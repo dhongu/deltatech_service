@@ -58,17 +58,8 @@ jobs:
           ref: "18.0"
           path: deltatech
 
-      - name: Set up environment variables
-        run: |
-          echo "addons_path=/opt/odoo/addons,.,$PWD/deltatech" >> ${ODOO_RC}
-          cat ${ODOO_RC}
-
-      # Opțiunea 1: Folosirea mecanismului OCA de instalare a dependențelor
       - name: Install addons and dependencies
-        run: |
-          PYTHONPATH=$PYTHONPATH:$PWD/deltatech oca_install_addons
-
-
+        run: oca_install_addons
       - name: Check licenses
         run: manifestoo -d . check-licenses
       - name: Check development status
