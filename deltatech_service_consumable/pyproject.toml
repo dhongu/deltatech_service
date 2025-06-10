@@ -1,3 +1,7 @@
 [build-system]
 requires = ["whool"]
 build-backend = "whool.buildapi"
+
+dependencies = [
+    "odoo-addon-deltatech_product_extension>=18.0dev,<18.1dev",
+]
