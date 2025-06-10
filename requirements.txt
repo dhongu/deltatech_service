@@ -1,6 +1,2 @@
 # generated from manifests external_dependencies
 xlwt
-
-
-deltatech_product_extension @ git+https://github.com/dhongu/deltatech.git@18.0#subdirectory=deltatech_product_extension
-deltatech_stock_report @ git+https://github.com/dhongu/deltatech.git@18.0#subdirectory=deltatech_stock_report
