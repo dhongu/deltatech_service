@@ -1,11 +1,3 @@
 [build-system]
 requires = ["whool"]
 build-backend = "whool.buildapi"
-
-[project]
-name = "odoo-addon-deltatech_service_consumable"
-
-dependencies = [
-    "odoo-addon-deltatech_product_extension>=18.0dev,<18.1dev",
-    "odoo-addon-deltatech_stock_report>=18.0dev,<18.1dev",
-]
