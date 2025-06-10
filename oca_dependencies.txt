@@ -1,2 +1,2 @@
 # See https://github.com/OCA/odoo-community.org/blob/master/website/Contribution/CONTRIBUTING.rst#oca_dependencies-txt
-deltatech https://github.com/dhongu/deltatech 18.0
+deltatech_product_extension @ git+https://github.com/dhongu/deltatech.git@18.0#subdirectory=deltatech_product_extension
