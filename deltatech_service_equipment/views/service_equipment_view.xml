@@ -17,7 +17,7 @@
                 <field name="group_id" optional="hide" />
                 <field name="agreement_id" optional="show" />
                 <field name="agreement_type_id" optional="hide" />
-                <field name="serial_id" optional="show" />
+
                 <field name="readings_status" widget="badge" decoration-success="readings_status == 'done'" />
 
                 <field name="total_revenues" sum="total" />
