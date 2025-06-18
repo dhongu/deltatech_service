@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="name" />
+                    <field name="name"/>
                 </group>
             </form>
         </field>
@@ -33,7 +33,8 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="name" />
+                    <field name="name"/>
+                    <field name="category_id"/>
                 </group>
             </form>
         </field>
@@ -60,7 +61,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="name" />
+                    <field name="name"/>
                 </group>
             </form>
         </field>
@@ -81,31 +82,31 @@
     />
 
 
-            <record id="view_service_meter_category_form" model="ir.ui.view">
-            <field name="name">Service meter category</field>
-            <field name="model">service.meter.category</field>
-            <field name="arch" type="xml">
-                <form>
+    <record id="view_service_meter_category_form" model="ir.ui.view">
+        <field name="name">Service meter category</field>
+        <field name="model">service.meter.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
                     <group>
-                        <group>
-                            <field name="name" />
-                            <field name="uom_id" />
-                            <field name="type" />
-                        </group>
-                        <group>
-
-                        </group>
+                        <field name="name"/>
+                        <field name="uom_id"/>
+                        <field name="type"/>
+                    </group>
+                    <group>
 
                     </group>
-                </form>
-            </field>
-        </record>
-        <record id="action_service_meter_category" model="ir.actions.act_window">
-            <field name="name">Services Meter Category</field>
-            <field name="res_model">service.meter.category</field>
-            <field name="view_mode">list,form</field>
-        </record>
-        <menuitem
+
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="action_service_meter_category" model="ir.actions.act_window">
+        <field name="name">Services Meter Category</field>
+        <field name="res_model">service.meter.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
         name="Meter Category"
         id="menu_service_meter_category"
         action="action_service_meter_category"
