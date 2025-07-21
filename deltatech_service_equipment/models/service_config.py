@@ -9,6 +9,7 @@ from odoo import api, fields, models
 #
 #     template_meter_ids = fields.One2many("service.template.meter", "categ_id")
 
+
 class ServiceEquipmentCategory(models.Model):
     _inherit = "service.equipment.category"
 
