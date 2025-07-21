@@ -145,6 +145,8 @@ class ServiceAgreement(models.Model):
 
     doc_count = fields.Integer(string="Number of documents attached", compute="_compute_attached_docs")
 
+    is_locked = fields.Boolean()
+
     _sql_constraints = [
         (
             "name_uniq",
@@ -352,6 +354,12 @@ class ServiceAgreement(models.Model):
             "default_agreement_ids": [(6, 0, self.ids)],
         }
         return action
+
+    def lock_agreement(self):
+        return self.write({"is_locked": True})
+
+    def unlock_agreement(self):
+        return self.write({"is_locked": False})
 
 
 class ServiceAgreementType(models.Model):
