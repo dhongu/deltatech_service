@@ -29,7 +29,7 @@ class ServiceEquipment(models.Model):
         "product.product",
         string="Product",
         ondelete="restrict",
-        domain=[("type", "=", "product")],
+        domain=[("is_storable", "=", True)],
     )
 
     serial_id = fields.Many2one("stock.lot", string="Product Serial Number", ondelete="restrict", copy=False)
