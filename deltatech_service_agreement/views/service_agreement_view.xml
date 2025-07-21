@@ -172,7 +172,7 @@
                         context="{'default_currency_id':currency_id}"
                         readonly="is_locked"
                     >
-                        <list editable="bottom">
+                        <list editable="bottom" decoration-danger="price_unit == 0 or quantity == 0">
                             <field name="sequence" widget="handle" />
                             <field name="product_id" context="{'default_type':'service'}" />
                             <field name="invoice_description" optional="hide" />
