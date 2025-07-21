@@ -346,9 +346,10 @@ class ServiceAgreement(models.Model):
                 wizard_billing = self.env["service.billing"].with_context(active_ids=res["consumption_ids"]).create({})
                 wizard_billing.do_billing()
 
-
     def action_service_billing_preparation(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("deltatech_service_agreement.action_service_billing_preparation")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "deltatech_service_agreement.action_service_billing_preparation"
+        )
         action["context"] = {
             "default_company_id": self.env.company.id,
             "default_agreement_ids": [(6, 0, self.ids)],
