@@ -23,7 +23,7 @@ class ServiceConsumableItem(models.Model):
         "product.product",
         string="Consumable",
         ondelete="restrict",
-        domain=[("type", "=", "product")],
+        domain=[("is_storable", "=", True)],
     )
     quantity = fields.Float(string="Quantity", compute="_compute_quantity", digits="Product Unit of Measure")
     shelf_life = fields.Float(string="Shelf Life", related="product_id.shelf_life")
