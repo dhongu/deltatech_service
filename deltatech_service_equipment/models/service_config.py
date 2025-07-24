@@ -20,8 +20,7 @@ class ServiceEquipmentType(models.Model):
     _inherit = "service.equipment.type"
 
     categ_id = fields.Many2one("service.equipment.category", string="Category")
-
-    template_meter_ids = fields.One2many("service.template.meter")
+    template_meter_ids = fields.One2many("service.template.meter", related="category_id.template_meter_ids")
 
     @api.depends("categ_id")
     def _compute_template_meter_ids(self):
