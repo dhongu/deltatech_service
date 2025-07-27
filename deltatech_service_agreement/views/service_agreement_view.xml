@@ -134,6 +134,7 @@
                         <button class="oe_stat_button" name="attachment_tree_view" type="object" icon="fa-files-o">
                             <field string="Documents" name="doc_count" widget="statinfo" />
                         </button>
+
                     </div>
                     <div class="oe_title">
                         <h1>
