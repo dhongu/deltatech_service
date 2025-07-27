@@ -163,7 +163,7 @@
                     name="common_history_button"
                     groups="deltatech_service_base.group_service_user"
                 >
-                    <span class="o_stat_text">History</span>
+                    <span class="o_stat_text">History Place</span>
                 </button>
 
             </div>
