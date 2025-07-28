@@ -16,11 +16,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[deltatech_object_history](deltatech_object_history/) | 18.0.0.0.1 | [![danila12](https://github.com/danila12.png?size=30px)](https://github.com/danila12) | Object history - a parallel history of Odoo documents, separated from standard Odoo messages
+[deltatech_object_history_service](deltatech_object_history_service/) | 18.0.0.0.1 | [![danila12](https://github.com/danila12.png?size=30px)](https://github.com/danila12) | Extends Object History for Agreement an Equipment models
 [deltatech_service](deltatech_service/) | 18.0.2.0.4 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Agreement
 [deltatech_service_agreement](deltatech_service_agreement/) | 18.0.2.0.5 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Agreement
 [deltatech_service_base](deltatech_service_base/) | 18.0.2.0.5 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Base
-[deltatech_service_consumable](deltatech_service_consumable/) | 18.0.1.1.3 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Consumable
-[deltatech_service_equipment](deltatech_service_equipment/) | 18.0.1.1.2 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Equipment Management
+[deltatech_service_consumable](deltatech_service_consumable/) | 18.0.1.1.4 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Consumable
+[deltatech_service_equipment](deltatech_service_equipment/) | 18.0.1.1.3 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Equipment Management
 [deltatech_service_equipment_base](deltatech_service_equipment_base/) | 18.0.1.1.6 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Equipment Management
 [deltatech_service_maintenance](deltatech_service_maintenance/) | 18.0.1.1.7 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Services Maintenance
 [deltatech_service_maintenance_agreement](deltatech_service_maintenance_agreement/) | 18.0.1.0.4 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Services Maintenance
