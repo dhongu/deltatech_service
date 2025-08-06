@@ -25,7 +25,8 @@ class ServiceConsumableItem(models.Model):
         ondelete="restrict",
         domain=[("is_storable", "=", True)],
     )
-    quantity = fields.Float(string="Quantity", compute="_compute_quantity", digits="Product Unit of Measure")
+    quantity = fields.Float(string="Quantity", compute="_compute_quantity", digits="Product Unit of Measure",
+                            compute_sudo=True)
     shelf_life = fields.Float(string="Shelf Life", related="product_id.shelf_life")
     uom_shelf_life = fields.Many2one(string="Shelf Life UoM", related="product_id.uom_shelf_life")
     colors = fields.Char("HTML Colors Index", default="['#a9d70b', '#f9c802', '#ff0000']")
@@ -34,6 +35,7 @@ class ServiceConsumableItem(models.Model):
         digits="Product Unit of Measure",
         help="Maximum Quantity allowed",
     )
+
 
     def _compute_quantity(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
