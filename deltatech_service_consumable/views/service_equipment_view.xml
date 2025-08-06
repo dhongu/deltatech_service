@@ -49,14 +49,22 @@
                     <group>
                         <field
                             name="consumable_item_ids"
-                            widget="many2many_kanban"
+                            mode="list,kanban"
                             nolabel="1"
                             context="{'equipment_id': id}"
                         >
+                            <list editable="bottom">
+                                <field name="product_id" />
+                                <field name="shelf_life" />
+                                <field name="colors" />
+                                <field name="quantity" />
+                            </list>
+
                             <kanban>
                                 <field name="product_id" />
                                 <field name="shelf_life" />
                                 <field name="colors" />
+                                <field name="quantity" />
                                 <templates>
                                     <t t-name="card">
                                         <div class="oe_kanban_content">
