@@ -48,6 +48,10 @@ class ServiceConsumableItem(models.Model):
             )
 
         equipment_id = self.env.context.get("equipment_id", False)
+        if not equipment_id:
+            params = self.env.context.get("params", False)
+            if params and "resId" in params:
+                equipment_id = params["resId"]
         pickings = self.env["stock.picking"]
 
         if equipment_id:
