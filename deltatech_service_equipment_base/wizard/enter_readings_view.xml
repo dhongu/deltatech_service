@@ -49,8 +49,7 @@
         <field name="res_model">service.enter.reading</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="model_service_equipment" />
-        <field name="binding_view_types">list,form</field>
+
     </record>
 
 
