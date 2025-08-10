@@ -66,10 +66,7 @@ class ServicePlan(models.Model):
         string="Order Type",
     )
 
-    work_center_id = fields.Many2one(
-        "service.work.center",
-        string="Work Center"
-    )
+    work_center_id = fields.Many2one("service.work.center", string="Work Center")
 
     call_ids = fields.One2many("service.plan.call", "plan_id", string="Plan Calls", readonly=True)
 

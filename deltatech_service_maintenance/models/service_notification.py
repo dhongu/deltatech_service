@@ -62,10 +62,7 @@ class ServiceNotification(models.Model):
     address_id = fields.Many2one("res.partner", string="Address")
     user_id = fields.Many2one("res.users", string="Responsible")
 
-    work_center_id = fields.Many2one(
-        "service.work.center",
-        string="Work Center"
-    )
+    work_center_id = fields.Many2one("service.work.center", string="Work Center")
 
     type = fields.Selection(
         [("external", "External"), ("internal", "Internal")],

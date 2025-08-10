@@ -47,12 +47,7 @@
             <page id="meters" position="before">
                 <page string="Consumable">
                     <group>
-                        <field
-                            name="consumable_item_ids"
-                            mode="list,kanban"
-                            nolabel="1"
-                            context="{'equipment_id': id}"
-                        >
+                        <field name="consumable_item_ids" mode="list,kanban" nolabel="1" context="{'equipment_id': id}">
                             <list editable="bottom">
                                 <field name="product_id" />
                                 <field name="shelf_life" />
