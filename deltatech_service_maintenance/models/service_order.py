@@ -70,7 +70,6 @@ class ServiceOrder(models.Model):
     work_center_id = fields.Many2one(
         "service.work.center",
         string="Work Center",
-        required=True,
     )
 
     # raportul poate sa fie legat de o sesizre
