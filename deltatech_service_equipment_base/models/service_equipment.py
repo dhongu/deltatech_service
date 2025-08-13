@@ -10,7 +10,7 @@ class ServiceEquipment(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char(string="Reference", index=True, default=lambda self: _("New"))
-    display_name = fields.Char(compute="_compute_display_name")
+    # display_name = fields.Char(compute="_compute_display_name")
     partner_id = fields.Many2one("res.partner", string="Customer")
     contact_id = fields.Many2one(
         "res.partner",
@@ -63,14 +63,21 @@ class ServiceEquipment(models.Model):
         if self.serial_id:
             self.serial_no = self.serial_id.name
 
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
         for equipment in self:
-            name = equipment.name
+            display_name = equipment.name
             if equipment.serial_id:
-                name += "/" + equipment.serial_id.name
-            res.append((equipment.id, name))
-        return res
+                display_name += " / " + equipment.serial_id.name
+            equipment.display_name = display_name
+
+    # def name_get(self):
+    #     res = []
+    #     for equipment in self:
+    #         name = equipment.name
+    #         if equipment.serial_id:
+    #             name += "/" + equipment.serial_id.name
+    #         res.append((equipment.id, name))
+    #     return res
 
     def update_meter_status(self):
         pass

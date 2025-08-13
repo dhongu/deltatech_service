@@ -509,15 +509,15 @@ class ServiceOrderReason(models.Model):
 
     name = fields.Char(string="Reason", translate=True)
     code = fields.Char(string="Code")
-    display_name = fields.Char(compute="_compute_display_name")
+    # display_name = fields.Char(compute="_compute_display_name")
 
-    def name_get(self):
-        result = []
-        for record in self:
-            result.append((record.id, record.display_name))
-        return result
+    # def name_get(self):
+    #     result = []
+    #     for record in self:
+    #         result.append((record.id, record.display_name))
+    #     return result
 
-    @api.depends("name", "code")  # this definition is recursive
+    # @api.depends("name", "code")  # this definition is recursive
     def _compute_display_name(self):
         for reason in self:
             if reason.code:
@@ -551,14 +551,14 @@ class ServiceOperation(models.Model):
     name = fields.Char(string="Operation")
     code = fields.Char(string="Code")
     duration = fields.Float(string="Duration")
-    display_name = fields.Char(compute="_compute_display_name")
+    # display_name = fields.Char(compute="_compute_display_name")
     product_id = fields.Many2one("product.product", domain=[("type", "=", "service")])
 
-    def name_get(self):
-        result = []
-        for record in self:
-            result.append((record.id, record.display_name))
-        return result
+    # def name_get(self):
+    #     result = []
+    #     for record in self:
+    #         result.append((record.id, record.display_name))
+    #     return result
 
     @api.depends("name", "code")  # this definition is recursive
     def _compute_display_name(self):
