@@ -22,7 +22,7 @@
                     id="common_history_button"
                     icon="fa-book"
                     name="common_history_button"
-                    groups="deltatech_service.group_service_user"
+                    groups="deltatech_service_base.group_service_user"
                 >
                         <span class="o_stat_text">History Place</span>
                     </button>
