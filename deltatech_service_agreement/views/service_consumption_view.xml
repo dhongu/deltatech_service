@@ -92,7 +92,7 @@
                 <field name="agreement_id" />
                 <field name="invoice_id" />
                 <separator />
-                <filter name="date_invoice" date="date_invoice" default_period="month" />
+                <filter name="filter_date_invoice" date="date_invoice" default_period="month" />
                 <separator />
 
 
