@@ -219,7 +219,7 @@
                 <field name="agreement_type_id" />
                 <field name="ean_code" />
                 <separator />
-                <filter name="last_reading" date="last_reading" default_period="month" />
+                <filter name="filter_last_reading" date="last_reading" default_period="month" />
 
             </field>
             <group position="inside">
