@@ -207,6 +207,9 @@ class ServiceEquiOperation(models.TransientModel):
 
         # self.equipment_id.write({'agreement_id':self.agreement_id.id,
         #                         'partner_id':self.partner_id.id})
+        if not self.equipment_id.type_id.template_meter_ids:
+            raise UserError(_("No meter template defined for this equipment type."))
+
         for template in self.equipment_id.type_id.template_meter_ids:
             values = {
                 "agreement_id": self.agreement_id.id,
