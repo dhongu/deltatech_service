@@ -129,7 +129,7 @@ class ServiceEquiOperation(models.TransientModel):
         if self.state == "rem":
             domain = [("equipment_id", "=", self.equipment_id.id)]
             agreement_lines = self.env["service.agreement.line"].search(domain)
-            agreement_lines.with_context(from_uninstall=True).do_billing_preparation(self.period_id)
+            agreement_lines.with_context(from_uninstall=True).do_billing_preparation(self.service_period_id)
             self._compute_can_remove()
 
             if not self.can_remove:
