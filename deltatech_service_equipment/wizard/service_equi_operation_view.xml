@@ -24,6 +24,7 @@
                             name="agreement_id"
                             domain="[('partner_id','=',partner_id)]"
                             invisible="state!='add'"
+                            required="state=='add'"
                             placeholder="Leave empty to create a new agreement"
                         />
                     </group>
