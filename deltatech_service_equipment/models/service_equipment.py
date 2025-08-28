@@ -296,10 +296,9 @@ class ServiceEquipment(models.Model):
         res = super().name_search(name, args, operator=operator, limit=limit) + res_serial
         return res
 
-
     def _compute_display_name(self):
         for equipment in self:
-            name = equipment.name
+            name = equipment.name or ""
             if equipment.address_id.name:
                 name += "/" + equipment.address_id.name
             if equipment.serial_id.name:
