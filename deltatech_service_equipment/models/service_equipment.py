@@ -300,9 +300,9 @@ class ServiceEquipment(models.Model):
     def _compute_display_name(self):
         for equipment in self:
             name = equipment.name
-            if equipment.address_id:
+            if equipment.address_id.name:
                 name += "/" + equipment.address_id.name
-            if equipment.serial_id:
+            if equipment.serial_id.name:
                 name += "/" + equipment.serial_id.name
             equipment.display_name = name
 
