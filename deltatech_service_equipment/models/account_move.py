@@ -105,13 +105,11 @@ class AccountInvoice(models.Model):
         workbook.close()
         data_file = base64.b64encode(temp_file.getvalue())
         file_name = f"export_contori_{self.name}.xls" or self.invoice_date
-        # wizard = self.env["wizard.download.file"].create({"data_file": data_file, "file_name": file_name})
-        # return wizard.do_download_file()
         attachment = self.env["ir.attachment"].create(
             {
                 "name": file_name,
-                "raw": data_file,
-                "mimetype": "application/xlsx",
+                "datas": data_file,
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "res_model": "account.move",
                 "res_id": self.id,
             }
