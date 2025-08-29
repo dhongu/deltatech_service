@@ -36,7 +36,7 @@
                     <group>
                         <group string="Technical Details" name="technical_details">
                             <field name="type_id" required="1" />
-                            <field name="model_id" required="1" />
+                            <field name="model_id"  />
                             <field name="manufacturer_id" />
                             <field name="serial_no" />
                         </group>
