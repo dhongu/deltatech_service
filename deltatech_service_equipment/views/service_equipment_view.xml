@@ -96,7 +96,7 @@
                     name="create_meters_button"
                     type="object"
                     string="Create Meters"
-                    invisible="meter_ids!=[]"
+                    invisible="meter_ids"
                     groups="deltatech_service_base.group_service_manager"
                 />
 
