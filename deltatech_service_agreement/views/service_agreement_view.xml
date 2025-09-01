@@ -37,6 +37,7 @@
         <field name="arch" type="xml">
             <form string="Service Agreement">
                 <header>
+                    <field name="is_locked" invisible="1" />
                     <button
                         name="contract_close"
                         invisible="state!='open'"
@@ -58,16 +59,10 @@
                         class="oe_highlight"
                         string="Set Draft"
                     />
-                     <button
-                        name="lock_agreement"
-                        invisible="not is_locked"
-                        type="object"
-                        icon="fa-lock"
-                        string="Lock"
-                    />
+                     <button name="lock_agreement" invisible="is_locked" type="object" icon="fa-lock" string="Lock" />
                     <button
                         name="unlock_agreement"
-                        invisible="is_locked"
+                        invisible="not is_locked"
                         type="object"
                         icon="fa-unlock"
                         string="UnLock "
@@ -173,7 +168,11 @@
                         context="{'default_currency_id':currency_id}"
                         readonly="is_locked"
                     >
-                        <list editable="bottom" decoration-danger="price_unit == 0 or quantity == 0">
+                        <list
+                            editable="top"
+                            decoration-danger="price_unit == 0 or quantity == 0"
+                            default_order="id desc"
+                        >
                             <field name="sequence" widget="handle" />
                             <field name="product_id" context="{'default_type':'service'}" />
                             <field name="invoice_description" optional="hide" />
