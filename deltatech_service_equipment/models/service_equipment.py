@@ -292,7 +292,7 @@ class ServiceEquipment(models.Model):
                 limit=10,
             )
             if equipment_ids:
-                res_serial = equipment_ids.name_get()
+                res_serial = [(equipment_id.id, equipment_id.display_name) for equipment_id in equipment_ids]
         res = super().name_search(name, args, operator=operator, limit=limit) + res_serial
         return res
 
@@ -304,14 +304,3 @@ class ServiceEquipment(models.Model):
             if equipment.serial_id.name:
                 name += "/" + equipment.serial_id.name
             equipment.display_name = name
-
-    # def name_get(self):
-    #     res = []
-    #     for equipment in self:
-    #         name = equipment.name
-    #         if equipment.address_id:
-    #             name += "/" + equipment.address_id.name
-    #         if equipment.serial_id:
-    #             name += "/" + equipment.serial_id.name
-    #         res.append((equipment.id, name))
-    #     return res
