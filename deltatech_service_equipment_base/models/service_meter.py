@@ -292,6 +292,7 @@ class ServiceMeterReading(models.Model):
                     [
                         ("meter_id", "=", reading.meter_id.id),
                         ("date", "<=", reading.date),
+                        ("id", "!=", reading.id),
                     ],
                     limit=1,
                     order="date desc, id desc",
