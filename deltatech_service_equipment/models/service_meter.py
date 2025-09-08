@@ -26,6 +26,8 @@ class ServiceMeterReading(models.Model):
     consumption_id = fields.Many2one("service.consumption", string="Consumption", readonly=True)
 
     def unlink(self):
+        if self.env.context.get("force_delete", False):
+            return super().unlink()
         meters = self.env["service.meter"]
         for reading in self:
             if reading.consumption_id:
