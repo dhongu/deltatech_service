@@ -291,7 +291,7 @@ class ServiceMeterReading(models.Model):
                 previous = self.env["service.meter.reading"].search(
                     [
                         ("meter_id", "=", reading.meter_id.id),
-                        ("date", "<", reading.date),
+                        ("date", "<=", reading.date),
                     ],
                     limit=1,
                     order="date desc, id desc",
