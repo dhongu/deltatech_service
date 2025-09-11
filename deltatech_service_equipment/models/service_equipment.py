@@ -301,6 +301,8 @@ class ServiceEquipment(models.Model):
             name = equipment.name or ""
             if equipment.address_id.name:
                 name += "/" + equipment.address_id.name
+            if equipment.emplacement:
+                name += "/" + equipment.emplacement
             if equipment.serial_id.name:
                 name += "/" + equipment.serial_id.name
             equipment.display_name = name
