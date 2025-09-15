@@ -383,7 +383,7 @@ class ServiceAgreementLine(models.Model):
 
     sequence = fields.Integer(
         string="Sequence",
-        default=1,
+        default=-1,
         help="Gives the sequence of this line when displaying the agreement.",
     )
     agreement_id = fields.Many2one("service.agreement", string="Contract Services", ondelete="cascade")
