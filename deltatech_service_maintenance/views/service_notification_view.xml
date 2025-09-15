@@ -147,23 +147,6 @@
 
                     </group>
                     <notebook>
-                        <page string="Operations">
-                            <field name="operation_ids" readonly="state=='done'">
-                                <list editable="bottom">
-                                    <field name="sequence" widget="handle" />
-                                    <field name="operation_id" />
-                                    <field name="duration" widget="float_time" />
-                                </list>
-                            </field>
-                            <field
-                                name="description"
-                                class="oe-bordered-editor"
-                                readonly="state=='done'"
-                                nolabel="1"
-                                placeholder="Description..."
-                            />
-                        </page>
-
                         <page string="Components" name="lines">
                             <field name="item_ids" mode="list,kanban">
                                 <list editable="bottom">
@@ -236,6 +219,22 @@
                             </field>
 
                         </page>
+                        <page string="Operations">
+                            <field name="operation_ids" readonly="state=='done'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="operation_id" />
+                                    <field name="duration" widget="float_time" />
+                                </list>
+                            </field>
+                            <field
+                                name="description"
+                                class="oe-bordered-editor"
+                                readonly="state=='done'"
+                                nolabel="1"
+                                placeholder="Description..."
+                            />
+                        </page>
                         <page string="Other Info" name="other_information">
                             <group>
                                 <group>
@@ -256,11 +255,7 @@
                                 </group>
                                 <group>
                                     <field name="piking_id" invisible="piking_id==False" />
-                                    <field name="sale_order_id" invisible="sale_order_id==False" />
-                                    <!--                                    <field-->
-                                    <!--                                        name="required_order_id"-->
-                                    <!--                                        attrs="{'invisible': [('required_order_id','=',False)]}"-->
-                                    <!--                                    />-->
+                                    <field name="sale_order_id" invisible="sale_order_id==False" />s
                                 </group>
                             </group>
                         </page>
