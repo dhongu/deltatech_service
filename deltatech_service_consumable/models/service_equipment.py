@@ -11,11 +11,17 @@ from odoo.tools.safe_eval import safe_eval
 class ServiceEquipment(models.Model):
     _inherit = "service.equipment"
 
+    consumables = fields.Char(
+        string="Consumables (text)",
+        compute="_compute_consumables_text",
+        store=False,
+        readonly=True,
+    )
     consumable_item_ids = fields.Many2many(
         "service.consumable.item",
         string="Consumables",
         compute="_compute_consumable_item_ids",
-        readonly=True,
+        store=True,
     )
     permits_pickings = fields.Boolean(related="agreement_id.type_id.permits_pickings")
 
@@ -23,7 +29,10 @@ class ServiceEquipment(models.Model):
     def _compute_consumable_item_ids(self):
         for equipment in self:
             domain = [("type_id", "=", equipment.type_id.id)]
-            equipment.consumable_item_ids = self.env["service.consumable.item"].search(domain)
+            # bind the equipment explicitly so downstream computes (e.g. quantity) can use it
+            equipment.consumable_item_ids = (
+                self.env["service.consumable.item"].with_context(equipment_id=equipment.id).search(domain)
+            )
 
     def new_piking_button(self):
         # todo: de pus in config daca livrarea se face la adresa din echipamente sau contract
@@ -117,3 +126,16 @@ class ServiceEquipment(models.Model):
             "context": context,
             "type": "ir.actions.act_window",
         }
+
+    def _compute_consumables_text(self):
+        for equi in self:
+            cons_values = []
+            # ensure the equipment is bound when accessing consumable fields
+            for cons_item in equi.sudo().consumable_item_ids.with_context(equipment_id=equi.id):
+                name = cons_item.product_id.name
+                shelf_life = cons_item.product_id.shelf_life or 0
+                quantity = cons_item.quantity
+                max_quantity = cons_item.max_qty
+                cons_single = f"{name}&{quantity}&{max_quantity}&{shelf_life}"
+                cons_values.append(cons_single)
+            equi.consumables = "|".join(str(e) for e in cons_values)
