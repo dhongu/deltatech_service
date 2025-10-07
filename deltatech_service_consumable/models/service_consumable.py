@@ -17,6 +17,14 @@ class ServiceConsumableItem(models.Model):
     _name = "service.consumable.item"
     _description = "Consumable Item"
 
+    # transient field to hold the current equipment when rendered from equipment form
+    equipment_id = fields.Many2one(
+        "service.equipment",
+        string="Equipment (view)",
+        compute="_compute_equipment_id_view",
+        store=False,
+        help="Set when this consumable is rendered under an Equipment form.",
+    )
     name = fields.Char(string="Name", related="product_id.name")
     type_id = fields.Many2one("service.equipment.type", string="Type", ondelete="cascade")
     product_id = fields.Many2one(
@@ -37,41 +45,46 @@ class ServiceConsumableItem(models.Model):
         help="Maximum Quantity allowed",
     )
 
+    def _compute_equipment_id_view(self):
+        eq_id = self.env.context.get("equipment_id")
+        equipment = self.env["service.equipment"].browse(eq_id) if eq_id else self.env["service.equipment"]
+        for rec in self:
+            rec.equipment_id = equipment
+
     def _compute_quantity(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
-
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
-            raise RedirectWarning(
-                _("Please define the picking type for service."),
-                action.id,
-                _("Stock Settings"),
-            )
+            raise RedirectWarning(_("Please define the picking type for service."), action.id, _("Stock Settings"))
 
-        equipment_id = self.env.context.get("equipment_id", False)
-        if not equipment_id:
-            params = self.env.context.get("params", False)
-            if params and "resId" in params:
-                equipment_id = params["resId"]
+        equipment_id = self.env.context.get("equipment_id") or (self.equipment_id.id if self.equipment_id else False)
         pickings = self.env["stock.picking"]
-
         if equipment_id:
-            domain = [
-                ("equipment_id", "=", equipment_id),
-                ("picking_type_id", "=", picking_type_id),
-                ("state", "=", "done"),
-            ]
-            pickings = self.env["stock.picking"].sudo().search(domain)
+            pickings = (
+                self.env["stock.picking"]
+                .sudo()
+                .search(
+                    [
+                        ("equipment_id", "=", equipment_id),
+                        ("picking_type_id", "=", picking_type_id),
+                        ("state", "=", "done"),
+                    ]
+                )
+            )
 
         for item in self:
             if equipment_id:
-                domain = [
-                    ("picking_id", "in", pickings.ids),
-                    ("product_id", "=", item.product_id.id),
-                ]
-
-                move_lines = self.env["stock.move"].sudo().search(domain)
+                move_lines = (
+                    self.env["stock.move"]
+                    .sudo()
+                    .search(
+                        [
+                            ("picking_id", "in", pickings.ids),
+                            ("product_id", "=", item.product_id.id),
+                        ]
+                    )
+                )
                 move_qtys = 0.0
                 for move in move_lines:
                     if move.location_dest_id.usage == "internal":
@@ -80,22 +93,13 @@ class ServiceConsumableItem(models.Model):
                         move_qtys += move.product_id.shelf_life * move.product_uom_qty
 
                 eff = self.env["service.efficiency.report"]
-                domain = [
-                    ("product_id", "=", item.product_id.id),
-                    ("equipment_id", "=", equipment_id),
-                ]
-                fields_list = [
-                    "equipment_id",
-                    "product_id",
-                    "location_dest_id",
-                    "usage",
-                    "shelf_life",
-                ]
-                group_by_list = ["equipment_id", "product_id", "location_dest_id"]
-                res = eff.read_group(domain=domain, fields=fields_list, groupby=group_by_list, lazy=False)
-                usage = 0.0
-                for line in res:
-                    usage = line["usage"]
+                res = eff.read_group(
+                    domain=[("product_id", "=", item.product_id.id), ("equipment_id", "=", equipment_id)],
+                    fields=["equipment_id", "product_id", "location_dest_id", "usage", "shelf_life"],
+                    groupby=["equipment_id", "product_id", "location_dest_id"],
+                    lazy=False,
+                )
+                usage = next((line["usage"] for line in res), 0.0)
                 item.quantity = move_qtys - usage
             else:
                 item.quantity = 0
