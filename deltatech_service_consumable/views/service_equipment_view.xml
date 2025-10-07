@@ -47,14 +47,8 @@
             <page id="meters" position="before">
                 <page string="Consumable">
                     <group>
-                        <field name="consumable_item_ids" mode="list,kanban" nolabel="1" context="{'equipment_id': id}">
-                            <list editable="bottom">
-                                <field name="product_id" />
-                                <field name="shelf_life" />
-                                <field name="colors" />
-                                <field name="quantity" />
-                            </list>
-
+                        <field name="consumables" readonly="1" nolabel="1" invisible="1" />
+                        <field name="consumable_item_ids" mode="kanban" nolabel="1" context="{'equipment_id': id}">
                             <kanban>
                                 <field name="product_id" />
                                 <field name="shelf_life" />
@@ -69,17 +63,13 @@
                                                 </div>
                                             </div>
                                             <div class="o_kanban_record_body">
-
                                                 <field
                                                     name="quantity"
                                                     widget="progressbar"
                                                     title="Quantity"
-                                                    options="{  'max_value': 'shelf_life', 'editable': false }"
+                                                    options="{'max_value': 'shelf_life', 'editable': false}"
                                                 />
-
-
                                             </div>
-
                                         </div>
                                     </t>
                                 </templates>
