@@ -92,15 +92,10 @@
                     <field
                         name="state"
                         widget="statusbar"
+                        groups="deltatech_service_base.group_warranty_manager"
                         options="{'clickable': '1'}"
-                        invisible="type != 'warranty'"
                     />
-                    <field
-                        name="rec_state"
-                        widget="statusbar"
-                        options="{'clickable': '1'}"
-                        invisible="type != 'recondition'"
-                    />
+                    <field name="state" widget="statusbar" groups="!deltatech_service_base.group_warranty_manager" />
                 </header>
                 <sheet>
                     <div class="oe_title">
