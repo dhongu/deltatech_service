@@ -21,7 +21,6 @@ class ServiceWarranty(models.Model):
         string="Date",
         default=fields.Date.context_today,
         readonly=True,
-        # states={"new": [("readonly", False)]}
     )
     state = fields.Selection(
         [
