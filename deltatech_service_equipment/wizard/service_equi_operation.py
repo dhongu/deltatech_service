@@ -45,17 +45,9 @@ class ServiceEquiOperation(models.TransientModel):
             defaults["partner_id"] = equipment.partner_id.id
             defaults["address_id"] = equipment.address_id.id
             defaults["emplacement"] = equipment.emplacement
-            domain = [("partner_id", "=", equipment.partner_id.id)]
-            agreement = self.env["service.agreement"].search(domain, limit=1)
-            if agreement:
-                defaults["agreement_id"] = agreement.id
         else:
             raise UserError(_("Please select equipment."))
         return defaults
-
-    @api.onchange("partner_id")
-    def onchange_partner_id(self):
-        self.address_id = self.partner_id
 
     def _compute_can_remove(self):
         # ca sa se poata elimina dintr-un contract trebuie ca:

@@ -8,6 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 
 class ServiceEquipment(models.Model):
@@ -148,7 +149,24 @@ class ServiceEquipment(models.Model):
                     for line in invoice.invoice_line_ids:
                         if line.agreement_line_id.equipment_id == equipment:
                             total_invoiced += line.price_subtotal
-            equipment.write({"total_invoiced": total_invoiced, "total_revenues": total_consumption})
+            get_param = self.env["ir.config_parameter"].sudo().get_param
+            picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+            if picking_type_id:
+                pickings = self.env["stock.picking"].search(
+                    [
+                        ("equipment_id", "=", equipment.id),
+                        ("picking_type_id", "=", picking_type_id),
+                        ("state", "=", "done"),
+                    ]
+                )
+                total_consumables = sum(pickings.mapped("move_ids.stock_valuation_layer_ids.value"))
+            equipment.write(
+                {
+                    "total_invoiced": total_invoiced,
+                    "total_revenues": total_consumption,
+                    "total_costs": total_consumables,
+                }
+            )
 
     def costs_and_revenues(self):
         self.compute_totals()

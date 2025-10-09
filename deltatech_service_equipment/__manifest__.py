@@ -5,7 +5,7 @@
 {
     "name": "Services Equipment",
     "summary": "Service Equipment Management",
-    "version": "18.0.1.1.10",
+    "version": "18.0.1.1.11",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Equipment",
