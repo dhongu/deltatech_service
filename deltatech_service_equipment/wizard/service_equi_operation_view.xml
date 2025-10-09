@@ -18,7 +18,6 @@
                 </group>
                 <group string="Location" invisible="state not in ('ins', 'add')">
                     <group>
-                        <field name="service_period_id" />
                         <field name="partner_id" required="state=='ins'" />
                         <field
                             name="agreement_id"
