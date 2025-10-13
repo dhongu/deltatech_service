@@ -18,20 +18,18 @@
                 </group>
                 <group string="Location" invisible="state not in ('ins', 'add')">
                     <group>
-                        <field name="service_period_id" />
                         <field name="partner_id" required="state=='ins'" />
                         <field
                             name="agreement_id"
                             domain="[('partner_id','=',partner_id)]"
                             invisible="state!='add'"
                             required="state=='add'"
-                            placeholder="Leave empty to create a new agreement"
                         />
                     </group>
                     <group>
                         <field
                             name="address_id"
-                            required="state=='ins'"
+                            required="state in ['ins', 'add']"
                             domain="['|',('parent_id','child_of',partner_id),('id','=',partner_id)]"
                             context="{ 'search_default_parent_id':partner_id, 'default_parent_id':partner_id,
                             'default_filter_parent_id':partner_id}"
