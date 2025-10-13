@@ -154,6 +154,8 @@ class ServiceWarranty(models.Model):
             self.partner_id = False
 
     def new_delivery_button(self):
+        if self.env.user.has_group("deltatech_service_base.group_warranty_approve"):
+            raise UserError(_("Your user cannot create a delivery order"))
         # block picking if partner blocked
         if self.partner_id:
             if self.partner_id.picking_warn == "block":
@@ -233,6 +235,8 @@ class ServiceWarranty(models.Model):
         self.state = "approved"
 
     def set_done(self):
+        if self.env.user.has_group("deltatech_service_base.group_warranty_approve"):
+            raise UserError(_("Your user cannot set done"))
         self.state = "done"
 
     @api.model_create_multi

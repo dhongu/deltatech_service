@@ -30,6 +30,12 @@
         <field name="implied_ids" eval="[(4, ref('group_service_user'))]" />
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
     </record>
+    <record id="group_warranty_approve" model="res.groups">
+        <field name="name">Approval</field>
+        <field name="category_id" ref="module_category_warranty" />
+        <field name="implied_ids" eval="[(4, ref('group_service_user'))]" />
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
+    </record>
     <record id="group_warranty_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="category_id" ref="module_category_warranty" />
