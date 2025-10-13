@@ -1394,6 +1394,18 @@ msgid "Work Done"
 msgstr "Lucru efectuat"
 
 #. module: deltatech_service_maintenance
+#. odoo-python
+#: code:addons/deltatech_service_maintenance/models/service_warranty.py:0
+msgid "Your user cannot create a delivery order"
+msgstr "Utilizatorul nu poate creea un aviz"
+
+#. module: deltatech_service_maintenance
+#. odoo-python
+#: code:addons/deltatech_service_maintenance/models/service_warranty.py:0
+msgid "Your user cannot set done"
+msgstr "Utilizatorul nu poate seta efectuat"
+
+#. module: deltatech_service_maintenance
 #: model:service.operating.parameter,name:deltatech_service_maintenance.equi_work_again
 msgid "the defect was fixed equipment works"
 msgstr "defectul a fost înlăturat echipamentul funcționează"

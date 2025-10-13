@@ -79,7 +79,7 @@
                         class="oe_highlight"
                         string="Approve"
                         invisible="state != 'approval_requested'"
-                        groups="deltatech_service_base.group_warranty_manager"
+                        groups="deltatech_service_base.group_warranty_manager,deltatech_service_base.group_warranty_approve"
                     />
                     <button
                         name="set_done"
