@@ -17,21 +17,28 @@ class StockPicking(models.Model):
     @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
         notification_id = self.env.context.get("notification_id", False)
+        warranty_ctx_id = self.env.context.get("warranty_id", False)
+
         for vals in vals_list:
+            # propagate context defaults coming from actions/wizards
             if notification_id:
-                vals["notification_id"] = notification_id
-        picking = super().create(vals_list)
+                vals["notification_id"] = vals.get("notification_id") or notification_id
+            if warranty_ctx_id:
+                vals["warranty_id"] = vals.get("warranty_id") or warranty_ctx_id
 
-        if notification_id and picking:
+        pickings = super().create(vals_list)
+
+        # link back to related documents
+        if notification_id and pickings:
             notification = self.env["service.notification"].browse(notification_id)
-            notification.write({"piking_id": picking[0].id})
+            notification.write({"piking_id": pickings[0].id})
 
-        warranty_id = self.env.context.get("warranty_id", False)
-        if warranty_id:
-            picking.warranty_id = warranty_id
-            warranty = self.env["service.warranty"].browse(warranty_id)
-            warranty.write({"picking_id": picking.id})
-        return picking
+        # If warranty present, ensure reverse link on the warranty record
+        if pickings:
+            for picking in pickings:
+                if picking.warranty_id:
+                    picking.warranty_id.write({"picking_id": picking.id})
+        return pickings
 
     def new_notification(self):
         self.ensure_one()
@@ -60,8 +67,18 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         """
-        Write the actual values in warranty
+        Validate transfer and write the actual values in warranty.
+        Enforcement: only users in `deltatech_service_base.group_warranty_approve` can
+        validate pickings linked to a warranty of type 'warranty'.
         """
+        user_has_approve = self.env.user.has_group("deltatech_service_base.group_warranty_approve")
+        for picking in self:
+            if (
+                picking.warranty_id
+                and picking.warranty_id.type == "warranty"
+                and not user_has_approve
+            ):
+                raise UserError(_("You are not allowed to validate a delivery for a warranty. Please request approval."))
         res = super().button_validate()
         for picking in self:
             if picking.warranty_id:
