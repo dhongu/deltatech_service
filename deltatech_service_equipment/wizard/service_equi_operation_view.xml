@@ -29,7 +29,7 @@
                     <group>
                         <field
                             name="address_id"
-                            required="state in ['ins', 'add']"
+                            required="state=='ins'"
                             domain="['|',('parent_id','child_of',partner_id),('id','=',partner_id)]"
                             context="{ 'search_default_parent_id':partner_id, 'default_parent_id':partner_id,
                             'default_filter_parent_id':partner_id}"
@@ -38,11 +38,11 @@
                     </group>
 
                 </group>
-                <group string="Remove" invisible="state!='rem'">
+                <group string="Remove">
                     <field name="service_period_id" />
                     <field name="can_remove" invisible="1" />
                     <div
-                        invisible="can_remove==True"
+                        invisible="can_remove==True or state!='rem'"
                         class="alert alert-danger  alert-dismissible text-left"
                         role="alert"
                     >
