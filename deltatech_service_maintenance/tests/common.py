@@ -41,3 +41,8 @@ class TestServiceBase(TransactionCase):
                 "is_storable": True,
             }
         )
+        # Ensure sales use make-to-stock flow and avoid unintended purchase/MTO routes during tests
+        self.product.route_ids = [(6, 0, [])]
+        # Add on-hand stock so the generated delivery can be reserved
+        stock_location = self.env.ref("stock.stock_location_stock")
+        self.env["stock.quant"]._update_available_quantity(self.product, stock_location, 10.0)
