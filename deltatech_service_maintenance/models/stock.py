@@ -73,12 +73,10 @@ class StockPicking(models.Model):
         """
         user_has_approve = self.env.user.has_group("deltatech_service_base.group_warranty_approve")
         for picking in self:
-            if (
-                picking.warranty_id
-                and picking.warranty_id.type == "warranty"
-                and not user_has_approve
-            ):
-                raise UserError(_("You are not allowed to validate a delivery for a warranty. Please request approval."))
+            if picking.warranty_id and picking.warranty_id.type == "warranty" and not user_has_approve:
+                raise UserError(
+                    _("You are not allowed to validate a delivery for a warranty. Please request approval.")
+                )
         res = super().button_validate()
         for picking in self:
             if picking.warranty_id:
