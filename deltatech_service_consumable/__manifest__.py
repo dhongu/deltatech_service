@@ -15,7 +15,7 @@
         "deltatech_product_extension",
         "deltatech_stock_report",
     ],
-    "license": "OPL-1",
+    "license": "AGPL-3",
     "data": [
         # 'service_consumable_view.xml',
         "views/service_equipment_view.xml",
