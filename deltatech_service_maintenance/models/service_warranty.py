@@ -154,8 +154,9 @@ class ServiceWarranty(models.Model):
             self.partner_id = False
 
     def new_delivery_button(self):
-        if self.env.user.has_group("deltatech_service_base.group_warranty_approve"):
-            raise UserError(_("Your user cannot create a delivery order"))
+        # Permissions: allow creating a delivery from warranty for regular users as this action
+        # only opens a prefilled picking form; standard stock ACLs will still apply on save.
+        # Previously this was blocking users incorrectly due to an inverted group check.
         # block picking if partner blocked
         if self.partner_id:
             if self.partner_id.picking_warn == "block":
@@ -199,7 +200,9 @@ class ServiceWarranty(models.Model):
                     "price_unit": item.product_id.standard_price,
                 }
                 context["default_move_ids_without_package"] += [(0, 0, value)]
+        # Mark the picking as originated from this warranty both as context flag and default field value
         context["warranty_id"] = self.id
+        context["default_warranty_id"] = self.id
         return {
             "name": _("Delivery for warranty"),
             "view_type": "form",
