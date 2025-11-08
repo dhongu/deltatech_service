@@ -199,24 +199,29 @@ class ServiceEquiOperation(models.TransientModel):
 
         # self.equipment_id.write({'agreement_id':self.agreement_id.id,
         #                         'partner_id':self.partner_id.id})
-        if not self.equipment_id.type_id.template_meter_ids:
-            raise UserError(_("No meter template defined for this equipment type."))
+        templates = self.equipment_id.type_id.template_meter_ids
+        if not templates:
+            # If there are no templates defined but the equipment already has meters,
+            # allow linking the equipment to the agreement without creating lines from templates.
+            # Only block when neither templates nor meters exist (nothing to bill/track).
+            if not self.equipment_id.meter_ids:
+                raise UserError(_("No meter template defined for this equipment type."))
+        else:
+            for template in templates:
+                values = {
+                    "agreement_id": self.agreement_id.id,
+                    "equipment_id": self.equipment_id.id,
+                    "currency_id": template.currency_id.id,
+                    "product_id": template.product_id.id,
+                    "uom_id": template.product_id.uom_id.id,
+                    # "analytic_account_id": template.analytic_account_id.id,
+                }
+                for meter in self.equipment_id.meter_ids:
+                    if meter.meter_categ_id == template.meter_categ_id:
+                        values["meter_id"] = meter.id
+                        values["uom_id"] = template.meter_categ_id.bill_uom_id.id
 
-        for template in self.equipment_id.type_id.template_meter_ids:
-            values = {
-                "agreement_id": self.agreement_id.id,
-                "equipment_id": self.equipment_id.id,
-                "currency_id": template.currency_id.id,
-                "product_id": template.product_id.id,
-                "uom_id": template.product_id.uom_id.id,
-                # "analytic_account_id": template.analytic_account_id.id,
-            }
-            for meter in self.equipment_id.meter_ids:
-                if meter.meter_categ_id == template.meter_categ_id:
-                    values["meter_id"] = meter.id
-                    values["uom_id"] = template.meter_categ_id.bill_uom_id.id
-
-            self.env["service.agreement.line"].create(values)
+                self.env["service.agreement.line"].create(values)
 
         self.equipment_id.write({"agreement_id": self.agreement_id})
 

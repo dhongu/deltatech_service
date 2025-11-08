@@ -138,6 +138,7 @@ class ServiceEquipment(models.Model):
         for equipment in self:
             total_consumption = 0.0
             total_invoiced = 0.0
+            total_consumables = 0.0
             consumptions = self.env["service.consumption"].search([("equipment_id", "=", equipment.id)])
             invoices = self.env["account.move"]
             for consumption in consumptions:
@@ -159,7 +160,7 @@ class ServiceEquipment(models.Model):
                         ("state", "=", "done"),
                     ]
                 )
-                total_consumables = sum(pickings.mapped("move_ids.stock_valuation_layer_ids.value"))
+                total_consumables = sum(pickings.mapped("move_ids.stock_valuation_layer_ids.value")) or 0.0
             equipment.write(
                 {
                     "total_invoiced": total_invoiced,
