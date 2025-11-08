@@ -53,7 +53,7 @@ class ServiceConsumableItem(models.Model):
 
     def _compute_quantity(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
-        #todo: se pus acest tip intr-un camp din companie
+        # todo: se pus acest tip intr-un camp din companie
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
