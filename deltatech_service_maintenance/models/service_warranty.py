@@ -43,7 +43,7 @@ class ServiceWarranty(models.Model):
             ("done", "Done"),
         ],
         default="new",
-        string="Status",
+        string="Progress Status",
         tracking=True,
     )
 
