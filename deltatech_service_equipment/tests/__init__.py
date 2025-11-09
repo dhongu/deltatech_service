@@ -3,3 +3,4 @@
 
 
 from . import test_equipment
+from . import test_equipment_extra
