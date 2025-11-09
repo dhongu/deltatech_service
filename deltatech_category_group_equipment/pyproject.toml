@@ -6,3 +6,7 @@ build-backend = "whool.buildapi"
 
 [project]
 name = "odoo-addon-deltatech-category-group-equipment"
+
+dependencies = [
+    "odoo-addon-deltatech-category-group @ git+https://github.com/dhongu/deltatech.git@18.0#subdirectory=deltatech_category_group"
+]
