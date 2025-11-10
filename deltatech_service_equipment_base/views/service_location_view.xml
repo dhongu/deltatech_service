@@ -84,7 +84,7 @@
                 <field name="partner_id" />
 
                 <separator />
-                <group expand="1" string="Group By...">
+                <group>
 
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}" />
                 </group>

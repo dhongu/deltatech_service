@@ -76,13 +76,10 @@ class ServiceMeter(models.Model):
     value_b = fields.Float()
     company_id = fields.Many2one("res.company", required=True, default=lambda self: self.env.company)
 
-    _sql_constraints = [
-        (
-            "equipment_uom_uniq",
-            "unique(equipment_id,uom_id)",
-            "Two meter for one equipment with the same unit of measure? Impossible!",
-        )
-    ]
+    _equipment_uom_uniq = models.Constraint(
+        "unique(equipment_id,uom_id)",
+        "Two meter for one equipment with the same unit of measure? Impossible!",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

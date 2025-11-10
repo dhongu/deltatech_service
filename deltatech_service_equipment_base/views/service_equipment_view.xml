@@ -143,7 +143,7 @@
                 <field name="serial_id" />
                 <field name="product_id" />
                 <separator />
-                <group expand="1" string="Group By...">
+                <group>
                     <filter string="Type" name="type" context="{'group_by':'type_id'}" />
                      <filter string="Model" name="model" context="{'group_by':'model_id'}" />
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}" />

@@ -46,8 +46,8 @@ class ServiceEquipment(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get("name", _("New")) == _("New") or vals.get("name") == "/":
-                vals["name"] = self.env["ir.sequence"].next_by_code("service.equipment") or _("New")
+            if vals.get("name", self.env._("New")) == self.env._("New") or vals.get("name") == "/":
+                vals["name"] = self.env["ir.sequence"].next_by_code("service.equipment") or self.env._("New")
         return super().create(vals_list)
 
     @api.onchange("product_id")
