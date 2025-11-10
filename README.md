@@ -1,7 +1,7 @@
 ![Licence](https://img.shields.io/badge/licence-OPL--1-blue.svg)
 [![codecov](https://codecov.io/gh/dhongu/deltatech_service/branch/19.0/graph/badge.svg?token=uWeAwY9Z6T)](https://codecov.io/gh/dhongu/deltatech_service/19.0)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-
+[![tests](https://github.com/dhongu/deltatech_service/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/dhongu/deltatech_service/actions/workflows/test.yml?query=branch%3A19.0)
 
 
 Deltatech Service
