@@ -4,7 +4,7 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -147,13 +147,10 @@ class ServiceAgreement(models.Model):
 
     is_locked = fields.Boolean()
 
-    _sql_constraints = [
-        (
-            "name_uniq",
-            "unique(name, partner_id, company_id)",
-            "Reference must be unique!",
-        ),
-    ]
+    _name_uniq = models.Constraint(
+        "unique(name, partner_id, company_id)",
+        "Reference must be unique!",
+    )
 
     def _compute_attached_docs(self):
         for task in self:
@@ -169,7 +166,7 @@ class ServiceAgreement(models.Model):
         ]
 
         return {
-            "name": _("Attachments"),
+            "name": self.env._("Attachments"),
             "domain": domain,
             "res_model": "ir.attachment",
             "type": "ir.actions.act_window",
@@ -312,7 +309,7 @@ class ServiceAgreement(models.Model):
     def unlink(self):
         for item in self:
             if item.state != "draft":
-                raise UserError(_("You cannot delete a service agreement which is not draft."))
+                raise UserError(self.env._("You cannot delete a service agreement which is not draft."))
         return super().unlink()
 
     def get_agreements_auto_billing(self):

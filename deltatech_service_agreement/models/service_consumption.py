@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -118,13 +118,10 @@ class ServiceConsumption(models.Model):
     )
     from_uninstall = fields.Boolean(default=False)  # used to mark consumptions made in the uninstall process
 
-    _sql_constraints = [
-        (
-            "agreement_line_period_uniq",
-            "unique(service_period_id,agreement_line_id)",
-            "Agreement line in period already exist!",
-        )
-    ]
+    _agreement_line_period_uniq = models.Constraint(
+        "unique(service_period_id,agreement_line_id)",
+        "Agreement line in period already exist!",
+    )
 
     @api.depends("price_unit", "invoiced_qty", "date_invoice")
     def _compute_revenues(self):
@@ -139,10 +136,10 @@ class ServiceConsumption(models.Model):
     def unlink(self):
         for item in self:
             if item.state == "done":
-                raise UserError(_("You cannot delete a service consumption which is invoiced."))
+                raise UserError(self.env._("You cannot delete a service consumption which is invoiced."))
             if item.from_uninstall:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot delete a service consumption generated from an uninstall "
                         "operation (%(equipment_name)s / %(agreement_name)s)."
                     )

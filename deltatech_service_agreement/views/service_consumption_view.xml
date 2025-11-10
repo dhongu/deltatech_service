@@ -99,7 +99,7 @@
                 <filter name="draft" string="To Be Invoiced" domain="[('state','=','draft')]" />
                 <filter name="done" string="Invoiced" domain="[('state','=','done')]" />
                 <newline />
-                <group expand="1" string="Group By...">
+                <group>
                     <filter string="Period" name="period" context="{'group_by':'service_period_id'}" />
                     <filter string="Product" name="product" context="{'group_by':'product_id'}" />
                     <filter string="Service Group" name="group" context="{'group_by':'group_id'}" />
