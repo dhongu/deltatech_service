@@ -15,7 +15,7 @@ class ServiceDateRange(models.Model):
     date_start = fields.Date(string="Start date", required=True)
     date_end = fields.Date(string="End date", required=True)
     active = fields.Boolean(
-        help="The active field allows you to hide the date range without " "removing it.",
+        help="The active field allows you to hide the date range without removing it.",
         default=True,
     )
 
