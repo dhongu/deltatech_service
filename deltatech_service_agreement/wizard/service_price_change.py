@@ -44,7 +44,7 @@ class ServicePriceChange(models.TransientModel):
         from_currency = self.env.user.company_id.currency_id
         company = self.env.user.company_id
         to_currency = self.currency_id
-        date = self._context.get("date") or fields.Date.today()
+        date = self.env.context.get("date") or fields.Date.today()
         self.price_unit = from_currency._convert(price_unit, to_currency, company, date)
 
     def do_price_change(self):
@@ -77,7 +77,7 @@ class ServicePriceChange(models.TransientModel):
 
         company = self.env.user.company_id
         to_currency = self.env.user.company_id.currency_id
-        date = self._context.get("date") or fields.Date.today()
+        date = self.env.context.get("date") or fields.Date.today()
 
         price_unit = self.currency_id._convert(self.price_unit, to_currency, company, date)
 
