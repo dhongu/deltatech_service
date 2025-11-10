@@ -8,7 +8,6 @@ on:
     branches:
       - "19.0"
 
-
 jobs:
   unreleased-deps:
     runs-on: ubuntu-latest
@@ -37,10 +36,13 @@ jobs:
         include:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo19.0:latest
             name: test with Odoo
+#          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+#            name: test with OCB
+            makepot: "true"
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:13.0
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
@@ -49,39 +51,26 @@ jobs:
           - 5432:5432
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out Deltatech Service repository
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
+
       - name: Install addons and dependencies
         run: oca_install_addons
+
       - name: Check licenses
         run: manifestoo -d . check-licenses
+
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
-
-      - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
         run: oca_run_tests
-
-      - name: Upload code coverage to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@v4  # <-- New action to upload coverage file
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          # The action will automatically search for common coverage files (e.g., coverage.xml)
-
-      - name: Upload test results to Codecov (Pass/Fail)
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-
-
 #      - name: Update .pot files
 #        run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
-#        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'dhongu' }}
+#        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'OCA' }}

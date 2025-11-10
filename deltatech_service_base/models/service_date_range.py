@@ -20,7 +20,7 @@ class ServiceDateRange(models.Model):
     )
 
     _date_range_uniq = models.Constraint(
-        'unique (name, active)',
+        "unique (name, active)",
         "A date range must be unique!",
     )
 
