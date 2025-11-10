@@ -19,13 +19,10 @@ class ServiceDateRange(models.Model):
         default=True,
     )
 
-    _sql_constraints = [
-        (
-            "date_range_uniq",
-            "unique (name, active)",
-            "A date range must be unique!",
-        )
-    ]
+    _date_range_uniq = models.Constraint(
+        'unique (name, active)',
+        "A date range must be unique!",
+    )
 
     @api.model
     def generate_date_range(self):
