@@ -3,7 +3,6 @@
 
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
 
 
 class ServiceBillingPreparation(models.TransientModel):
@@ -52,10 +51,10 @@ class ServiceBillingPreparation(models.TransientModel):
     def do_billing_preparation(self):
         # check for blocked partners
         # for agreement in self.agreement_ids:
-            # if agreement.partner_id.sale_warn == "block":
-            #     raise UserError(agreement.partner_id.sale_warn_msg)
-            # if agreement.partner_id.parent_id and agreement.partner_id.parent_id.invoice_warn == "block":
-            #     raise UserError(agreement.partner_id.parent_id.invoice_warn_msg)
+        # if agreement.partner_id.sale_warn == "block":
+        #     raise UserError(agreement.partner_id.sale_warn_msg)
+        # if agreement.partner_id.parent_id and agreement.partner_id.parent_id.invoice_warn == "block":
+        #     raise UserError(agreement.partner_id.parent_id.invoice_warn_msg)
 
         consumptions = self.env["service.consumption"]
         for agreement in self.agreement_ids:
