@@ -159,7 +159,6 @@ class ServiceWarranty(models.Model):
         # Previously this was blocking users incorrectly due to an inverted group check.
         # block picking if partner blocked
 
-
         picking_type_id = False
         get_param = self.env["ir.config_parameter"].sudo().get_param
         if self.type == "warranty":

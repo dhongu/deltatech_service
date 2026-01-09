@@ -326,7 +326,6 @@ class ServiceNotification(models.Model):
                 }
                 context["default_operation_ids"] += [(0, 0, value)]
 
-
         return {
             "domain": domain,
             "res_id": res_id,
@@ -369,7 +368,6 @@ class ServiceNotification(models.Model):
                 # TODO: De anuntat utilizatorul ca are o sesizare
 
     def new_delivery_button(self):
-
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
 
@@ -481,8 +479,6 @@ class ServiceNotification(models.Model):
             }
 
     def new_sale_order_button(self):
-
-
         sale_order = self.env["sale.order"].search([("notification_id", "=", self.id)])
         if not sale_order and self.order_id:
             sale_order = self.env["sale.order"].search([("service_order_id", "=", self.order_id.id)])

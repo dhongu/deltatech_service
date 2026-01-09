@@ -237,7 +237,6 @@ class ServiceOrder(models.Model):
         return self.new_delivery_button()
 
     def new_delivery_button(self):
-
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
 
