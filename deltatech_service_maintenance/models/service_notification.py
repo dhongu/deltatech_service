@@ -326,19 +326,17 @@ class ServiceNotification(models.Model):
                 }
                 context["default_operation_ids"] += [(0, 0, value)]
 
-        if self.partner_id.sale_warn and self.partner_id.sale_warn == "block":
-            raise UserError(_("This partner is blocked"))
-        else:
-            return {
-                "domain": domain,
-                "res_id": res_id,
-                "name": _("Services Order"),
-                "view_type": "form",
-                "view_mode": "form",
-                "res_model": "service.order",
-                "context": context,
-                "type": "ir.actions.act_window",
-            }
+
+        return {
+            "domain": domain,
+            "res_id": res_id,
+            "name": _("Services Order"),
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "service.order",
+            "context": context,
+            "type": "ir.actions.act_window",
+        }
 
     def action_done(self):
         self.write({"state": "done", "date_done": fields.Datetime.now()})
@@ -371,13 +369,6 @@ class ServiceNotification(models.Model):
                 # TODO: De anuntat utilizatorul ca are o sesizare
 
     def new_delivery_button(self):
-        # block picking if partner blocked
-        if self.partner_id:
-            if self.partner_id.picking_warn == "block":
-                raise UserError(self.partner_id.picking_warn_msg)
-            if self.partner_id.parent_id:
-                if self.partner_id.parent_id.picking_warn == "block":
-                    raise UserError(self.partner_id.parent_id.picking_warn_msg)
 
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
@@ -490,8 +481,7 @@ class ServiceNotification(models.Model):
             }
 
     def new_sale_order_button(self):
-        if self.partner_id.sale_warn and self.partner_id.sale_warn == "block":
-            raise UserError(_("This partner is blocked"))
+
 
         sale_order = self.env["sale.order"].search([("notification_id", "=", self.id)])
         if not sale_order and self.order_id:

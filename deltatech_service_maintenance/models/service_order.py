@@ -237,12 +237,6 @@ class ServiceOrder(models.Model):
         return self.new_delivery_button()
 
     def new_delivery_button(self):
-        if self.partner_id:
-            if self.partner_id.picking_warn == "block":
-                raise UserError(self.partner_id.picking_warn_msg)
-            if self.partner_id.commercial_partner_id:
-                if self.partner_id.commercial_partner_id.picking_warn == "block":
-                    raise UserError(self.partner_id.commercial_partner_id.picking_warn_msg)
 
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
@@ -317,9 +311,6 @@ class ServiceOrder(models.Model):
         return action
 
     def new_sale_order_button(self):
-        if self.partner_id.sale_warn and self.partner_id.sale_warn == "block":
-            raise UserError(_("This partner is blocked"))
-
         action = self.get_action_sale_order()
         context = {
             "default_partner_id": self.partner_id.id,

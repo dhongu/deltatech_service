@@ -158,12 +158,8 @@ class ServiceWarranty(models.Model):
         # only opens a prefilled picking form; standard stock ACLs will still apply on save.
         # Previously this was blocking users incorrectly due to an inverted group check.
         # block picking if partner blocked
-        if self.partner_id:
-            if self.partner_id.picking_warn == "block":
-                raise UserError(self.partner_id.picking_warn_msg)
-            if self.partner_id.parent_id:
-                if self.partner_id.parent_id.picking_warn == "block":
-                    raise UserError(self.partner_id.parent_id.picking_warn_msg)
+
+
         picking_type_id = False
         get_param = self.env["ir.config_parameter"].sudo().get_param
         if self.type == "warranty":
