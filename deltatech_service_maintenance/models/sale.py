@@ -13,7 +13,6 @@ class SaleOrder(models.Model):
     service_order_id = fields.Many2one("service.order", string="Service Order", readonly=True)
 
     @api.model_create_multi
-    @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
         notification_id = self.env.context.get("notification_id", False)
         for vals in vals_list:
