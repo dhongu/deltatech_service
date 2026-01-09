@@ -14,7 +14,6 @@ class StockPicking(models.Model):
     warranty_id = fields.Many2one("service.warranty", string="Warranty", readonly=True, copy=False)
 
     @api.model_create_multi
-    @api.returns("self", lambda value: value.id)
     def create(self, vals_list):
         notification_id = self.env.context.get("notification_id", False)
         warranty_ctx_id = self.env.context.get("warranty_id", False)
