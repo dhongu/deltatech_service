@@ -245,7 +245,7 @@
                     help="Notifications that are assigned to me"
                 />
                 <filter name="unassigned" string="Unassigned" domain="[('user_id','=', False)]" />
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_by_user_id" string="Responsible" context="{'group_by':'user_id'}" />
                     <filter name="group_by_state" string="State" context="{'group_by':'state'}" />
                     <filter name="group_by_equipment_id" string="Equipment" context="{'group_by':'equipment_id'}" />
