@@ -25,7 +25,7 @@ class ServiceEquipment(models.Model):
         context = self.get_context_default()
         return {
             "domain": "[('id','in', [" + ",".join(map(str, notifications.ids)) + "])]",
-            "name": _("Notifications"),
+            "name": self.env._("Notifications"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.notification",
@@ -39,7 +39,7 @@ class ServiceEquipment(models.Model):
         context = self.get_context_default()
         return {
             "domain": "[('id','in', [" + ",".join(map(str, orders.ids)) + "])]",
-            "name": _("Orders"),
+            "name": self.env._("Orders"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.order",
@@ -55,9 +55,9 @@ class ServiceEquipment(models.Model):
             action = {
                 "res_model": "service.warranty",
                 "type": "ir.actions.act_window",
-                "name": _("Warranties for equipment %s", self.name),
+                "name": self.env._("Warranties for equipment %s", self.name),
                 "domain": [("id", "in", warranties.ids)],
                 "view_mode": "list,form",
             }
             return action
-        raise UserError(_("No warranties for this serial!"))
+        raise UserError(self.env._("No warranties for this serial!"))

@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
 
         context["sale_order_id"] = self.id
         return {
-            "name": _("Notification"),
+            "name": self.env._("Notification"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "service.notification",
