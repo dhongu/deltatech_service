@@ -168,7 +168,7 @@ class ServiceWarranty(models.Model):
         if picking_type_id:
             picking_type = self.env["stock.picking.type"].browse(picking_type_id)
         else:
-            raise UserError(_("Please set a warranty picking type in settings"))
+            raise UserError(self.env._("Please set a warranty picking type in settings"))
 
         # context = self.get_context_default()
         context = dict(self.env.context)
@@ -199,7 +199,7 @@ class ServiceWarranty(models.Model):
         context["warranty_id"] = self.id
         context["default_warranty_id"] = self.id
         return {
-            "name": _("Delivery for warranty"),
+            "name": self.env._("Delivery for warranty"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "stock.picking",
@@ -234,7 +234,7 @@ class ServiceWarranty(models.Model):
 
     def set_done(self):
         if self.env.user.has_group("deltatech_service_base.group_warranty_approve"):
-            raise UserError(_("Your user cannot set done"))
+            raise UserError(self.env._("Your user cannot set done"))
         self.state = "done"
 
     @api.model_create_multi

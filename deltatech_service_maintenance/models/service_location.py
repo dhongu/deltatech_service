@@ -25,7 +25,7 @@ class ServiceLocation(models.Model):
         context = self.get_context_default()
         return {
             "domain": "[('id','in', [" + ",".join(map(str, notifications.ids)) + "])]",
-            "name": _("Notifications"),
+            "name": self.env._("Notifications"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.notification",
@@ -39,7 +39,7 @@ class ServiceLocation(models.Model):
         context = self.get_context_default()
         return {
             "domain": "[('id','in', [" + ",".join(map(str, orders.ids)) + "])]",
-            "name": _("Orders"),
+            "name": self.env._("Orders"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.order",

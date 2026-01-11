@@ -54,7 +54,7 @@ class StockPicking(models.Model):
 
         context["sale_order_id"] = self.id
         return {
-            "name": _("Notification"),
+            "name": self.env._("Notification"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "service.notification",
@@ -74,7 +74,7 @@ class StockPicking(models.Model):
         for picking in self:
             if picking.warranty_id and picking.warranty_id.type == "warranty" and not user_has_approve:
                 raise UserError(
-                    _("You are not allowed to validate a delivery for a warranty. Please request approval.")
+                    self.env._("You are not allowed to validate a delivery for a warranty. Please request approval.")
                 )
         res = super().button_validate()
         for picking in self:
@@ -87,7 +87,7 @@ class StockPicking(models.Model):
                         lambda p, product_id=move.product_id: p.product_id == product_id
                     )
                     if not line or len(line) > 1:
-                        raise UserError(_("No lines or multiple lines in linked warranty found"))
+                        raise UserError(self.env._("No lines or multiple lines in linked warranty found"))
                     else:
                         line.write({"price_unit": value / line.quantity if line.quantity else 0.0})
         return res
@@ -105,9 +105,9 @@ class StockLot(models.Model):
                 action = {
                     "res_model": "service.warranty",
                     "type": "ir.actions.act_window",
-                    "name": _("Warranties for serial %s", self.name),
+                    "name": self.env._("Warranties for serial %s", self.name),
                     "domain": [("id", "in", warranties.ids)],
                     "view_mode": "list,form",
                 }
                 return action
-        raise UserError(_("No warranties for this serial!"))
+        raise UserError(self.env._("No warranties for this serial!"))

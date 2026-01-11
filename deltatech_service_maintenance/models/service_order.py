@@ -153,11 +153,11 @@ class ServiceOrder(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get("name", _("New")) == _("New"):
+            if vals.get("name", self.env._("New")) == self.env._("New"):
                 seq_date = None
                 if "date" in vals:
                     seq_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(vals["date"]))
-                vals["name"] = self.env["ir.sequence"].next_by_code("service.order", sequence_date=seq_date) or _("New")
+                vals["name"] = self.env["ir.sequence"].next_by_code("service.order", sequence_date=seq_date) or self.env._("New")
         return super().create(vals)
 
     @api.onchange("equipment_id", "date")
@@ -275,7 +275,7 @@ class ServiceOrder(models.Model):
                 context["default_move_ids_without_package"] += [(0, 0, value)]
 
         return {
-            "name": _("Delivery for service"),
+            "name": self.env._("Delivery for service"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "stock.picking",
@@ -297,7 +297,7 @@ class ServiceOrder(models.Model):
             sale_order.write({"service_order_id": self.id})
 
         action = {
-            "name": _("Sale Order for Service Order"),
+            "name": self.env._("Sale Order for Service Order"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "sale.order",
@@ -398,7 +398,7 @@ class ServiceOrder(models.Model):
     def unlink(self):
         for order in self:
             if order.state not in ["draft", "cancel"]:
-                raise UserError(_("Can not delete order in status %s") % order.state)
+                raise UserError(self.env._("Can not delete order in status %s") % order.state)
         return super().unlink()
 
     def open_order_on_website(self):

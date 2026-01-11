@@ -206,41 +206,41 @@ class ServiceNotification(models.Model):
                     if not vals.get("partner_id", False):
                         vals["partner_id"] = equipments.agreement_id.partner_id.id
 
-            if vals.get("name", _("New")) == _("New"):
+            if vals.get("name", self.env._("New")) == self.env._("New"):
                 seq_date = None
                 if "date" in vals:
                     seq_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(vals["date"]))
                 vals["name"] = self.env["ir.sequence"].next_by_code(
                     "service.notification", sequence_date=seq_date
-                ) or _("New")
+                ) or self.env._("New")
 
         return super().create(vals_list)
 
     def write(self, vals):
         if "user_id" in vals:
             if self.state != "new":
-                raise UserError(_("Notification is assigned."))
+                raise UserError(self.env._("Notification is assigned."))
         result = super().write(vals)
         return result
 
     def action_cancel_assign(self):
         if self.state != "assigned":
-            raise UserError(_("Notification is not assigned."))
+            raise UserError(self.env._("Notification is not assigned."))
         self.write({"state": "new", "date_assign": fields.Datetime.now()})
 
     def action_assign(self):
         for notification in self:
             if not notification.user_id:
-                raise UserError(_("Please select a responsible."))
+                raise UserError(self.env._("Please select a responsible."))
             if notification.state != "new":
-                raise UserError(_("Notification is already assigned."))
+                raise UserError(self.env._("Notification is already assigned."))
 
             notification.write({"state": "assigned", "date_assign": fields.Datetime.now()})
 
             new_follower_ids = [notification.user_id.partner_id.id]
 
             if notification.user_id != self.env.user:
-                msg = _("Please solve notification for %(partner_name)s: %(description)s") % {
+                msg = self.env._("Please solve notification for %(partner_name)s: %(description)s") % {
                     "partner_name": notification.partner_id.name,
                     "description": notification.description or "",
                 }
@@ -264,7 +264,7 @@ class ServiceNotification(models.Model):
 
     def action_taking(self):
         if self.state != "new":
-            raise UserError(_("Notification is already assigned."))
+            raise UserError(self.env._("Notification is already assigned."))
 
         self.write(
             {
@@ -329,7 +329,7 @@ class ServiceNotification(models.Model):
         return {
             "domain": domain,
             "res_id": res_id,
-            "name": _("Services Order"),
+            "name": self.env._("Services Order"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "service.order",
@@ -343,7 +343,7 @@ class ServiceNotification(models.Model):
         new_follower_ids = [self.contact_id.id]
 
         if self.user_id != self.env.user:
-            msg = _("Notification %(description)s for %(partner_name)s was done") % {
+            msg = self.env._("Notification %(description)s for %(partner_name)s was done") % {
                 "description": self.description or "",
                 "partner_name": self.partner_id.name,
             }
@@ -406,7 +406,7 @@ class ServiceNotification(models.Model):
                 context["default_move_ids_without_package"] += [(0, 0, value)]
                 context["notification_id"] = self.id
         return {
-            "name": _("Delivery for service"),
+            "name": self.env._("Delivery for service"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "stock.picking",
@@ -420,7 +420,7 @@ class ServiceNotification(models.Model):
         if self.piking_id:
             return {
                 "domain": "[('id','=', [" + str(self.piking_id.id) + "])]",
-                "name": _("Delivery for service"),
+                "name": self.env._("Delivery for service"),
                 "view_type": "form",
                 "view_mode": "list,form",
                 "res_model": "stock.picking",
@@ -455,7 +455,7 @@ class ServiceNotification(models.Model):
                 context["default_move_lines"] += [(0, 0, value)]
                 context["notification_id"] = self.id
         return {
-            "name": _("Transfer for service"),
+            "name": self.env._("Transfer for service"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "stock.picking",
@@ -469,7 +469,7 @@ class ServiceNotification(models.Model):
         if self.piking_id:
             return {
                 "domain": "[('id','=', [" + str(self.piking_id.id) + "])]",
-                "name": _("Transfer for service"),
+                "name": self.env._("Transfer for service"),
                 "view_type": "form",
                 "view_mode": "list,form",
                 "res_model": "stock.picking",
@@ -491,7 +491,7 @@ class ServiceNotification(models.Model):
         }
         route = self.work_center_id.sale_route_id
         action = {
-            "name": _("Sale Order for Notification"),
+            "name": self.env._("Sale Order for Notification"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "sale.order",
@@ -544,7 +544,7 @@ class ServiceNotification(models.Model):
         if self.sale_order_id:
             return {
                 "domain": "[('id','=', [" + str(self.sale_order_id.id) + "])]",
-                "name": _("Sale Order for Notification"),
+                "name": self.env._("Sale Order for Notification"),
                 "view_type": "form",
                 "view_mode": "list,form",
                 "res_model": "sale.order",
