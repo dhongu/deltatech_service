@@ -118,9 +118,10 @@ class ServiceEquipment(models.Model):
     last_reading_value = fields.Float(string="Last reading value")
     installation_date = fields.Date("Installation Date")
 
-    _sql_constraints = [
-        ("ean_code_uniq", "unique(ean_code)", "EAN Code already exist!"),
-    ]
+    _ean_code_uniq = models.Constraint(
+        'unique(ean_code)',
+        "EAN Code already exist!",
+    )
 
     @api.depends("serial_id.quant_ids")
     def _compute_location(self):
@@ -281,7 +282,7 @@ class ServiceEquipment(models.Model):
             self.agreement_id = False
         else:
             raise UserError(
-                _("The agreement %(agreement_name)s is in state %(agreement_state)s")
+                self.env._("The agreement %(agreement_name)s is in state %(agreement_state)s")
                 % {
                     "agreement_name": self.agreement_id.name,
                     "agreement_state": self.agreement_id.state,

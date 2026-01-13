@@ -6,7 +6,7 @@ import base64
 from io import BytesIO
 
 from odoo import _, models
-from odoo.tools.misc import xlsxwriter
+import xlsxwriter
 
 
 class AccountInvoice(models.Model):
@@ -65,21 +65,21 @@ class AccountInvoice(models.Model):
         worksheet.write(
             0,
             0,
-            _("Invoice: %(invoice_name)s / %(invoice_date)s")
+            self.env._("Invoice: %(invoice_name)s / %(invoice_date)s")
             % {"invoice_name": self.name, "invoice_date": self.invoice_date},
             style,
         )
-        worksheet.write(1, 0, _("Customer: %(customer_name)s") % {"customer_name": self.partner_id.name}, style)
-        worksheet.write(2, 0, _("Agreement: %(agreement_details)s ") % {"agreement_details": agreements_string}, style)
+        worksheet.write(1, 0, self.env._("Customer: %(customer_name)s") % {"customer_name": self.partner_id.name}, style)
+        worksheet.write(2, 0, self.env._("Agreement: %(agreement_details)s ") % {"agreement_details": agreements_string}, style)
 
-        worksheet.write(3, 0, _("Data"), style)
-        worksheet.write(3, 1, _("Equipment"), style)
-        worksheet.write(3, 2, _("Serial"), style)
-        worksheet.write(3, 3, _("Meter"), style)
-        worksheet.write(3, 4, _("Installed at"), style)
-        worksheet.write(3, 5, _("Previous value"), style)
-        worksheet.write(3, 6, _("Read value"), style)
-        worksheet.write(3, 7, _("Difference"), style)
+        worksheet.write(3, 0, self.env._("Data"), style)
+        worksheet.write(3, 1, self.env._("Equipment"), style)
+        worksheet.write(3, 2, self.env._("Serial"), style)
+        worksheet.write(3, 3, self.env._("Meter"), style)
+        worksheet.write(3, 4, self.env._("Installed at"), style)
+        worksheet.write(3, 5, self.env._("Previous value"), style)
+        worksheet.write(3, 6, self.env._("Read value"), style)
+        worksheet.write(3, 7, self.env._("Difference"), style)
         total_readings = 0
         lines = self.get_counter_lines()
         crt_row = 4

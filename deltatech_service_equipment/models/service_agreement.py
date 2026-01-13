@@ -53,7 +53,7 @@ class ServiceAgreement(models.Model):
 
         return {
             "domain": "[('id','in', [" + ",".join(map(str, res)) + "])]",
-            "name": _("Services Equipment"),
+            "name": self.env._("Services Equipment"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.equipment",
@@ -172,7 +172,7 @@ class ServiceAgreementLine(models.Model):
                 if readings:
                     first_reading = readings[-1]
                     last_reading = readings[0]
-                    name += _("Old index: %(old_index)s, New index:%(new_index)s") % {
+                    name += self.env._("Old index: %(old_index)s, New index:%(new_index)s") % {
                         "old_index": first_reading.previous_counter_value,
                         "new_index": last_reading.counter_value,
                     }
@@ -196,10 +196,7 @@ class ServiceConsumption(models.Model):
 
     equipment_id = fields.Many2one("service.equipment", string="Equipment", index=True)
 
-    _sql_constraints = [
-        (
-            "agreement_line_period_uniq",
-            "unique(service_period_id,agreement_line_id,equipment_id)",
-            "Agreement line in period already exist!",
-        ),
-    ]
+    _agreement_line_period_uniq = models.Constraint(
+        'unique(service_period_id,agreement_line_id,equipment_id)',
+        "Agreement line in period already exist!",
+    )
