@@ -5,8 +5,9 @@
 import base64
 from io import BytesIO
 
-from odoo import _, models
 import xlsxwriter
+
+from odoo import models
 
 
 class AccountInvoice(models.Model):
@@ -69,8 +70,12 @@ class AccountInvoice(models.Model):
             % {"invoice_name": self.name, "invoice_date": self.invoice_date},
             style,
         )
-        worksheet.write(1, 0, self.env._("Customer: %(customer_name)s") % {"customer_name": self.partner_id.name}, style)
-        worksheet.write(2, 0, self.env._("Agreement: %(agreement_details)s ") % {"agreement_details": agreements_string}, style)
+        worksheet.write(
+            1, 0, self.env._("Customer: %(customer_name)s") % {"customer_name": self.partner_id.name}, style
+        )
+        worksheet.write(
+            2, 0, self.env._("Agreement: %(agreement_details)s ") % {"agreement_details": agreements_string}, style
+        )
 
         worksheet.write(3, 0, self.env._("Data"), style)
         worksheet.write(3, 1, self.env._("Equipment"), style)

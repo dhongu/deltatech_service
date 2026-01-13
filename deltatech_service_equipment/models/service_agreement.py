@@ -4,7 +4,7 @@
 
 from datetime import timedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ServiceAgreementType(models.Model):
@@ -197,6 +197,6 @@ class ServiceConsumption(models.Model):
     equipment_id = fields.Many2one("service.equipment", string="Equipment", index=True)
 
     _agreement_line_period_uniq = models.Constraint(
-        'unique(service_period_id,agreement_line_id,equipment_id)',
+        "unique(service_period_id,agreement_line_id,equipment_id)",
         "Agreement line in period already exist!",
     )
