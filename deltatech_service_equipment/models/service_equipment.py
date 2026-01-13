@@ -6,7 +6,7 @@ from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
@@ -119,7 +119,7 @@ class ServiceEquipment(models.Model):
     installation_date = fields.Date("Installation Date")
 
     _ean_code_uniq = models.Constraint(
-        'unique(ean_code)',
+        "unique(ean_code)",
         "EAN Code already exist!",
     )
 

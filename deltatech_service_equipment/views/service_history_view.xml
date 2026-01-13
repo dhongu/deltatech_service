@@ -36,13 +36,13 @@
             <field name="model">service.history</field>
 
             <field name="arch" type="xml">
-                <search string="Search">
+                <search>
                     <field name="name" string="Type" />
                     <field name="date" />
                     <field name="equipment_id" />
                     <field name="agreement_id" />
                     <field name="description" />
-                    <group expand="1" string="Group By...">
+                    <group>
                         <filter string="Type" name="yype" context="{'group_by':'name'}" />
                         <filter string="Data" name="date" context="{'group_by':'date'}" />
                         <filter string="Equipment" name="equipment" context="{'group_by':'equipment_id'}" />
