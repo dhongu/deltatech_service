@@ -157,7 +157,9 @@ class ServiceOrder(models.Model):
                 seq_date = None
                 if "date" in vals:
                     seq_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(vals["date"]))
-                vals["name"] = self.env["ir.sequence"].next_by_code("service.order", sequence_date=seq_date) or self.env._("New")
+                vals["name"] = self.env["ir.sequence"].next_by_code(
+                    "service.order", sequence_date=seq_date
+                ) or self.env._("New")
         return super().create(vals)
 
     @api.onchange("equipment_id", "date")
