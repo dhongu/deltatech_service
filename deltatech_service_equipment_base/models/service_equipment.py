@@ -82,7 +82,7 @@ class ServiceEquipment(models.Model):
     def update_meter_status(self):
         pass
 
-     # la modificarea locului functiona se aduc datele la nivel de echipament
+    # la modificarea locului functiona se aduc datele la nivel de echipament
     @api.onchange("service_location_id")
     def onchange_service_location_id(self):
         if self.service_location_id:

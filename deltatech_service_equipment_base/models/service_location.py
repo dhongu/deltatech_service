@@ -9,7 +9,7 @@ class ServiceLocation(models.Model):
     _description = "Service Location"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    name = fields.Char(string="Reference", index=True, default=lambda self: _("New"))
+    name = fields.Char(string="Reference", index=True, default=lambda self: self.env._("New"))
     display_name = fields.Char(compute="_compute_display_name")
     partner_id = fields.Many2one("res.partner", string="Customer")
     contact_id = fields.Many2one(

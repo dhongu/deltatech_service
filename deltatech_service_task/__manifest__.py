@@ -9,10 +9,7 @@
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
-    "depends": [
-        "deltatech_service_equipment_base",
-        "project"
-    ],
+    "depends": ["deltatech_service_equipment_base", "project"],
     "license": "OPL-1",
     "data": [
         "views/project_task_views.xml",

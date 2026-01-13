@@ -17,6 +17,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[deltatech_service](deltatech_service/) | 19.0.2.0.4 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Manage Services Agreement
+[deltatech_service_agreement](deltatech_service_agreement/) | 19.0.2.0.8 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Manage Services Agreement
+[deltatech_service_base](deltatech_service_base/) | 19.0.2.0.6 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Manage Services Base
+[deltatech_service_equipment](deltatech_service_equipment/) | 19.0.1.1.11 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Service Equipment Management
+[deltatech_service_equipment_base](deltatech_service_equipment_base/) | 19.0.1.1.9 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Service Equipment Management
+[deltatech_service_maintenance](deltatech_service_maintenance/) | 19.0.1.2.1 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Services Maintenance
+[deltatech_service_task](deltatech_service_task/) | 19.0.0.0.1 | <a href='https://github.com/dhongu'><img src='https://github.com/dhongu.png' width='32' height='32' style='border-radius:50%;' alt='dhongu'/></a> | Services Task Maintenance
 
 [//]: # (end addons)
 
