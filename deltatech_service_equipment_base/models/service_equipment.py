@@ -1,7 +1,7 @@
 # ©  2015-2022 Deltatech
 # See README.rst file on addons root folder for license details
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ServiceEquipment(models.Model):
@@ -9,7 +9,7 @@ class ServiceEquipment(models.Model):
     _description = "Service Equipment"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    name = fields.Char(string="Reference", index=True, default=lambda self: _("New"))
+    name = fields.Char(string="Reference", index=True, default=lambda self: self.env._("New"))
     # display_name = fields.Char(compute="_compute_display_name")
     partner_id = fields.Many2one("res.partner", string="Customer")
     contact_id = fields.Many2one(
@@ -81,3 +81,11 @@ class ServiceEquipment(models.Model):
 
     def update_meter_status(self):
         pass
+
+     # la modificarea locului functiona se aduc datele la nivel de echipament
+    @api.onchange("service_location_id")
+    def onchange_service_location_id(self):
+        if self.service_location_id:
+            self.partner_id = self.service_location_id.partner_id.id
+            self.contact_id = self.service_location_id.contact_id.id
+            self.technician_user_id = self.service_location_id.technician_user_id.id
