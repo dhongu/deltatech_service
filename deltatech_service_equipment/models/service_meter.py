@@ -31,7 +31,7 @@ class ServiceMeterReading(models.Model):
         meters = self.env["service.meter"]
         for reading in self:
             if reading.consumption_id:
-                raise UserError(_("Meter reading recorder in consumption prepared for billing."))
+                raise UserError(self.env._("Meter reading recorder in consumption prepared for billing."))
             meters |= reading.meter_id
 
         res = super().unlink()
