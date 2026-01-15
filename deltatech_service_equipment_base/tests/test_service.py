@@ -63,7 +63,12 @@ class TestService(TransactionCase):
         part1 = self.env["service.part"].create({"name": "Test Part 1"})
         part2 = self.env["service.part"].create({"name": "Test Part 2"})
         self.env["service.part.template"].create(
-            {"name": "Test Part Template 1", "part_id": part1.id, "equipment_type_id": self.equipment_type.id, "sequence": 20}
+            {
+                "name": "Test Part Template 1",
+                "part_id": part1.id,
+                "equipment_type_id": self.equipment_type.id,
+                "sequence": 20,
+            }
         )
         self.env["service.part.template"].create(
             {
@@ -87,6 +92,41 @@ class TestService(TransactionCase):
         self.assertEqual(equipment.part_ids[0].sequence, 10)
         self.assertEqual(equipment.part_ids[1].sequence, 20)
         self.assertEqual(equipment.part_ids[0].note, "Test Note 2")
+
+    def test_equipment_checks_measurements(self):
+        check1 = self.env["service.check"].create({"name": "Test Check 1"})
+        self.env["service.check.template"].create(
+            {
+                "check_id": check1.id,
+                "equipment_type_id": self.equipment_type.id,
+                "sequence": 10,
+                "note": "Test Check Note",
+            }
+        )
+
+        uom_unit = self.env.ref("uom.product_uom_unit")
+        meas1 = self.env["service.measurement"].create({"name": "Test Meas 1", "uom_id": uom_unit.id})
+        self.env["service.measurement.template"].create(
+            {
+                "measurement_id": meas1.id,
+                "equipment_type_id": self.equipment_type.id,
+                "sequence": 10,
+                "note": "Test Meas Note",
+            }
+        )
+
+        equipment_form = Form(self.env["service.equipment"])
+        equipment_form.name = "Test Equipment Checks"
+        equipment_form.type_id = self.equipment_type
+        equipment = equipment_form.save()
+
+        self.assertEqual(len(equipment.check_ids), 1)
+        self.assertEqual(equipment.check_ids[0].check_id, check1)
+        self.assertEqual(equipment.check_ids[0].note, "Test Check Note")
+
+        self.assertEqual(len(equipment.measurement_ids), 1)
+        self.assertEqual(equipment.measurement_ids[0].measurement_id, meas1)
+        self.assertEqual(equipment.measurement_ids[0].uom_id, uom_unit)
 
     def test_create_location(self):
         location = Form(self.env["service.location"])

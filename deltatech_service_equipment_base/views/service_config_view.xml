@@ -56,6 +56,24 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Checks" name="checks">
+                            <field name="check_template_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="check_id" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Measurements" name="measurements">
+                            <field name="measurement_template_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="measurement_id" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -134,6 +152,85 @@
         action="action_service_meter_category"
         parent="deltatech_service_base.menu_service_config"
         sequence="203"
+    />
+
+    <record id="view_service_part_form" model="ir.ui.view">
+        <field name="name">Service Part Form</field>
+        <field name="model">service.part</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_service_part" model="ir.actions.act_window">
+        <field name="name">Service Parts</field>
+        <field name="res_model">service.part</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        name="Parts"
+        id="menu_service_part"
+        action="action_service_part"
+        parent="deltatech_service_base.menu_service_config"
+        sequence="210"
+    />
+
+    <record id="view_service_check_form" model="ir.ui.view">
+        <field name="name">Service Check Form</field>
+        <field name="model">service.check</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_service_check" model="ir.actions.act_window">
+        <field name="name">Service Checks</field>
+        <field name="res_model">service.check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        name="Checks"
+        id="menu_service_check"
+        action="action_service_check"
+        parent="deltatech_service_base.menu_service_config"
+        sequence="211"
+    />
+
+    <record id="view_service_measurement_form" model="ir.ui.view">
+        <field name="name">Service Measurement Form</field>
+        <field name="model">service.measurement</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" />
+                    <field name="uom_id" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_service_measurement" model="ir.actions.act_window">
+        <field name="name">Service Measurements</field>
+        <field name="res_model">service.measurement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        name="Measurements"
+        id="menu_service_measurement"
+        action="action_service_measurement"
+        parent="deltatech_service_base.menu_service_config"
+        sequence="212"
     />
 
 </odoo>
