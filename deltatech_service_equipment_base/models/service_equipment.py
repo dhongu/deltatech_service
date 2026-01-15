@@ -43,7 +43,8 @@ class ServiceEquipment(models.Model):
 
     meter_ids = fields.One2many("service.meter", "equipment_id", string="Meters", copy=True)
     part_ids = fields.One2many("service.equipment.part", "equipment_id", string="Parts", copy=True)
-
+    check_ids = fields.One2many("service.equipment.check", "equipment_id", string="Checks", copy=True)
+    measurement_ids = fields.One2many("service.equipment.measurement", "equipment_id", string="Measurements", copy=True)
 
     @api.onchange("type_id")
     def onchange_type_id(self):
@@ -63,6 +64,36 @@ class ServiceEquipment(models.Model):
                     )
                 )
             self.part_ids = part_list
+
+            check_list = []
+            for check_template in self.type_id.check_template_ids:
+                check_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "check_id": check_template.check_id.id,
+                            "sequence": check_template.sequence,
+                            "note": check_template.note,
+                        },
+                    )
+                )
+            self.check_ids = check_list
+
+            measurement_list = []
+            for measurement_template in self.type_id.measurement_template_ids:
+                measurement_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "measurement_id": measurement_template.measurement_id.id,
+                            "sequence": measurement_template.sequence,
+                            "note": measurement_template.note,
+                        },
+                    )
+                )
+            self.measurement_ids = measurement_list
 
     @api.model_create_multi
     def create(self, vals_list):

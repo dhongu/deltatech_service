@@ -13,7 +13,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Parts" name="parts">
                     <field name="part_ids" mode="list,kanban">
-                        <list editable="bottom">
+                        <list editable="bottom" create="false" delete="false">
                             <field name="sequence" widget="handle" />
                             <field name="part_id" />
                             <field name="quantity" />
@@ -34,7 +34,7 @@
                                             </strong>
                                         </div>
                                         <div class="col-4 text-end">
-                                            <field name="is_ok" widget="boolean_favorite" nolabel="1" />
+                                            <field name="is_ok" widget="boolean_toggle" nolabel="1" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -50,6 +50,105 @@
                                 </t>
                             </templates>
                         </kanban>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="part_id" readonly="1" />
+                                    <field name="quantity" />
+                                    <field name="is_ok" />
+                                    <field name="note" />
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+                <page string="Checks" name="checks">
+                    <field name="check_ids" mode="list,kanban">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="sequence" widget="handle" />
+                            <field name="check_id" />
+                            <field name="note" />
+                            <field name="is_ok" />
+                        </list>
+                        <kanban class="o_kanban_mobile">
+                            <field name="check_id" />
+                            <field name="is_ok" />
+                            <field name="note" />
+                            <templates>
+                                <t t-name="card">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <strong>
+                                                <field name="check_id" />
+                                            </strong>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="is_ok" widget="boolean_toggle" nolabel="1" />
+                                        </div>
+                                    </div>
+                                    <div class="row" t-if="record.note.raw_value">
+                                        <div class="col-12">
+                                            <field name="note" />
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="check_id" readonly="1" />
+                                    <field name="is_ok" />
+                                    <field name="note" />
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+                <page string="Measurements" name="measurements">
+                    <field name="measurement_ids" mode="list,kanban">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="sequence" widget="handle" />
+                            <field name="measurement_id" />
+                            <field name="value" />
+                            <field name="uom_id" />
+                            <field name="note" />
+                        </list>
+                        <kanban class="o_kanban_mobile">
+                            <field name="measurement_id" />
+                            <field name="value" />
+                            <field name="uom_id" />
+                            <field name="note" />
+                            <templates>
+                                <t t-name="card">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <strong>
+                                                <field name="measurement_id" />
+                                            </strong>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="value" /> <field name="uom_id" />
+                                        </div>
+                                    </div>
+                                    <div class="row" t-if="record.note.raw_value">
+                                        <div class="col-12">
+                                            <field name="note" />
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="measurement_id" readonly="1" />
+                                    <field name="value" />
+                                    <field name="uom_id" />
+                                    <field name="note" />
+                                </group>
+                            </sheet>
+                        </form>
                     </field>
                 </page>
             </xpath>
