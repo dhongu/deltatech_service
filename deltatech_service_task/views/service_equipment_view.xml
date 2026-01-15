@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="view_service_equipment_form_inherited" model="ir.ui.view">
+        <field name="name">service.equipment.form.inherited</field>
+        <field name="model">service.equipment</field>
+        <field name="inherit_id" ref="deltatech_service_equipment_base.view_service_equipment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_task_history" type="object" class="oe_stat_button" icon="fa-tasks">
+                    <field name="task_count" widget="statinfo" string="Tasks" />
+                </button>
+                <button name="action_view_check_history" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                    <field name="check_history_count" widget="statinfo" string="Checks" />
+                </button>
+                <button
+                    name="action_view_measurement_history"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-list-ol"
+                >
+                    <field name="measurement_history_count" widget="statinfo" string="Measurements" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_project_task_check_tree" model="ir.ui.view">
+        <field name="name">project.task.check.list</field>
+        <field name="model">project.task.check</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="task_id" />
+                <field name="check_id" />
+                <field name="is_ok" />
+                <field name="note" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_task_measurement_tree" model="ir.ui.view">
+        <field name="name">project.task.measurement.list</field>
+        <field name="model">project.task.measurement</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="task_id" />
+                <field name="measurement_id" />
+                <field name="value" />
+                <field name="uom_id" />
+                <field name="note" />
+            </list>
+        </field>
+    </record>
+
+
+</odoo>

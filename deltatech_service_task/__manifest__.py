@@ -12,7 +12,10 @@
     "depends": ["deltatech_service_equipment_base", "project"],
     "license": "OPL-1",
     "data": [
+        "security/ir.model.access.csv",
+        "report/project_task_report.xml",
         "views/project_task_views.xml",
+        "views/service_equipment_view.xml",
     ],
     "images": ["static/description/main_screenshot.png"],
     "development_status": "Beta",
