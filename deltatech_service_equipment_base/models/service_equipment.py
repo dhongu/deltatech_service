@@ -42,6 +42,27 @@ class ServiceEquipment(models.Model):
     technician_user_id = fields.Many2one("res.users", string="Responsible", tracking=True)
 
     meter_ids = fields.One2many("service.meter", "equipment_id", string="Meters", copy=True)
+    part_ids = fields.One2many("service.equipment.part", "equipment_id", string="Parts", copy=True)
+
+
+    @api.onchange("type_id")
+    def onchange_type_id(self):
+        if self.type_id:
+            part_list = []
+            for part_template in self.type_id.part_template_ids:
+                part_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "part_id": part_template.part_id.id,
+                            "quantity": 1.0,
+                            "sequence": part_template.sequence,
+                            "note": part_template.note,
+                        },
+                    )
+                )
+            self.part_ids = part_list
 
     @api.model_create_multi
     def create(self, vals_list):

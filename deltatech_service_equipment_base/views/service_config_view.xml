@@ -32,10 +32,32 @@
         <field name="model">service.equipment.type</field>
         <field name="arch" type="xml">
             <form>
-                <group>
-                    <field name="name" />
-                    <field name="category_id" />
-                </group>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="category_id" />
+                    </group>
+                    <notebook>
+                        <page string="Meters" name="meters">
+                            <field name="template_meter_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="meter_categ_id" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Parts" name="parts">
+                            <field name="part_template_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+
+                                    <field name="part_id" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
             </form>
         </field>
     </record>

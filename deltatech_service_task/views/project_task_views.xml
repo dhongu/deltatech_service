@@ -10,6 +10,49 @@
                 <field name="service_location_id"  />
                 <field name="service_equipment_id" />
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Parts" name="parts">
+                    <field name="part_ids" mode="list,kanban">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="part_id" />
+                            <field name="quantity" />
+                            <field name="note" />
+                            <field name="is_ok" />
+                        </list>
+                        <kanban class="o_kanban_mobile">
+                            <field name="part_id" />
+                            <field name="quantity" />
+                            <field name="is_ok" />
+                            <field name="note" />
+                            <templates>
+                                <t t-name="card">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <strong>
+                                                <field name="part_id" />
+                                            </strong>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="is_ok" widget="boolean_favorite" nolabel="1" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-muted">
+                                            Cantitate: <field name="quantity" />
+                                        </div>
+                                    </div>
+                                    <div class="row" t-if="record.note.raw_value">
+                                        <div class="col-12">
+                                            <field name="note" />
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </page>
+            </xpath>
         </field>
     </record>
 
