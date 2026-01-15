@@ -1,3 +1,9 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_project_task_part_manager,access_project_task_part,model_project_task_part,project.group_project_manager,1,1,1,1
 access_project_task_part_user,access_project_task_part,model_project_task_part,project.group_project_user,1,1,1,1
+
+access_project_task_check_manager,access_project_task_check,model_project_task_check,project.group_project_manager,1,1,1,1
+access_project_task_check_user,access_project_task_check,model_project_task_check,project.group_project_user,1,1,1,1
+
+access_project_task_measurement_manager,access_project_task_measurement,model_project_task_measurement,project.group_project_manager,1,1,1,1
+access_project_task_measurement_user,access_project_task_measurement,model_project_task_measurement,project.group_project_user,1,1,1,1

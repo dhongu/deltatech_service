@@ -10,6 +10,8 @@ class ProjectTask(models.Model):
     service_location_id = fields.Many2one("service.location", string="Functional Location")
     service_equipment_id = fields.Many2one("service.equipment", string="Service Equipment")
     part_ids = fields.One2many("project.task.part", "task_id", string="Parts", copy=True)
+    check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
+    measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
 
     @api.onchange("service_location_id")
     def _onchange_service_location_id(self):
@@ -40,6 +42,36 @@ class ProjectTask(models.Model):
                 )
             self.part_ids = part_list
 
+            check_list = []
+            for equipment_check in self.service_equipment_id.check_ids:
+                check_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "check_id": equipment_check.check_id.id,
+                            "sequence": equipment_check.sequence,
+                            "note": equipment_check.note,
+                        },
+                    )
+                )
+            self.check_ids = check_list
+
+            measurement_list = []
+            for equipment_measurement in self.service_equipment_id.measurement_ids:
+                measurement_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "measurement_id": equipment_measurement.measurement_id.id,
+                            "sequence": equipment_measurement.sequence,
+                            "note": equipment_measurement.note,
+                        },
+                    )
+                )
+            self.measurement_ids = measurement_list
+
 
 class ProjectTaskPart(models.Model):
     _name = "project.task.part"
@@ -52,3 +84,28 @@ class ProjectTaskPart(models.Model):
     quantity = fields.Float(string="Quantity", default=1.0)
     note = fields.Text(string="Note")
     is_ok = fields.Boolean(string="Is OK")
+
+
+class ProjectTaskCheck(models.Model):
+    _name = "project.task.check"
+    _description = "Project Task Check"
+    _order = "sequence, id"
+
+    sequence = fields.Integer(string="Sequence", default=10)
+    task_id = fields.Many2one("project.task", string="Task", required=True, ondelete="cascade")
+    check_id = fields.Many2one("service.check", string="Check", required=True)
+    note = fields.Text(string="Note")
+    is_ok = fields.Boolean(string="Is OK")
+
+
+class ProjectTaskMeasurement(models.Model):
+    _name = "project.task.measurement"
+    _description = "Project Task Measurement"
+    _order = "sequence, id"
+
+    sequence = fields.Integer(string="Sequence", default=10)
+    task_id = fields.Many2one("project.task", string="Task", required=True, ondelete="cascade")
+    measurement_id = fields.Many2one("service.measurement", string="Measurement", required=True)
+    value = fields.Float(string="Value")
+    uom_id = fields.Many2one("uom.uom", string="Unit of Measure", related="measurement_id.uom_id", readonly=True)
+    note = fields.Text(string="Note")
