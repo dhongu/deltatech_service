@@ -33,7 +33,9 @@ class ServiceEquipmentType(models.Model):
     category_id = fields.Many2one("service.equipment.category", string="Category")
     part_template_ids = fields.One2many("service.part.template", "equipment_type_id", string="Parts")
     check_template_ids = fields.One2many("service.check.template", "equipment_type_id", string="Checks")
-    measurement_template_ids = fields.One2many("service.measurement.template", "equipment_type_id", string="Measurements")
+    measurement_template_ids = fields.One2many(
+        "service.measurement.template", "equipment_type_id", string="Measurements"
+    )
 
 
 class ServicePart(models.Model):
