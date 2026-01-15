@@ -80,6 +80,7 @@ class ProjectTaskPart(models.Model):
 
     sequence = fields.Integer(string="Sequence", default=10)
     task_id = fields.Many2one("project.task", string="Task", required=True, ondelete="cascade")
+    equipment_id = fields.Many2one("service.equipment", related="task_id.service_equipment_id", store=True)
     part_id = fields.Many2one("service.part", string="Part", required=True)
     quantity = fields.Float(string="Quantity", default=1.0)
     note = fields.Text(string="Note")
@@ -93,6 +94,7 @@ class ProjectTaskCheck(models.Model):
 
     sequence = fields.Integer(string="Sequence", default=10)
     task_id = fields.Many2one("project.task", string="Task", required=True, ondelete="cascade")
+    equipment_id = fields.Many2one("service.equipment", related="task_id.service_equipment_id", store=True)
     check_id = fields.Many2one("service.check", string="Check", required=True)
     note = fields.Text(string="Note")
     is_ok = fields.Boolean(string="Is OK")
@@ -105,7 +107,15 @@ class ProjectTaskMeasurement(models.Model):
 
     sequence = fields.Integer(string="Sequence", default=10)
     task_id = fields.Many2one("project.task", string="Task", required=True, ondelete="cascade")
+    equipment_id = fields.Many2one("service.equipment", related="task_id.service_equipment_id", store=True)
     measurement_id = fields.Many2one("service.measurement", string="Measurement", required=True)
     value = fields.Float(string="Value")
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", related="measurement_id.uom_id", readonly=True)
     note = fields.Text(string="Note")
+    date_measurement = fields.Datetime(
+        related="task_id.create_date",
+        store=True,
+        string="Data Măsurătorii"
+    )
+
+

@@ -14,6 +14,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/project_task_views.xml",
+        "views/service_equipment_view.xml",
     ],
     "images": ["static/description/main_screenshot.png"],
     "development_status": "Beta",
