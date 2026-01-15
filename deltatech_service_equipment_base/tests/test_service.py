@@ -59,6 +59,35 @@ class TestService(TransactionCase):
         meter.calc_forecast_coef()
         meter.recheck_value()
 
+    def test_equipment_parts(self):
+        part1 = self.env["service.part"].create({"name": "Test Part 1"})
+        part2 = self.env["service.part"].create({"name": "Test Part 2"})
+        self.env["service.part.template"].create(
+            {"name": "Test Part Template 1", "part_id": part1.id, "equipment_type_id": self.equipment_type.id, "sequence": 20}
+        )
+        self.env["service.part.template"].create(
+            {
+                "name": "Test Part Template 2",
+                "part_id": part2.id,
+                "equipment_type_id": self.equipment_type.id,
+                "sequence": 10,
+                "note": "Test Note 2",
+            }
+        )
+
+        equipment_form = Form(self.env["service.equipment"])
+        equipment_form.name = "Test Equipment with Parts"
+        equipment_form.type_id = self.equipment_type
+        equipment = equipment_form.save()
+
+        self.assertEqual(len(equipment.part_ids), 2, "Two parts should have been generated")
+        # Ordering is by sequence, id. So sequence 10 should be first.
+        self.assertEqual(equipment.part_ids[0].part_id, part2, "The first part should be part 2 (sequence 10)")
+        self.assertEqual(equipment.part_ids[1].part_id, part1, "The second part should be part 1 (sequence 20)")
+        self.assertEqual(equipment.part_ids[0].sequence, 10)
+        self.assertEqual(equipment.part_ids[1].sequence, 20)
+        self.assertEqual(equipment.part_ids[0].note, "Test Note 2")
+
     def test_create_location(self):
         location = Form(self.env["service.location"])
         location.name = "Test Location"

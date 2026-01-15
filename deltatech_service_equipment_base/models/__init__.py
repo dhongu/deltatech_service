@@ -6,3 +6,4 @@ from . import service_config
 from . import service_equipment
 from . import service_meter
 from . import service_location
+from . import service_equipment_part

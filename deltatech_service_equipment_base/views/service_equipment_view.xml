@@ -100,6 +100,16 @@
                                 </kanban>
                             </field>
                         </page>
+                        <page id='parts' string="Parts">
+                            <field name="part_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="part_id" />
+                                    <field name="quantity" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                     <field name="note" />
                 </sheet>

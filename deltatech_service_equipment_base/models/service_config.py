@@ -31,6 +31,27 @@ class ServiceEquipmentType(models.Model):
     name = fields.Char(string="Type", translate=True)
     template_meter_ids = fields.One2many("service.template.meter", "type_id", string="Meters")
     category_id = fields.Many2one("service.equipment.category", string="Category")
+    part_template_ids = fields.One2many("service.part.template", "equipment_type_id", string="Parts")
+
+
+class ServicePart(models.Model):
+    _name = "service.part"
+    _description = "Service Part"
+
+    name = fields.Char(string="Part Name", required=True)
+
+
+class ServicePartTemplate(models.Model):
+    _name = "service.part.template"
+    _description = "Service Part Template"
+    _order = "sequence, id"
+
+    sequence = fields.Integer(string="Sequence", default=10)
+    name = fields.Char(string="Part Name", related="part_id.name", readonly=True)
+    part_id = fields.Many2one("service.part", string="Part")
+    equipment_type_id = fields.Many2one("service.equipment.type", required=False, string="Type")
+    note = fields.Text(string="Note")
+
 
 
 class ServiceEquipmentModel(models.Model):
