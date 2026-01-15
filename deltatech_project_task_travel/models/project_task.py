@@ -21,11 +21,12 @@ class ProjectTask(models.Model):
 
     def action_timer_start(self):
         if self.is_traveling:
-            # We use the stop coordinates saved by JS if available, or 0.0
+            # We use the stop coordinates saved by JS if available
             coords = {
                 "lat": self.travel_stop_latitude,
                 "lng": self.travel_stop_longitude
             }
+            # If GPS didn't provide coords, action_travel_stop will use the functional location
             self.action_travel_stop(coords=coords)
         return super().action_timer_start()
 
@@ -39,6 +40,14 @@ class ProjectTask(models.Model):
             coords = {}
         lat = coords.get("lat", 0.0)
         lng = coords.get("lng", 0.0)
+
+        # Fallback to company headquarters coordinates if GPS not available
+        if not lat or not lng:
+            company_partner = self.env.company.partner_id
+            if company_partner.partner_latitude or company_partner.partner_longitude:
+                lat = company_partner.partner_latitude
+                lng = company_partner.partner_longitude
+
         self.write({
             "is_traveling": True,
             "travel_timer_start": fields.Datetime.now(),
@@ -68,6 +77,15 @@ class ProjectTask(models.Model):
             coords = {}
         lat = coords.get("lat", 0.0)
         lng = coords.get("lng", 0.0)
+
+        # Fallback to service location address coordinates if GPS not available
+        if not lat or not lng:
+            dest_lat = self.service_location_id.address_id.partner_latitude
+            dest_lng = self.service_location_id.address_id.partner_longitude
+            if dest_lat or dest_lng:
+                lat = dest_lat
+                lng = dest_lng
+
         start_lat = self.travel_start_latitude
         start_lng = self.travel_start_longitude
 
