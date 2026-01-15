@@ -7,8 +7,12 @@ from odoo import api, fields, models
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    service_location_id = fields.Many2one("service.location", string="Functional Location")
-    service_equipment_id = fields.Many2one("service.equipment", string="Service Equipment")
+    service_location_id = fields.Many2one(
+        "service.location", string="Functional Location", domain="[('partner_id', '=', partner_id)]"
+    )
+    service_equipment_id = fields.Many2one(
+        "service.equipment", string="Service Equipment", domain="[('service_location_id', '=', service_location_id)]"
+    )
 
     @api.onchange("service_location_id")
     def _onchange_service_location_id(self):

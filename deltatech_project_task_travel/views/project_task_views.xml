@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_task_form2_travel" model="ir.ui.view">
+        <field name="name">project.task.form.travel</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">travel_project_task_form</attribute>
+            </xpath>
+            <field name="user_ids" position="after">
+                <field name="is_traveling" invisible="1" />
+            </field>
+            <xpath expr="//header" position="inside">
+                <button name="action_travel_start" type="object" string="Start Travel" class="oe_highlight" invisible="is_traveling or timer_start" />
+                <button name="action_travel_stop" type="object" string="Stop Travel" class="oe_highlight" invisible="not is_traveling" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Travel" name="travel">
+                    <group>
+                        <group string="Travel Information">
+                            <field name="travel_distance" widget="float" />
+                            <field name="travel_time" widget="float_time" />
+                            <button name="action_sync_travel" type="object" string="Sync to SO" class="btn-secondary" invisible="not sale_order_id" />
+                        </group>
+                        <group string="Start Coordinates">
+                            <field name="travel_start_latitude" />
+                            <field name="travel_start_longitude" />
+                        </group>
+                        <group string="Stop Coordinates">
+                            <field name="travel_stop_latitude" />
+                            <field name="travel_stop_longitude" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

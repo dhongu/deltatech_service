@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_travel" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.travel</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='project_time']" position="after">
+                <block title="Travel Management" name="travel_management">
+                    <setting id="travel_distance_setting" help="Product used for travel distance">
+                        <field name="travel_distance_product_id" />
+                    </setting>
+                    <setting id="travel_time_setting" help="Product used for travel time">
+                        <field name="travel_time_product_id" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
