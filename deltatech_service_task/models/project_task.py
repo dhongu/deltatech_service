@@ -112,10 +112,4 @@ class ProjectTaskMeasurement(models.Model):
     value = fields.Float(string="Value")
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", related="measurement_id.uom_id", readonly=True)
     note = fields.Text(string="Note")
-    date_measurement = fields.Datetime(
-        related="task_id.create_date",
-        store=True,
-        string="Data Măsurătorii"
-    )
-
-
+    date_measurement = fields.Datetime(related="task_id.create_date", store=True, string="Data Măsurătorii")

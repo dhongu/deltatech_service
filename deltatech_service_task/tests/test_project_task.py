@@ -21,7 +21,9 @@ class TestProjectTask(TransactionCase):
             {"measurement_id": self.meas1.id, "equipment_type_id": self.equipment_type.id}
         )
 
-        self.equipment = self.env["service.equipment"].create({"name": "Test Equipment", "type_id": self.equipment_type.id})
+        self.equipment = self.env["service.equipment"].create(
+            {"name": "Test Equipment", "type_id": self.equipment_type.id}
+        )
         # Trigger onchange manually or assume it worked (in tests create doesn't trigger onchange unless via Form)
         # Using Form for equipment to trigger onchange_type_id
         equipment_form = Form(self.env["service.equipment"])
@@ -33,12 +35,12 @@ class TestProjectTask(TransactionCase):
         task_form = Form(self.env["project.task"])
         task_form.name = "Test Task 1"
         task_form.service_equipment_id = self.equipment
-        task1 = task_form.save()
+        task_form.save()
 
         task_form = Form(self.env["project.task"])
         task_form.name = "Test Task 2"
         task_form.service_equipment_id = self.equipment
-        task2 = task_form.save()
+        task_form.save()
 
         self.equipment._compute_task_history()
         self.assertEqual(self.equipment.task_count, 2)
@@ -55,3 +57,16 @@ class TestProjectTask(TransactionCase):
 
         action_meas = self.equipment.action_view_measurement_history()
         self.assertEqual(action_meas["res_model"], "project.task.measurement")
+
+    def test_task_report(self):
+        task_form = Form(self.env["project.task"])
+        task_form.name = "Test Task Report"
+        task_form.service_equipment_id = self.equipment
+        task = task_form.save()
+
+        report_name = "deltatech_service_task.report_project_task_service_template"
+        report = self.env["ir.actions.report"]._get_report_from_name(report_name)
+        # Render report to ensure no QWeb errors
+        html_report = report._render_qweb_html(report_name, task.ids)
+        self.assertTrue(html_report)
+        self.assertIn(task.name, str(html_report))
