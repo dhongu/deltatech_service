@@ -302,6 +302,8 @@ class ServiceEquipment(models.Model):
             "type": "ir.actions.act_window",
         }
 
+    # todo: de implementat _search_display_name in loc de name_search
+
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=100):
         res_serial = []
