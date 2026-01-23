@@ -42,8 +42,15 @@
                             <field name="technician_user_id" />
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Note"/>
+                        </page>
+                        <page string="Equipments" name="equipments">
+                            <field name="equipment_ids"/>
+                        </page>
+                    </notebook>
 
-                    <field name="note" placeholder="Note" />
                 </sheet>
                 <chatter />
             </form>
