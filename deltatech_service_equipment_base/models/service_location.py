@@ -23,6 +23,7 @@ class ServiceLocation(models.Model):
     parent_id = fields.Many2one("service.location", string="Functional Location")
     children_ids = fields.One2many("service.location", "parent_id", string="Children")
     address_id = fields.Many2one("res.partner", string="Address")
+    equipment_ids = fields.One2many("service.equipment", "service_location_id", string="Equipments")
 
     @api.model_create_multi
     def create(self, vals_list):
