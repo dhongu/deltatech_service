@@ -22,6 +22,7 @@
 
                 <field name="total_revenues" sum="total" />
                 <field name="total_costs" sum="total" />
+                <field name="total_percent" optional="hide" />
                 <field name="analytic_account_id" optional="hide" />
 
                 <field
