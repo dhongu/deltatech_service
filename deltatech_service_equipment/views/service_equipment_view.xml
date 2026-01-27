@@ -22,6 +22,7 @@
 
                 <field name="total_revenues" sum="total" />
                 <field name="total_costs" sum="total" />
+                <field name="total_percent" optional="hide" />
                 <field name="analytic_account_id" optional="hide" />
 
                 <field
@@ -152,6 +153,21 @@
                             <field string="Revenues" name="total_revenues" widget="monetary" />
                         </span>
                         <span class="o_stat_text">Revenues</span>
+                    </div>
+                </button>
+
+                <button
+                    class="oe_stat_button"
+                    id="totals_button"
+                    icon="fa-percent"
+                    name="totals_button"
+                    groups="account.group_account_invoice"
+                >
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field string="Total percent" name="total_percent" />
+                        </span>
+                        <span class="o_stat_text">Total percent</span>
                     </div>
                 </button>
 
