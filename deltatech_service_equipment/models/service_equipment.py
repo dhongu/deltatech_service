@@ -72,6 +72,9 @@ class ServiceEquipment(models.Model):
     # se va calcula din suma avizelor
     total_costs = fields.Float(string="Total cost", readonly=True)
 
+    # se va calcula (costs/revenues)*100
+    total_percent = fields.Float(string="Total percent equipment", readonly=True)
+
     start_date = fields.Date(string="Start Date")
 
     readings_status = fields.Selection(
@@ -166,6 +169,9 @@ class ServiceEquipment(models.Model):
                     "total_invoiced": total_invoiced,
                     "total_revenues": total_consumption,
                     "total_costs": total_consumables,
+                    "total_percent": round(((-1 * total_consumables) / total_consumption) * 100, 2)
+                    if total_consumption
+                    else 0.0,
                 }
             )
 
