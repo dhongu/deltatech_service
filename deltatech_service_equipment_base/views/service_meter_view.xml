@@ -120,6 +120,7 @@
                     <field name="counter_value" />
                     <field name="difference" />
                     <field name="estimated" />
+                    <field name="read_by" optional="show" />
                 </list>
             </field>
         </record>
