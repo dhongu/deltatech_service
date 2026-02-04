@@ -5,7 +5,7 @@
 {
     "name": "Deltatech Services Task",
     "summary": "Services Task Maintenance",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
