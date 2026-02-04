@@ -54,7 +54,7 @@
                             </div>
                         </div>
 
-                        <t t-if="doc.part_ids">
+                        <t t-if="doc.part_ids or doc.child_ids.part_ids">
                             <h3 style="font-size: 14px; margin-top: 15px; margin-bottom: 5px;">Parts</h3>
                             <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
                                 <thead>
@@ -75,11 +75,25 @@
                                         </td>
                                         <td><span t-field="part.note" /></td>
                                     </tr>
+                                    <t t-foreach="doc.child_ids" t-as="sub_task">
+                                        <tr t-foreach="sub_task.part_ids" t-as="part">
+                                            <td>
+                                                <span t-field="part.part_id" />
+                                                <span style="font-style: italic;">(from <span t-field="sub_task.name" />)</span>
+                                            </td>
+                                            <td class="text-end"><span t-field="part.quantity" /></td>
+                                            <td>
+                                                <span t-if="part.is_ok">OK</span>
+                                                <span t-else="">Not OK</span>
+                                            </td>
+                                            <td><span t-field="part.note" /></td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </t>
 
-                        <t t-if="doc.check_ids">
+                        <t t-if="doc.check_ids or doc.child_ids.check_ids" >
                             <h3 style="font-size: 14px; margin-top: 15px; margin-bottom: 5px;">Checks</h3>
                             <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
                                 <thead>
@@ -98,11 +112,24 @@
                                         </td>
                                         <td><span t-field="check.note" /></td>
                                     </tr>
+                                    <t t-foreach="doc.child_ids" t-as="sub_task">
+                                        <tr t-foreach="sub_task.check_ids" t-as="check">
+                                            <td>
+                                                <span t-field="check.check_id" />
+                                                <span style="font-style: italic;">(from <span t-field="sub_task.name" />)</span>
+                                            </td>
+                                            <td>
+                                                <span t-if="check.is_ok">OK</span>
+                                                <span t-else="">Not OK</span>
+                                            </td>
+                                            <td><span t-field="check.note" /></td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </t>
 
-                        <t t-if="doc.measurement_ids">
+                        <t t-if="doc.measurement_ids or doc.child_ids.measurement_ids">
                             <h3 style="font-size: 14px; margin-top: 15px; margin-bottom: 5px;">Measurements</h3>
                             <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
                                 <thead>
@@ -120,6 +147,17 @@
                                         <td><span t-field="meas.uom_id" /></td>
                                         <td><span t-field="meas.note" /></td>
                                     </tr>
+                                    <t t-foreach="doc.child_ids" t-as="sub_task">
+                                        <tr t-foreach="sub_task.measurement_ids" t-as="meas">
+                                            <td>
+                                                <span t-field="meas.measurement_id" />
+                                                <span style="font-style: italic;">(from <span t-field="sub_task.name" />)</span>
+                                            </td>
+                                            <td class="text-end"><span t-field="meas.value" /></td>
+                                            <td><span t-field="meas.uom_id" /></td>
+                                            <td><span t-field="meas.note" /></td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </t>
