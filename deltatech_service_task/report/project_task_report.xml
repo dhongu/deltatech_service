@@ -28,10 +28,15 @@
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="paperformat_service_report"/>
     </record>
+
     <template id="report_project_task_service_contents">
         <t t-if="doc and doc.service_equipment_id">
             <h4>
                 <span t-field="doc.service_equipment_id.name"/>
+                 -
+                <span t-out="child.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
+                    01.01.2001
+                </span>
             </h4>
 
             <div class="col-6 mb-1" t-if="doc.partner_id">
@@ -46,10 +51,10 @@
                 <strong>Location:</strong>
                 <span class="m-0 text-break" t-field="doc.service_location_id"/>
             </div>
-            <div class="col-6 mb-1" t-if="doc.user_ids">
-                <strong>Technicians:</strong>
-                <span class="m-0 text-break" t-field="doc.user_ids"/>
-            </div>
+<!--            <div class="col-6 mb-1" t-if="doc.user_ids">-->
+<!--                <strong>Technicians:</strong>-->
+<!--                <span class="m-0 text-break" t-field="doc.user_ids"/>-->
+<!--            </div>-->
             <t t-if="doc.part_ids">
                 <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Parts</h3>
                 <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
@@ -140,8 +145,13 @@
         <t t-if="doc and doc.child_ids">
             <t t-foreach="doc.child_ids" t-as="child">
                 <t t-if="child.service_equipment_id">
+                    <div style="page-break-before: always;"/>
                     <h4 style="margin-top: 20px;">
                         <span t-field="child.service_equipment_id.name"/>
+                        -
+                        <span t-out="child.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
+                                    01.01.2001
+                        </span>
                     </h4>
 
                     <div class="col-6 mb-1" t-if="child.partner_id">
@@ -156,10 +166,10 @@
                         <strong>Location:</strong>
                         <span class="m-0 text-break" t-field="child.service_location_id"/>
                     </div>
-                    <div class="col-6 mb-1" t-if="child.user_ids">
-                        <strong>Technicians:</strong>
-                        <span class="m-0 text-break" t-field="child.user_ids"/>
-                    </div>
+<!--                    <div class="col-6 mb-1" t-if="child.user_ids">-->
+<!--                        <strong>Technicians:</strong>-->
+<!--                        <span class="m-0 text-break" t-field="child.user_ids"/>-->
+<!--                    </div>-->
                     <t t-if="child.part_ids">
                         <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Parts</h3>
                         <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
