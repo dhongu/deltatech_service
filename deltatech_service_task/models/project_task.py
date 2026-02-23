@@ -8,7 +8,11 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     service_location_id = fields.Many2one("service.location", string="Functional Location")
-    service_equipment_id = fields.Many2one("service.equipment", string="Service Equipment")
+    service_equipment_id = fields.Many2one(
+        "service.equipment",
+        string="Service Equipment",
+        domain="[('service_location_id', '=', service_location_id)]",
+    )
     part_ids = fields.One2many("project.task.part", "task_id", string="Parts", copy=True)
     check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
