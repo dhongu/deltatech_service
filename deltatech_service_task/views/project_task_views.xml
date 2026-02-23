@@ -10,6 +10,9 @@
                 <field name="service_location_id"  />
                 <field name="service_equipment_id" />
             </xpath>
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="employee_ids" widget="many2many_avatar_employee"/>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Parts" name="parts">
                     <field name="part_ids" mode="list,kanban">

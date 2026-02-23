@@ -12,6 +12,40 @@ class ProjectTask(models.Model):
     part_ids = fields.One2many("project.task.part", "task_id", string="Parts", copy=True)
     check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
+    employee_ids = fields.Many2many("hr.employee", string="Team")
+
+    @api.onchange("user_ids")
+    def _onchange_user_ids(self):
+        self._sync_employees_from_users()
+
+    def _sync_employees_from_users(self):
+        for record in self:
+            if not record.user_ids:
+                employees_to_remove = record.employee_ids.filtered(lambda e: e.user_id)
+                record.employee_ids -= employees_to_remove
+                continue
+
+            selected_users_employees = self.env["hr.employee"].search([("user_id", "in", record.user_ids.ids)])
+            current_employees = record.employee_ids
+            employees_to_add = selected_users_employees - current_employees
+            employees_to_remove = current_employees.filtered(lambda e: e.user_id and e.user_id not in record.user_ids)
+
+            if employees_to_add or employees_to_remove:
+                record.employee_ids = (current_employees + employees_to_add) - employees_to_remove
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for record in records:
+            if "user_ids" in record._fields:
+                record._sync_employees_from_users()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "user_ids" in vals:
+            self._sync_employees_from_users()
+        return res
 
     @api.onchange("service_location_id")
     def _onchange_service_location_id(self):
