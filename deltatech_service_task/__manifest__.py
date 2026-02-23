@@ -5,11 +5,11 @@
 {
     "name": "Deltatech Services Task",
     "summary": "Services Task Maintenance",
-    "version": "19.0.0.0.6",
+    "version": "19.0.0.0.7",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
-    "depends": ["deltatech_service_equipment_base", "project"],
+    "depends": ["deltatech_service_equipment_base", "project", "hr"],
     "license": "OPL-1",
     "data": [
         "security/ir.model.access.csv",
