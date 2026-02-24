@@ -34,7 +34,7 @@
             <h4>
                 <span t-field="doc.service_equipment_id.name"/>
                  -
-                <span t-out="child.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
+                <span t-out="doc.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
                     01.01.2001
                 </span>
             </h4>
