@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="paperformat_service_report" model="report.paperformat">
+        <field name="name">Service Report Paperformat</field>
+        <field name="default" eval="False" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">25</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">15</field>
+        <field name="dpi">110</field>
+    </record>
+
+    <record id="action_report_project_task_service" model="ir.actions.report">
+        <field name="name">Service Equipament Report</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">deltatech_service_task.report_project_task_service_template</field>
+        <field name="report_file">deltatech_service_task.report_project_task_service_template</field>
+        <field name="print_report_name">'Service Equipament Report - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="project.model_project_task" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_service_report" />
+    </record>
+
+    <template id="report_project_task_service_contents">
+        <t t-if="doc and doc.service_equipment_id">
+            <h4>
+                <span t-field="doc.service_equipment_id.name" />
+                 -
+                <span t-out="child.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
+                    01.01.2001
+                </span>
+            </h4>
+
+            <div class="col-6 mb-1" t-if="doc.partner_id">
+                <strong>Customer:</strong>
+                <span class="m-0 text-break" t-field="doc.partner_id" />
+            </div>
+            <div class="col-6 mb-1" t-if="doc.service_equipment_id">
+                <strong>Equipment:</strong>
+                <span class="m-0 text-break" t-field="doc.service_equipment_id" />
+            </div>
+            <div class="col-6 mb-1" t-if="doc.service_location_id">
+                <strong>Location:</strong>
+                <span class="m-0 text-break" t-field="doc.service_location_id" />
+            </div>
+<!--            <div class="col-6 mb-1" t-if="doc.user_ids">-->
+<!--                <strong>Technicians:</strong>-->
+<!--                <span class="m-0 text-break" t-field="doc.user_ids"/>-->
+<!--            </div>-->
+            <t t-if="doc.part_ids">
+                <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Parts</h3>
+                <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Part</th>
+                            <th class="text-end">Quantity</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.part_ids" t-as="part">
+                            <td>
+                                <span t-field="part.part_id" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="part.quantity" />
+                            </td>
+                            <td>
+                                <span t-if="part.is_ok">OK</span>
+                                <span t-else="">Not OK</span>
+                            </td>
+                            <td>
+                                <span t-field="part.note" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+            <t t-if="doc.check_ids">
+                <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Checks</h3>
+                <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Check Item</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.check_ids" t-as="check">
+                            <td>
+                                <span t-field="check.check_id" />
+                            </td>
+                            <td>
+                                <span t-if="check.is_ok">OK</span>
+                                <span t-else="">Not OK</span>
+                            </td>
+                            <td>
+                                <span t-field="check.note" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+            <t t-if="doc.measurement_ids">
+                <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Measurements</h3>
+                <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Measurement</th>
+                            <th class="text-end">Value</th>
+                            <th>Unit</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.measurement_ids" t-as="meas">
+                            <td>
+                                <span t-field="meas.measurement_id" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="meas.value" />
+                            </td>
+                            <td>
+                                <span t-field="meas.uom_id" />
+                            </td>
+                            <td>
+                                <span t-field="meas.note" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+
+        </t>
+        <t t-if="doc and doc.child_ids">
+            <t t-foreach="doc.child_ids" t-as="child">
+                <t t-if="child.service_equipment_id">
+                    <div style="page-break-before: always;" />
+                    <h4 style="margin-top: 20px;">
+                        <span t-field="child.service_equipment_id.name" />
+                        -
+                        <span t-out="child.date_deadline" t-options='{"widget": "datetime", "date_only": True}'>
+                                    01.01.2001
+                        </span>
+                    </h4>
+
+                    <div class="col-6 mb-1" t-if="child.partner_id">
+                        <strong>Customer:</strong>
+                        <span class="m-0 text-break" t-field="child.partner_id" />
+                    </div>
+                    <div class="col-6 mb-1" t-if="child.service_equipment_id">
+                        <strong>Equipment:</strong>
+                        <span class="m-0 text-break" t-field="child.service_equipment_id" />
+                    </div>
+                    <div class="col-6 mb-1" t-if="child.service_location_id">
+                        <strong>Location:</strong>
+                        <span class="m-0 text-break" t-field="child.service_location_id" />
+                    </div>
+<!--                    <div class="col-6 mb-1" t-if="child.user_ids">-->
+<!--                        <strong>Technicians:</strong>-->
+<!--                        <span class="m-0 text-break" t-field="child.user_ids"/>-->
+<!--                    </div>-->
+                    <t t-if="child.part_ids">
+                        <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Parts</h3>
+                        <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Part</th>
+                                    <th class="text-end">Quantity</th>
+                                    <th>Status</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="child.part_ids" t-as="part">
+                                    <td>
+                                        <span t-field="part.part_id" />
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-field="part.quantity" />
+                                    </td>
+                                    <td>
+                                        <span t-if="part.is_ok">OK</span>
+                                        <span t-else="">Not OK</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="part.note" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if="child.check_ids">
+                        <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Checks</h3>
+                        <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Check Item</th>
+                                    <th>Status</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="child.check_ids" t-as="check">
+                                    <td>
+                                        <span t-field="check.check_id" />
+                                    </td>
+                                    <td>
+                                        <span t-if="check.is_ok">OK</span>
+                                        <span t-else="">Not OK</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="check.note" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if="child.measurement_ids">
+                        <h3 style="font-size: 20px; margin-top: 15px; margin-bottom: 5px;">Measurements</h3>
+                        <table class="table table-sm o_main_table" style="margin-bottom: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Measurement</th>
+                                    <th class="text-end">Value</th>
+                                    <th>Unit</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="child.measurement_ids" t-as="meas">
+                                    <td>
+                                        <span t-field="meas.measurement_id" />
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-field="meas.value" />
+                                    </td>
+                                    <td>
+                                        <span t-field="meas.uom_id" />
+                                    </td>
+                                    <td>
+                                        <span t-field="meas.note" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+
+                </t>
+            </t>
+
+        </t>
+    </template>
+
+    <template id="report_project_task_service_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 11px;">
+                        <h2 style="font-size: 18px; margin-bottom: 10px;">Service Report:
+                            <span t-field="doc.name" />
+                        </h2>
+                        <t t-call="deltatech_service_task.report_project_task_service_contents" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
