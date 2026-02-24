@@ -42,6 +42,58 @@ class ServiceEquipment(models.Model):
     technician_user_id = fields.Many2one("res.users", string="Responsible", tracking=True)
 
     meter_ids = fields.One2many("service.meter", "equipment_id", string="Meters", copy=True)
+    part_ids = fields.One2many("service.equipment.part", "equipment_id", string="Parts", copy=True)
+    check_ids = fields.One2many("service.equipment.check", "equipment_id", string="Checks", copy=True)
+    measurement_ids = fields.One2many("service.equipment.measurement", "equipment_id", string="Measurements", copy=True)
+
+    @api.onchange("type_id")
+    def onchange_type_id(self):
+        if self.type_id:
+            part_list = []
+            for part_template in self.type_id.part_template_ids:
+                part_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "part_id": part_template.part_id.id,
+                            "quantity": 1.0,
+                            "sequence": part_template.sequence,
+                            "note": part_template.note,
+                        },
+                    )
+                )
+            self.part_ids = part_list
+
+            check_list = []
+            for check_template in self.type_id.check_template_ids:
+                check_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "check_id": check_template.check_id.id,
+                            "sequence": check_template.sequence,
+                            "note": check_template.note,
+                        },
+                    )
+                )
+            self.check_ids = check_list
+
+            measurement_list = []
+            for measurement_template in self.type_id.measurement_template_ids:
+                measurement_list.append(
+                    (
+                        0,
+                        0,
+                        {
+                            "measurement_id": measurement_template.measurement_id.id,
+                            "sequence": measurement_template.sequence,
+                            "note": measurement_template.note,
+                        },
+                    )
+                )
+            self.measurement_ids = measurement_list
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -81,3 +133,11 @@ class ServiceEquipment(models.Model):
 
     def update_meter_status(self):
         pass
+
+    # la modificarea locului functiona se aduc datele la nivel de echipament
+    @api.onchange("service_location_id")
+    def onchange_service_location_id(self):
+        if self.service_location_id:
+            self.partner_id = self.service_location_id.partner_id.id
+            self.contact_id = self.service_location_id.contact_id.id
+            self.technician_user_id = self.service_location_id.technician_user_id.id

@@ -100,6 +100,37 @@
                                 </kanban>
                             </field>
                         </page>
+                        <page id='parts' string="Parts">
+                            <field name="part_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="part_id" />
+                                    <field name="quantity" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
+                        <page id='checks' string="Checks">
+                            <field name="check_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="check_id" />
+                                    <field name="is_ok" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
+                        <page id='measurements' string="Measurements">
+                            <field name="measurement_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="measurement_id" />
+                                    <field name="value" />
+                                    <field name="uom_id" />
+                                    <field name="note" />
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                     <field name="note" />
                 </sheet>
