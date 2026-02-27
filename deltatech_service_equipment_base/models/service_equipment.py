@@ -34,6 +34,13 @@ class ServiceEquipment(models.Model):
 
     serial_id = fields.Many2one("stock.lot", string="Product Serial Number", ondelete="restrict", copy=False)
     serial_no = fields.Char("Serial Number", copy=False)
+    storage_place = fields.Many2one(
+        "stock.location",
+        string="Storage Place",
+        related="serial_id.location_id",
+        store=True,
+        readonly=True,
+    )
 
     vendor_id = fields.Many2one("res.partner", string="Vendor")
     manufacturer_id = fields.Many2one("res.partner", string="Manufacturer")
@@ -45,6 +52,34 @@ class ServiceEquipment(models.Model):
     part_ids = fields.One2many("service.equipment.part", "equipment_id", string="Parts", copy=True)
     check_ids = fields.One2many("service.equipment.check", "equipment_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("service.equipment.measurement", "equipment_id", string="Measurements", copy=True)
+    state = fields.Selection(
+        [
+            ("active", "Active"),
+            ("defect", "Defect"),
+            ("in_repair", "In Repair"),
+            ("disposed", "Disposed"),
+            ("reserved", "Reserved"),
+            ("lost", "Lost"),
+        ],
+        tracking=True,
+        copy=False,
+    )
+    property_type = fields.Selection(
+        [
+            ("owned", "Owned"),
+            ("rented", "Rented"),
+            ("borrowed", "Borrowed"),
+        ],
+        string="Property Type",
+        tracking=True,
+        copy=False,
+    )
+
+    def action_view_stock_move_lines(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_line_action")
+        action["domain"] = [("product_id", "in", self.product_id.id), ("lot_id", "=", self.serial_id.id)]
+        return action
 
     @api.onchange("type_id")
     def onchange_type_id(self):
