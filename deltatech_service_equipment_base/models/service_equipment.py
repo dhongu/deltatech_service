@@ -62,6 +62,7 @@ class ServiceEquipment(models.Model):
             ("lost", "Lost"),
         ],
         tracking=True,
+        readonly=False,
         copy=False,
     )
     property_type = fields.Selection(
