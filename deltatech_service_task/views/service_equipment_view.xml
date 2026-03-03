@@ -11,6 +11,9 @@
                 <button name="action_view_task_history" type="object" class="oe_stat_button" icon="fa-tasks">
                     <field name="task_count" widget="statinfo" string="Tasks" />
                 </button>
+                <button name="action_view_part_history" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                    <field name="part_history_count" widget="statinfo" string="Parts" />
+                </button>
                 <button name="action_view_check_history" type="object" class="oe_stat_button" icon="fa-check-square-o">
                     <field name="check_history_count" widget="statinfo" string="Checks" />
                 </button>
