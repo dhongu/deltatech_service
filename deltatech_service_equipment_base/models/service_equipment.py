@@ -75,6 +75,7 @@ class ServiceEquipment(models.Model):
         tracking=True,
         copy=False,
     )
+    inventory_no = fields.Char(string="Inventory Number", tracking=True, copy=False)
 
     def action_view_stock_move_lines(self):
         self.ensure_one()
