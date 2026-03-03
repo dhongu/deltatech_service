@@ -151,6 +151,13 @@ class ServiceEquipment(models.Model):
     def onchange_serial_id(self):
         if self.serial_id:
             self.serial_no = self.serial_id.name
+            domain = [
+                ("lot_id", "=", self.serial_id.id),
+                ("picking_id.picking_type_id.code", "=", "incoming"),
+            ]
+            move_line = self.env["stock.move.line"].search(domain, limit=1, order="date desc")
+            if move_line:
+                self.vendor_id = move_line.picking_id.partner_id
 
     def _compute_display_name(self):
         for equipment in self:
