@@ -47,6 +47,7 @@
                             <field name="model_id" />
                             <field name="manufacturer_id" />
                             <field name="serial_no" />
+                            <field name="inventory_no" />
                             <field name="property_type"/>
                         </group>
                         <group string="Identification" name="identification">
