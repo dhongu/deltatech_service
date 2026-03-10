@@ -42,6 +42,19 @@
         </field>
     </record>
 
+    <record id="view_project_task_part_tree" model="ir.ui.view">
+        <field name="name">project.task.part.list</field>
+        <field name="model">project.task.part</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="task_id" />
+                <field name="part_id" />
+                <field name="is_ok" />
+                <field name="note" />
+            </list>
+        </field>
+    </record>
+
     <record id="view_project_task_measurement_tree" model="ir.ui.view">
         <field name="name">project.task.measurement.list</field>
         <field name="model">project.task.measurement</field>
