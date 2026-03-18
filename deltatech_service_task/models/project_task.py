@@ -23,6 +23,7 @@ class ProjectTask(models.Model):
         self._sync_employees_from_users()
 
     def _sync_employees_from_users(self):
+        self = self.sudo()
         for record in self:
             if not record.user_ids:
                 employees_to_remove = record.employee_ids.filtered(lambda e: e.user_id)
