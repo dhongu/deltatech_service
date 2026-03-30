@@ -20,7 +20,7 @@ class ProjectTask(models.Model):
 
     @api.onchange("user_ids")
     def _onchange_user_ids(self):
-        self._sync_employees_from_users()
+        self.sudo()._sync_employees_from_users()
 
     def _sync_employees_from_users(self):
         for record in self:
@@ -47,13 +47,13 @@ class ProjectTask(models.Model):
         records = super().create(vals_list)
         for record in records:
             if "user_ids" in record._fields:
-                record._sync_employees_from_users()
+                record.sudo()._sync_employees_from_users()
         return records
 
     def write(self, vals):
         res = super().write(vals)
         if "user_ids" in vals:
-            self._sync_employees_from_users()
+            self.sudo()._sync_employees_from_users()
         return res
 
     @api.onchange("service_location_id")
