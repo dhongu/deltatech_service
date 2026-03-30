@@ -16,7 +16,7 @@ class ProjectTask(models.Model):
     part_ids = fields.One2many("project.task.part", "task_id", string="Parts", copy=True)
     check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
-    employee_ids = fields.Many2many("hr.employee", string="Team")
+    employee_ids = fields.Many2many("hr.employee", string="Team", sudo=True)
 
     @api.onchange("user_ids")
     def _onchange_user_ids(self):
