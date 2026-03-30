@@ -23,17 +23,21 @@ class ProjectTask(models.Model):
         self._sync_employees_from_users()
 
     def _sync_employees_from_users(self):
-        self = self.sudo()
         for record in self:
-            if not record.user_ids:
-                employees_to_remove = record.employee_ids.filtered(lambda e: e.user_id)
-                record.employee_ids -= employees_to_remove
+            # sudo for data access
+            record_sudo = record.sudo()
+            if not record_sudo.user_ids:
+                employees_to_remove = record_sudo.employee_ids.filtered(lambda e: e.user_id)
+                if employees_to_remove:
+                    record.employee_ids -= employees_to_remove
                 continue
 
-            selected_users_employees = self.env["hr.employee"].search([("user_id", "in", record.user_ids.ids)])
-            current_employees = record.employee_ids
+            selected_users_employees = self.env["hr.employee"].sudo().search([("user_id", "in", record_sudo.user_ids.ids)])
+            current_employees = record_sudo.employee_ids
             employees_to_add = selected_users_employees - current_employees
-            employees_to_remove = current_employees.filtered(lambda e: e.user_id and e.user_id not in record.user_ids)
+            employees_to_remove = current_employees.filtered(
+                lambda e: e.user_id and e.user_id not in record_sudo.user_ids
+            )
 
             if employees_to_add or employees_to_remove:
                 record.employee_ids = (current_employees + employees_to_add) - employees_to_remove
