@@ -29,7 +29,7 @@ class ProjectTask(models.Model):
             if not record_sudo.user_ids:
                 employees_to_remove = record_sudo.employee_ids.filtered(lambda e: e.user_id)
                 if employees_to_remove:
-                    record.employee_ids -= employees_to_remove
+                    record_sudo.employee_ids -= employees_to_remove
                 continue
 
             selected_users_employees = self.env["hr.employee"].sudo().search([("user_id", "in", record_sudo.user_ids.ids)])
@@ -40,7 +40,7 @@ class ProjectTask(models.Model):
             )
 
             if employees_to_add or employees_to_remove:
-                record.employee_ids = (current_employees + employees_to_add) - employees_to_remove
+                record_sudo.employee_ids = (current_employees + employees_to_add) - employees_to_remove
 
     @api.model_create_multi
     def create(self, vals_list):
