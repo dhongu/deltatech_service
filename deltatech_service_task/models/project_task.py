@@ -59,6 +59,7 @@ class ProjectTask(models.Model):
 
     @api.onchange("service_equipment_id")
     def _onchange_service_equipment_id(self):
+        self = self.sudo()
         if self.service_equipment_id:
             if self.service_equipment_id.service_location_id:
                 self.service_location_id = self.service_equipment_id.service_location_id
