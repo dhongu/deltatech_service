@@ -32,7 +32,9 @@ class ProjectTask(models.Model):
                     record_sudo.employee_ids -= employees_to_remove
                 continue
 
-            selected_users_employees = self.env["hr.employee"].sudo().search([("user_id", "in", record_sudo.user_ids.ids)])
+            selected_users_employees = (
+                self.env["hr.employee"].sudo().search([("user_id", "in", record_sudo.user_ids.ids)])
+            )
             current_employees = record_sudo.employee_ids
             employees_to_add = selected_users_employees - current_employees
             employees_to_remove = current_employees.filtered(
