@@ -49,7 +49,7 @@ class ServiceEquipment(models.Model):
         }
 
         if self.consumable_item_ids:
-            context["default_move_ids_without_package"] = []
+            context["default_move_ids"] = []
             for item in self.consumable_item_ids:
                 value = {
                     "name": item.product_id.name,
@@ -60,7 +60,7 @@ class ServiceEquipment(models.Model):
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
                 }
-                context["default_move_ids_without_package"] += [(0, 0, value)]
+                context["default_move_ids"] += [(0, 0, value)]
 
         return {
             "name": _("Delivery for service"),

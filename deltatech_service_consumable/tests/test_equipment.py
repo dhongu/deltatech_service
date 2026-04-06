@@ -88,7 +88,7 @@ class TestAgreementEquipment(TestAgreement, TestService):
         picking.partner_id = self.partner_1
         picking.picking_type_id = picking_type_for_service
         picking.equipment_id = self.equipment
-        with picking.move_ids_without_package.new() as move:
+        with picking.move_ids.new() as move:
             move.product_id = self.product_ab
             move.product_uom_qty = 1
             # move.product_uom_id = self.product_ab.uom_id

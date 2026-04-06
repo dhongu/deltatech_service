@@ -106,12 +106,8 @@ class ServiceEfficiencyReport(models.Model):
 
         if uom_usage and equipment_id:
             uom = self.env["uom.uom"].browse(uom_usage)
-            meters = self.env["service.meter"].search(
-                [
-                    ("equipment_id", "=", equipment_id),
-                    ("uom_id.category_id", "=", uom.category_id.id),
-                ]
-            )
+            meters = self.env["service.meter"].search([("equipment_id", "=", equipment_id)])
+            meters = meters.filtered(lambda m: m.uom_id._has_common_reference(uom))
 
             if meters:
                 meter_find = meters[0]
