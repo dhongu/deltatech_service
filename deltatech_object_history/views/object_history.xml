@@ -72,7 +72,7 @@
                 <filter name="moves" domain="[('res_model','=','account.move')]" string="Moves" />
                 <filter name="pickings" domain="[('res_model','=','stock.picking')]" string="Transfers" />
                 <separator />
-                <group expand="0" string="Group By...">
+                <group>
                     <filter name="partner_id" string="Partner" domain="[]" context="{'group_by':'partner_id'}" />
                     <filter name="model" string="Parent" domain="[]" context="{'group_by':'res_model'}" />
                 </group>
