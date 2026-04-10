@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
 
 
