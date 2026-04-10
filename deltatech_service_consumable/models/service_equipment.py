@@ -63,7 +63,7 @@ class ServiceEquipment(models.Model):
                 context["default_move_ids"] += [(0, 0, value)]
 
         return {
-            "name": _("Delivery for service"),
+            "name": self.env._("Delivery for service"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "stock.picking",
@@ -80,9 +80,9 @@ class ServiceEquipment(models.Model):
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
             raise RedirectWarning(
-                _("Please define the picking type for service."),
+                self.env._("Please define the picking type for service."),
                 action.id,
-                _("Stock Settings"),
+                self.env._("Stock Settings"),
             )
 
         domain = [
@@ -94,7 +94,7 @@ class ServiceEquipment(models.Model):
         # view_id = self.sudo().env.ref('terrabit_rsy.view_stock_move_tree_rsy').id
         return {
             "domain": [("id", "in", move_lines.ids)],
-            "name": _("Delivery for service"),
+            "name": self.env._("Delivery for service"),
             "view_type": "form",
             "view_mode": "list",
             "res_model": "stock.move",
@@ -118,7 +118,7 @@ class ServiceEquipment(models.Model):
 
         return {
             "domain": "[('id','in', [" + ",".join(map(str, pickings.ids)) + "])]",
-            "name": _("Delivery for service"),
+            "name": self.env._("Delivery for service"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "stock.picking",
