@@ -17,7 +17,7 @@ class ServiceAgreement(models.Model):
             "target": "current",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "name": _("History"),
+            "name": self.env._("History"),
             "domain": [["res_id", "=", self.id], ["res_model", "=", "service.agreement"]],
             "context": {"default_res_id": self.id, "default_res_model": "service.agreement"},
         }

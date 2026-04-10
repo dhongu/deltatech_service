@@ -39,7 +39,7 @@ class StockPicking(models.Model):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
         if not picking_type_id:
-            raise UserError(_("Please define the picking type for service."))
+            raise UserError(self.env._("Please define the picking type for service."))
         else:
             if self.picking_type_id.id != picking_type_id:
                 return ""

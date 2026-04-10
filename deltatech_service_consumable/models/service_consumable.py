@@ -57,7 +57,7 @@ class ServiceConsumableItem(models.Model):
         picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
-            raise RedirectWarning(_("Please define the picking type for service."), action.id, _("Stock Settings"))
+            raise RedirectWarning(self.env._("Please define the picking type for service."), action.id, self.env._("Stock Settings"))
 
         equipment_id = self.env.context.get("equipment_id") or (self.equipment_id.id if self.equipment_id else False)
         pickings = self.env["stock.picking"]
