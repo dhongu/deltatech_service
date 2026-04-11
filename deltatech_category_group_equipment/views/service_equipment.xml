@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="equipment_category_group_list" model="ir.ui.view">
+        <field name="name">equipment.group.list</field>
+        <field name="model">service.equipment</field>
+        <field name="inherit_id" ref="deltatech_service_equipment.view_service_equipment_tree" />
+        <field name="arch" type="xml">
+            <field name="emplacement" position="after">
+                <field name="category_group_type" optional="hide" />
+                <field name="category_group_class" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_service_equipment_filter" model="ir.ui.view">
+        <field name="name">service.equipment.search</field>
+        <field name="model">service.equipment</field>
+        <field name="inherit_id" ref="deltatech_service_equipment.view_service_equipment_filter" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="category_group_type" optional="hide" />
+                <field name="category_group_class" optional="hide" />
+            </field>
+            <filter name="partner" position="after">
+                <filter name="group_type" string="Category Type" context="{'group_by': 'category_group_type'}" />
+                <filter name="group_class" string="Category Class" context="{'group_by': 'category_group_class'}" />
+            </filter>
+        </field>
+    </record>
+</odoo>

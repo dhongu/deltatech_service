@@ -1,0 +1,14 @@
+[build-system]
+requires = [
+    "whool",
+]
+build-backend = "whool.buildapi"
+
+[project]
+name = "odoo-addon-deltatech-category-group-equipment"
+
+dependencies = [
+    "odoo-addon-deltatech-category-group @ git+https://github.com/dhongu/deltatech.git@19.0#subdirectory=deltatech_category_group",
+    "odoo-addon-deltatech-sale-commission @ git+https://github.com/dhongu/deltatech.git@19.0#subdirectory=deltatech_sale_commission",
+    "odoo-addon-deltatech-sale-margin @ git+https://github.com/dhongu/deltatech.git@19.0#subdirectory=deltatech_sale_margin",
+]
