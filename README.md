@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [deltatech_property](deltatech_property/) | 18.0.1.0.1 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Property Management
 [deltatech_property_agreement](deltatech_property_agreement/) | 18.0.1.0.0 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage property agreements
 [deltatech_service](deltatech_service/) | 18.0.2.0.4 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Agreement
-[deltatech_service_agreement](deltatech_service_agreement/) | 18.0.2.0.8 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Agreement
+[deltatech_service_agreement](deltatech_service_agreement/) | 18.0.2.0.9 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Agreement
 [deltatech_service_base](deltatech_service_base/) | 18.0.2.0.6 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Manage Services Base
 [deltatech_service_consumable](deltatech_service_consumable/) | 18.0.1.1.6 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Consumable
 [deltatech_service_equipment](deltatech_service_equipment/) | 18.0.1.1.13 | [![dhongu](https://github.com/dhongu.png?size=30px)](https://github.com/dhongu) | Service Equipment Management
