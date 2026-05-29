@@ -794,3 +794,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
 msgid "or"
 msgstr "sau"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_localization
+msgid "Localization"
+msgstr "Localizare"

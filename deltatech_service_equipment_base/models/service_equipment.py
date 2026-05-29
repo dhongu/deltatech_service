@@ -19,6 +19,7 @@ class ServiceEquipment(models.Model):
         domain=[("type", "=", "contact"), ("is_company", "=", False)],
     )
     service_location_id = fields.Many2one("service.location", string="Functional Location")
+    localization = fields.Char(string="Localization", readonly=False)
 
     note = fields.Text(string="Notes")
     type_id = fields.Many2one("service.equipment.type", required=False, string="Type")
@@ -76,6 +77,9 @@ class ServiceEquipment(models.Model):
         copy=False,
     )
     inventory_no = fields.Char(string="Inventory Number", tracking=True, copy=False)
+    # equipment_properties = fields.Properties(
+    #     "Properties", definition="type_id.equipment_properties_definition", copy=True
+    # )
 
     def action_view_stock_move_lines(self):
         self.ensure_one()
