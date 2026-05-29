@@ -5,7 +5,7 @@
 {
     "name": "Services Equipment Base",
     "summary": "Service Equipment Management",
-    "version": "19.0.1.2.5",
+    "version": "19.0.1.2.6",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Equipment",

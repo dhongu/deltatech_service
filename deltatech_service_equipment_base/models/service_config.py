@@ -36,6 +36,7 @@ class ServiceEquipmentType(models.Model):
     measurement_template_ids = fields.One2many(
         "service.measurement.template", "equipment_type_id", string="Measurements"
     )
+    # equipment_properties_definition = fields.PropertiesDefinition("Properties")
 
 
 class ServicePart(models.Model):

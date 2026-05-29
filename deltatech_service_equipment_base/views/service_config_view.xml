@@ -46,6 +46,9 @@
                                 </list>
                             </field>
                         </page>
+<!--                        <page string="Properties" name="properties">-->
+<!--                            <field name="equipment_properties_definition" widget="properties_definition" />-->
+<!--                        </page>-->
                         <page string="Parts" name="parts">
                             <field name="part_template_ids">
                                 <list editable="bottom">

@@ -8,7 +8,6 @@
             <list sample="1">
                 <field name="name" />
                 <field name="partner_id" />
-
                 <field name="activity_ids" widget="list_activity" optional="hide" />
 <!--                <field name="message_unread" invisible="1" />-->
             </list>
