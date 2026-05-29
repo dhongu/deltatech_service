@@ -8,6 +8,7 @@
             <list sample="1">
                 <field name="name" />
                 <field name="service_location_id" optional="show" />
+                <field name="localization" optional="hide" />
                 <field name="partner_id" />
                 <field name="type_id" optional="show" />
                 <field name="model_id" optional="show" />
@@ -43,7 +44,7 @@
                     </div>
                     <group>
                         <group string="Technical Details" name="technical_details">
-                            <field name="type_id" required="1" />
+<!--                            <field name="type_id" required="1" options="{'no_open': True, 'no_create': True}"/>-->
                             <field name="model_id" />
                             <field name="manufacturer_id" />
                             <field name="serial_no" />
@@ -67,8 +68,12 @@
                         <group string="Technician" name="technician">
                             <field name="technician_user_id" />
                             <field name="service_location_id" />
+                            <field name="localization" widget="text" />
                         </group>
                     </group>
+<!--                    <group name="properties">-->
+<!--                        <field name="equipment_properties" nolabel="1" columns="2" widget="properties"/>-->
+<!--                    </group>-->
                     <notebook>
                         <page id='meters' string="Meters">
 
@@ -182,6 +187,8 @@
         <field name="arch" type="xml">
             <search string="Search">
                 <field name="partner_id" />
+                <field name="service_location_id" />
+                <field name="localization" />
                 <field name="serial_id" />
                 <field name="product_id" />
                 <separator />
