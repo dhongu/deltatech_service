@@ -13,10 +13,24 @@ class ProjectTask(models.Model):
         string="Service Equipment",
         domain="[('service_location_id', '=', service_location_id)]",
     )
+    equipment_type_summary = fields.Text(
+        string="Equipment Type Summary",
+        compute="_compute_equipment_type_summary",
+    )
     part_ids = fields.One2many("project.task.part", "task_id", string="Parts", copy=True)
     check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
     employee_ids = fields.Many2many("hr.employee", string="Team", sudo=True)
+
+    @api.depends("service_equipment_id.type_id", "child_ids.service_equipment_id.type_id")
+    def _compute_equipment_type_summary(self):
+        for task in self:
+            type_counts = {}
+            for t in task | task.child_ids:
+                type_id = t.service_equipment_id.type_id
+                if type_id:
+                    type_counts[type_id.name] = type_counts.get(type_id.name, 0) + 1
+            task.equipment_type_summary = "\n".join(f"{count} x {name}" for name, count in sorted(type_counts.items()))
 
     @api.onchange("user_ids")
     def _onchange_user_ids(self):
