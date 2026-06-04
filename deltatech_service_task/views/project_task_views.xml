@@ -9,6 +9,7 @@
             <xpath expr="//sheet//field[@name='role_ids']" position="after">
                 <field name="service_location_id"  />
                 <field name="service_equipment_id" />
+                <field name="equipment_type_summary" invisible="1" />
             </xpath>
             <xpath expr="//field[@name='user_ids']" position="after">
                 <field name="employee_ids" widget="many2many_avatar_employee"/>
