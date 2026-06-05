@@ -13,9 +13,9 @@ Deltatech Object History for Service
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech/tree/18.0/deltatech_object_history_service
-    :alt: dhongu/deltatech
+.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
+    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_object_history_service
+    :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
@@ -57,6 +57,6 @@ Current maintainer:
 
 |maintainer-danila12| 
 
-This module is part of the `dhongu/deltatech <https://github.com/dhongu/deltatech/tree/18.0/deltatech_object_history_service>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_object_history_service>`_ project on GitHub.
 
 You are welcome to contribute.
