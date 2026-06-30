@@ -22,7 +22,7 @@
         "views/account_move.xml",
         "views/stock_picking.xml",
     ],
-    # "images": ["static/description/main_screenshot.png"],
+    "images": ["static/description/main_screenshot.png"],
     "installable": True,
     "development_status": "Beta",
     "maintainers": ["danila12"],

@@ -1,0 +1,6 @@
+{
+  "title": "Services Maintenance",
+  "summary": "Manage service from notification to warranty",
+  "icon": "wrench",
+  "features": ["Customer notifications & ticketing", "Service orders with field tracking", "Warranty & recondition workflows"]
+}

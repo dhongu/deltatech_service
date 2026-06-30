@@ -1,0 +1,10 @@
+{
+  "title": "Service Task",
+  "summary": "Tasks linked to service equipment",
+  "icon": "wrench",
+  "features": [
+    "Assign equipment & location to tasks",
+    "Track parts, checks & measurements",
+    "Full service history per equipment"
+  ]
+}
