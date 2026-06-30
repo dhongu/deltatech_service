@@ -1,0 +1,6 @@
+{
+  "title": "Service Equipment Base",
+  "summary": "Track equipment, meters & readings per customer",
+  "icon": "wrench",
+  "features": ["Equipment lifecycle & status", "Meter readings & estimates", "Billing based on readings"]
+}

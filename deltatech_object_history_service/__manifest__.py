@@ -18,7 +18,7 @@
         "views/service_equipment.xml",
         "views/object_history.xml",
     ],
-    # "images": ["static/description/main_screenshot.png"],
+    "images": ["static/description/main_screenshot.png"],
     "installable": True,
     "development_status": "Beta",
     "maintainers": ["danila12"],
