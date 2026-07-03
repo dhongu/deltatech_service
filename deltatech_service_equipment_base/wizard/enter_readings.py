@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ServiceEnterReading(models.TransientModel):
@@ -23,10 +23,10 @@ class ServiceEnterReading(models.TransientModel):
             domain = [("date", ">", self.date), ("meter_id", "=", item.meter_id.id)]
             future_readings = self.env["service.meter.reading"].search(domain)
             if future_readings:
-                self.error += _("The counter %s has readings in the future!!!") % (item.meter_id.name)
+                self.error += self.env._("The counter %s has readings in the future!!!") % (item.meter_id.name)
                 self.error += "<br/>\r\n"
             if item.counter_value <= item.meter_id.total_counter_value and item.meter_id.total_counter_value > 0:
-                self.error += _(
+                self.error += self.env._(
                     "The counter %(meter_name)s value must be greater than %(total_counter_value)s.<br/>"
                 ) % {
                     "meter_name": item.meter_id.name,
