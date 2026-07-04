@@ -44,7 +44,7 @@
                     </div>
                     <group>
                         <group string="Technical Details" name="technical_details">
-<!--                            <field name="type_id" required="1" options="{'no_open': True, 'no_create': True}"/>-->
+                            <field name="type_id" options="{'no_open': True, 'no_create': True}" />
                             <field name="model_id" />
                             <field name="manufacturer_id" />
                             <field name="serial_no" />
