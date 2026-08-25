@@ -13,9 +13,9 @@ Property Agreement
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech/tree/18.0/deltatech_property_agreement
-    :alt: dhongu/deltatech
+.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
+    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property_agreement
+    :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
@@ -60,6 +60,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech <https://github.com/dhongu/deltatech/tree/18.0/deltatech_property_agreement>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property_agreement>`_ project on GitHub.
 
 You are welcome to contribute.

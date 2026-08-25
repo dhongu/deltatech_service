@@ -5,11 +5,16 @@
 {
     "name": "Property Agreement",
     "summary": "Manage property agreements",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Property",
-    "depends": ["deltatech_property", "deltatech_service_agreement", "deltatech_service_equipment"],
+    "depends": [
+        "deltatech_property",
+        "deltatech_service_agreement",
+        "deltatech_service_equipment",
+        "deltatech_service_equipment_base",
+    ],
     "license": "OPL-1",
     "data": ["views/property_building_view.xml", "security/ir.model.access.csv"],
     "images": ["static/description/main_screenshot.png"],
