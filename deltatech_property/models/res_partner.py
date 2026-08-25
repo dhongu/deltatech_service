@@ -13,7 +13,7 @@ class Partner(models.Model):
 
     def _avatar_get_placeholder_path(self):
         if self.type == "land":
-            return "deltatech_property/static/img/land.png"
+            return "deltatech_property/static/src/img/land.png"
         if self.type == "building":
-            return "deltatech_property/static/img/building.png"
+            return "deltatech_property/static/src/img/building.png"
         return super()._avatar_get_placeholder_path()

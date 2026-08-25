@@ -2,7 +2,7 @@
 #              Dorin Hongu <dhongu(@)gmail(.)com
 # See README.rst file on addons root folder for license details
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 selection_level = [("p", "P"), ("m", "M"), ("s", "S")] + [(str(num), str(num)) for num in range(1, 30)]
@@ -79,7 +79,7 @@ class PropertyRoom(models.Model):
     @api.constrains
     def _check_cleaning_surface(self):
         if self.cleaning_surface > self.surface:
-            raise ValidationError(_("Cleaning surface most by lower that surface area"))
+            raise ValidationError(self.env._("Cleaning surface most by lower that surface area"))
 
 
 class RoomUsage(models.Model):

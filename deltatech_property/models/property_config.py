@@ -21,19 +21,19 @@ class PropertyNomenclature(models.AbstractModel):
     @api.depends("cod", "name")
     def _compute_display_name(self):
         for item in self:
-            if self.cod:
+            if item.cod:
                 item.display_name = f"{item.cod} - {item.name}"
             else:
                 item.display_name = item.name
 
     @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
-        args = args or []
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
+        domain = domain or []
         if not name.isdigit():
-            return super().name_search(name, args, operator, limit)
+            return super().name_search(name, domain, operator, limit)
 
         recs = self.search([("cod", operator, name.zfill(2))], limit=1)
-        return recs.name_get()
+        return [(rec.id, rec.display_name) for rec in recs]
 
 
 class PropertyAcquisition(models.Model):

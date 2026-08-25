@@ -157,13 +157,10 @@ class PropertyBuilding(models.Model):
 
     @api.onchange("purpose_parent_id")
     def onchange_purpose_parent_id(self):
+        # Odoo 19: returning a dynamic domain from an onchange is ignored;
+        # the restriction is already declared on the purpose_id field.
         if self.purpose_id.parent_id != self.purpose_parent_id:
             self.purpose_id = False
-
-        if self.purpose_parent_id:
-            return {"domain": {"purpose_id": [("parent_id", "=", self.purpose_parent_id.id)]}}
-        else:
-            return {"domain": {"purpose_id": []}}
 
     @api.onchange("purpose_id")
     def onchange_purpose_id(self):

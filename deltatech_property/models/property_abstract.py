@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class PropertyProperty(models.AbstractModel):
@@ -29,7 +29,12 @@ class PropertyProperty(models.AbstractModel):
     street2 = fields.Char()
     zip = fields.Char(change_default=True)
     city = fields.Char()
-    state_id = fields.Many2one("res.country.state", string="State", ondelete="restrict")
+    state_id = fields.Many2one(
+        "res.country.state",
+        string="State",
+        ondelete="restrict",
+        domain="[('country_id', '=', country_id)]",
+    )
     country_id = fields.Many2one("res.country", string="Country", ondelete="restrict")
 
     # exista deja in
@@ -102,14 +107,17 @@ class PropertyProperty(models.AbstractModel):
     def attachment_tree_view(self):
         domain = [("res_model", "=", self._name), ("res_id", "in", self.ids)]
         return {
-            "name": _("Documents"),
+            "name": self.env._("Documents"),
             "domain": domain,
             "res_model": "ir.attachment",
             "type": "ir.actions.act_window",
             "view_id": False,
             "view_mode": "kanban,list,form",
             "limit": 80,
-            "context": f"{'default_res_model': {self._name},'default_res_id': {self.id}}",
+            "context": {
+                "default_res_model": self._name,
+                "default_res_id": self.id,
+            },
         }
 
     @api.model
@@ -121,7 +129,8 @@ class PropertyProperty(models.AbstractModel):
 
     @api.onchange("country_id")
     def _onchange_country_id(self):
-        if self.country_id:
-            return {"domain": {"state_id": [("country_id", "=", self.country_id.id)]}}
-        else:
-            return {"domain": {"state_id": []}}
+        # Odoo 19: returning a dynamic domain from an onchange is ignored;
+        # the restriction is declared directly on the state_id field.
+        # Keep the state consistent with the selected country.
+        if self.state_id and self.state_id.country_id != self.country_id:
+            self.state_id = False

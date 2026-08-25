@@ -198,8 +198,8 @@
                     <field name="owner_id" />
                     <field name="city" />
                     <separator />
-                    <filter string="Intravilan" domain="[('location_type','=','in')]" name="grup_in" />
-                    <filter string="Extravilan" domain="[('location_type','=','ex')]" name="grup_ex" />
+                    <filter string="Intravilan" domain="[('location_type','=','I')]" name="grup_in" />
+                    <filter string="Extravilan" domain="[('location_type','=','E')]" name="grup_ex" />
                     <separator />
                     <filter string="Archived" name="inactive" domain="[('active','=',False)]" />
                 </search>
