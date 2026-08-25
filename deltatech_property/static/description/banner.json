@@ -1,0 +1,11 @@
+{
+  "title": "Property Management",
+  "summary": "Manage land, buildings and rooms as assets",
+  "icon": "wrench",
+  "features": [
+    "Land, buildings & rooms in one place",
+    "Surface, maintenance & valuation data",
+    "Google Maps location for each asset"
+  ],
+  "lang": "en"
+}
