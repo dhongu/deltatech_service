@@ -17,7 +17,7 @@ Sinteză a noutăților față de versiunea 18.0, pe 3 module. Detaliile fiecăr
 
 Pentru completitudine, în sens invers: module care există pe ramura 18.0 și nu au (încă) un echivalent pe 19.0.
 
-**Nemigrate încă (2)** — fără semnal de retragere; ultima modificare pe 18.0 în paranteze:
+**Nemigrate încă (2)** — ultima modificare de cod în paranteze:
 
-- `deltatech_service_maintenance_agreement` — Deltatech Services Maintenance Agreement (2025-11)
-- `deltatech_service_maintenance_plan` — Deltatech Services Maintenance Plan (2025-11)
+- `deltatech_service_maintenance_agreement` — Deltatech Services Maintenance Agreement (2025-06)
+- `deltatech_service_maintenance_plan` — Deltatech Services Maintenance Plan (2025-08)
