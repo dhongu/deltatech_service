@@ -1,7 +1,7 @@
 # ©  2008-2018 Deltatech
 # See README.rst file on addons root folder for license details
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -63,7 +63,7 @@ class ServiceDistribution(models.TransientModel):
         consumptions = self.env["service.consumption"].search(domain)
 
         if not consumptions:
-            raise UserError(_("There were no service consumption !"))
+            raise UserError(self.env._("There were no service consumption !"))
 
         if self.type == "qty":
             if self.mode == "divide":
@@ -86,7 +86,7 @@ class ServiceDistribution(models.TransientModel):
 
         return {
             "domain": "[('id','in', [" + ",".join(map(str, [rec.id for rec in consumptions])) + "])]",
-            "name": _("Service Consumption"),
+            "name": self.env._("Service Consumption"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.consumption",

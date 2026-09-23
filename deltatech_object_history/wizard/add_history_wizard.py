@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -31,7 +31,7 @@ class HistoryAddRecord(models.TransientModel):
             defaults["res_id"] = active_id
             defaults["res_model"] = active_model
         else:
-            raise UserError(_("Object not found"))
+            raise UserError(self.env._("Object not found"))
         return defaults
 
     def add_history(self):

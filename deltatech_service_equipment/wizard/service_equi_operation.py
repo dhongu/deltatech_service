@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -46,7 +46,7 @@ class ServiceEquiOperation(models.TransientModel):
             defaults["address_id"] = equipment.address_id.id
             defaults["emplacement"] = equipment.emplacement
         else:
-            raise UserError(_("Please select equipment."))
+            raise UserError(self.env._("Please select equipment."))
         return defaults
 
     def _compute_can_remove(self):
@@ -78,7 +78,7 @@ class ServiceEquiOperation(models.TransientModel):
 
         if self.state == "ins":
             emplacement = self.emplacement or ""
-            message = _(
+            message = self.env._(
                 "Equipment installation at %(partner_name)s, address %(address_name)s, "
                 "emplacement %(emplacement)s.\r\rMeters: %(counters)s"
             ) % {
@@ -89,7 +89,7 @@ class ServiceEquiOperation(models.TransientModel):
             }
 
             values = {
-                "name": _("Installation"),
+                "name": self.env._("Installation"),
                 "equipment_id": self.equipment_id.id,
                 "description": message,
             }
@@ -125,9 +125,9 @@ class ServiceEquiOperation(models.TransientModel):
             self._compute_can_remove()
 
             if not self.can_remove:
-                raise UserError(_("You must bill consumption before uninstalling"))
+                raise UserError(self.env._("You must bill consumption before uninstalling"))
             emplacement = self.equipment_id.emplacement or ""
-            message = _(
+            message = self.env._(
                 "Uninstalling equipment from %(partner_name)s, address %(address_name)s,"
                 " emplacement %(emplacement)s.\r\rMeters: %(counters)s"
             ) % {
@@ -137,7 +137,7 @@ class ServiceEquiOperation(models.TransientModel):
                 "counters": counters,
             }
             values = {
-                "name": _("Uninstall"),
+                "name": self.env._("Uninstall"),
                 "equipment_id": self.equipment_id.id,
                 "description": message,
             }
@@ -169,7 +169,7 @@ class ServiceEquiOperation(models.TransientModel):
             for meter in self.equipment_id.meter_ids:
                 counters += str(meter.uom_id.name) + ": " + str(meter.total_counter_value) + "\r\n"
         emplacement = self.equipment_id.emplacement or ""
-        message = _(
+        message = self.env._(
             "Add to contract %(agreement_name)s, partner %(partner_name)s,"
             " address %(address_name)s, emplacement %(emplacement)s."
         ) % {
@@ -179,9 +179,9 @@ class ServiceEquiOperation(models.TransientModel):
             "emplacement": emplacement,
         }
         message += "\r\n"
-        message += _("Meters: %(counters)s") % {"counters": counters}
+        message += self.env._("Meters: %(counters)s") % {"counters": counters}
         values = {
-            "name": _("Add to contract"),
+            "name": self.env._("Add to contract"),
             "equipment_id": self.equipment_id.id,
             "agreement_id": self.agreement_id.id,
             "description": message,
@@ -205,7 +205,7 @@ class ServiceEquiOperation(models.TransientModel):
             # allow linking the equipment to the agreement without creating lines from templates.
             # Only block when neither templates nor meters exist (nothing to bill/track).
             if not self.equipment_id.meter_ids:
-                raise UserError(_("No meter template defined for this equipment type."))
+                raise UserError(self.env._("No meter template defined for this equipment type."))
         else:
             for template in templates:
                 values = {
@@ -227,7 +227,7 @@ class ServiceEquiOperation(models.TransientModel):
 
         action = {
             "domain": f"[('id','=',{self.agreement_id.id})]",
-            "name": _("Service Agreement"),
+            "name": self.env._("Service Agreement"),
             "view_type": "form",
             "view_mode": "form",
             "res_model": "service.agreement",

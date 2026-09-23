@@ -20,11 +20,11 @@ disable=all
 # pe măsură ce le curățăm:
 #   inheritable-method-lambda
 #   no-write-in-compute
-#   prefer-env-translation
 #   print-used
 #   translation-not-lazy
 
-enable=anomalous-backslash-in-string,
+enable=prefer-env-translation,
+    anomalous-backslash-in-string,
     assignment-from-none,
     attribute-deprecated,
     dangerous-default-value,
