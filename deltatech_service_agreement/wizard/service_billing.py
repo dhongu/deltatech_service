@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
 
@@ -179,16 +179,16 @@ class ServiceBilling(models.TransientModel):
                 pre_invoice[cons.date_invoice][key]["cons"] += cons
 
         if not pre_invoice:
-            raise UserError(_("No condition for create a new invoice"))
+            raise UserError(self.env._("No condition for create a new invoice"))
 
         service_invoices = self.env["account.move"]
 
         for date_invoice in pre_invoice:
             for key in pre_invoice[date_invoice]:
-                comment = _("According to agreement ")
+                comment = self.env._("According to agreement ")
                 payment_term_id = False
                 for agreement in pre_invoice[date_invoice][key]["agreement_ids"]:
-                    comment += _("%(agreement_name)s from %(agreement_date)s \n") % {
+                    comment += self.env._("%(agreement_name)s from %(agreement_date)s \n") % {
                         "agreement_name": agreement.name or "____",
                         "agreement_date": agreement.date_agreement or "____",
                     }

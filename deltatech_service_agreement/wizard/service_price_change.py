@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -65,7 +65,7 @@ class ServicePriceChange(models.TransientModel):
         consumptions = self.env["service.consumption"].search(domain)
 
         if not consumptions:
-            raise UserError(_("No consumptions!"))  # , _("There were no service consumption !")
+            raise UserError(self.env._("No consumptions!"))  # , _("There were no service consumption !")
 
         consumptions.write(
             {
@@ -85,7 +85,7 @@ class ServicePriceChange(models.TransientModel):
 
         return {
             "domain": "[('id','in', [" + ",".join(map(str, [rec.id for rec in consumptions])) + "])]",
-            "name": _("Service Consumption"),
+            "name": self.env._("Service Consumption"),
             "view_type": "form",
             "view_mode": "list,form",
             "res_model": "service.consumption",

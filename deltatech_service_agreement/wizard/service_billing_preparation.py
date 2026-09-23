@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ServiceBillingPreparation(models.TransientModel):
@@ -69,7 +69,7 @@ class ServiceBillingPreparation(models.TransientModel):
         ]
         return {
             "domain": domain,
-            "name": _("Service Consumption"),
+            "name": self.env._("Service Consumption"),
             "view_mode": "list,form",
             "res_model": "service.consumption",
             "view_id": False,
