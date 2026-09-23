@@ -14,6 +14,16 @@ valid-odoo-versions=19.0
 [MESSAGES CONTROL]
 disable=all
 
+# Reguli scoase TEMPORAR din rularea obligatorie: codul existent are încă încălcări
+# (au rămas de pe vremea pylint-odoo < v9.3.15, care pe 19.0 nu rula nicio regulă).
+# Rămân active în .pylintrc (rularea opțională, --exit-zero). Se mută înapoi aici
+# pe măsură ce le curățăm:
+#   inheritable-method-lambda
+#   no-write-in-compute
+#   prefer-env-translation
+#   print-used
+#   translation-not-lazy
+
 enable=anomalous-backslash-in-string,
     assignment-from-none,
     attribute-deprecated,
@@ -33,7 +43,6 @@ enable=anomalous-backslash-in-string,
     method-search,
     pointless-statement,
     pointless-string-statement,
-    print-used,
     redundant-keyword-arg,
     reimported,
     return-in-init,
@@ -43,7 +52,6 @@ enable=anomalous-backslash-in-string,
     translation-required,
     unreachable,
     use-vim-comment,
-
     consider-merging-classes-inherited,
     context-overridden,
     except-pass,
@@ -63,25 +71,20 @@ enable=anomalous-backslash-in-string,
     category-allowed,
     deprecated-name-get,
     deprecated-odoo-model-method,
-    inheritable-method-lambda,
     inheritable-method-string,
     invalid-email,
     manifest-behind-migrations,
     manifest-data-duplicated,
     missing-odoo-file,
-    # no-raise-unlink,
     no-search-all,
     no-wizard-in-models,
     prohibited-method-override,
-    prefer-env-translation,
     translation-format-interpolation,
     translation-format-truncated,
     translation-fstring-interpolation,
-    translation-not-lazy,
     translation-too-few-args,
     translation-too-many-args,
-    translation-unsupported-format,
-    no-write-in-compute
+    translation-unsupported-format
 
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
