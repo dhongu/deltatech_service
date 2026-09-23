@@ -2,7 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import UserError
 
 
@@ -17,9 +17,9 @@ class ServiceBillingPreparation(models.TransientModel):
             for agreement in self.agreement_ids:
                 if agreement.type_id.readings_required and not agreement.meter_reading_status:
                     readings_message += (
-                        _("The %s agreement does not have the meter readings made.\r\n") % agreement.name
+                        self.env._("The %s agreement does not have the meter readings made.\r\n") % agreement.name
                     )
             if not readings_message:
                 return super().do_billing_preparation()
             else:
-                raise UserError(_(readings_message))
+                raise UserError(self.env._(readings_message))
