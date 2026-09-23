@@ -4,7 +4,7 @@
 
 import uuid
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
@@ -18,7 +18,7 @@ class ServiceOrder(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "date desc"
 
-    name = fields.Char(string="Reference", readonly=True, index=True, default=lambda self: _("New"))
+    name = fields.Char(string="Reference", readonly=True, index=True, default=lambda self: self.env._("New"))
     date = fields.Date(
         string="Date",
         default=fields.Date.context_today,

@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
@@ -29,7 +29,7 @@ class ServiceNotification(models.Model):
     def compute_default_user_id(self):
         return self.env.user.id
 
-    name = fields.Char(string="Reference", readonly=True, index=True, default=lambda self: _("New"))
+    name = fields.Char(string="Reference", readonly=True, index=True, default=lambda self: self.env._("New"))
     date = fields.Datetime(string="Date", default=fields.Date.context_today)
 
     state = fields.Selection(
