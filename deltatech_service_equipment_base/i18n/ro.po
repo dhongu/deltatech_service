@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-06 06:16+0000\n"
+"POT-Creation-Date: 2026-09-24 14:50+0000\n"
 "PO-Revision-Date: 2022-12-06 06:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -27,6 +28,11 @@ msgid "Action Needed"
 msgstr "Necesită atenție"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__active
+msgid "Active"
+msgstr "Activ"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_ids
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_ids
 msgid "Activities"
@@ -36,19 +42,19 @@ msgstr "Activități"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_exception_decoration
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Decorare excepție activitate"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_state
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Stare activitate"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_type_icon
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Pictograma tipului de activitate"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__address_id
@@ -56,10 +62,20 @@ msgid "Address"
 msgstr "Adresă"
 
 #. module: deltatech_service_equipment_base
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
+msgid "Apply"
+msgstr "Aplică"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_attachment_count
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Număr atașamente"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__property_type__borrowed
+msgid "Borrowed"
+msgstr "Împrumutat"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
@@ -67,15 +83,37 @@ msgid "Cancel"
 msgstr "Anulare"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__category_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__meter_categ_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__name
 msgid "Category"
 msgstr "Categorie"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__check_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__check_id
+msgid "Check"
+msgstr "Verificare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__name
+msgid "Check Name"
+msgstr "Denumire verificare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__check_ids
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__check_template_ids
+#: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_check
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_type_form
+msgid "Checks"
+msgstr "Verificări"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__children_ids
 msgid "Children"
-msgstr ""
+msgstr "Subordonate"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_meter_category__type__collector
@@ -86,13 +124,14 @@ msgstr "Colector"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__company_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__company_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__company_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__company_id
 msgid "Company"
 msgstr "Companie"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_form
 msgid "Compute Estimated"
-msgstr "Caclul estimat"
+msgstr "Calculează estimarea"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__contact_id
@@ -112,30 +151,52 @@ msgid "Counter Value"
 msgstr "Valoare contor"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__create_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__create_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__create_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat la"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__partner_id
@@ -153,34 +214,55 @@ msgid "Date"
 msgstr "Data"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__defect
+msgid "Defect"
+msgstr "Defect"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__difference
 msgid "Difference"
 msgstr "Diferență"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__display_name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__display_name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__display_name
 msgid "Display Name"
 msgstr "Nume afișat"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__disposed
+msgid "Disposed"
+msgstr "Casat"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_enter_reading_item
 msgid "Enter Meter Reading Item"
-msgstr ""
+msgstr "Poziție introducere citire"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_enter_reading
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_enter_reading
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
 msgid "Enter Meter Readings"
-msgstr ""
+msgstr "Introducere citiri contoare"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__enter_reading_id
@@ -189,6 +271,9 @@ msgstr "Introducere citire"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__equipment_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__equipment_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__equipment_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__equipment_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__equipment_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__equipment_id
 #: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__internal_type__equipment
@@ -201,7 +286,7 @@ msgstr "Echipament"
 #. module: deltatech_service_equipment_base
 #: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_equipment_model
 msgid "Equipment Model"
-msgstr "Model Echipament"
+msgstr "Model echipament"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_equipment_type
@@ -209,7 +294,14 @@ msgid "Equipment Type"
 msgstr "Tip echipament"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_equipment_category
+msgid "Equipment category"
+msgstr "Categorie echipament"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_equipment
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__equipment_ids
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_form
 msgid "Equipments"
 msgstr "Echipamente"
 
@@ -233,24 +325,24 @@ msgstr "Valoare estimată"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_follower_ids
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Urmăritori"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_partner_ids
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Urmăritori (parteneri)"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__activity_type_icon
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Pictogramă Font Awesome, de ex. fa-tasks"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
 msgid "For the selected meters please enter readings"
-msgstr ""
+msgstr "Introduceți citirile pentru contoarele selectate"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_location
@@ -258,48 +350,50 @@ msgstr ""
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__parent_id
 #: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_location
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_form
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_tree
 msgid "Functional Location"
 msgstr "Loc funcțional"
-
-#. module: deltatech_service_equipment_base
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_filter
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_filter
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_filter
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_reading_filter
-msgid "Group By..."
-msgstr ""
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__has_message
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Are mesaj"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_exception_icon
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Pictogramă"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__activity_exception_icon
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Pictogramă care indică o activitate de excepție."
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
@@ -308,11 +402,9 @@ msgstr "Identificare"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_needaction
-#: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_unread
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_needaction
-#: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_unread
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Dacă e bifat, mesajele noi necesită atenția dvs."
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_has_error
@@ -320,12 +412,17 @@ msgstr ""
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_has_error
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Dacă e bifat, unele mesaje au o eroare de livrare."
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__imported
 msgid "Imported"
-msgstr ""
+msgstr "Importată"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__in_repair
+msgid "In Repair"
+msgstr "În reparație"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__internal_type
@@ -333,10 +430,21 @@ msgid "Internal Type"
 msgstr "Tip intern"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__inventory_no
+msgid "Inventory Number"
+msgstr "Număr de inventar"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_is_follower
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Este urmăritor"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__is_ok
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__is_ok
+msgid "Is OK"
+msgstr "Este OK"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__items
@@ -346,74 +454,107 @@ msgstr "Poziții"
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__last_meter_reading_id
 msgid "Last Meter Reading"
-msgstr "Utima citire"
+msgstr "Ultima citire"
 
 #. module: deltatech_service_equipment_base
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category____last_update
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__write_uid
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__write_uid
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare de"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading_item__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_category__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__write_date
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__write_date
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__last_reading_date
 msgid "Last reading date"
-msgstr "Ultima citire la data"
+msgstr "Data ultimei citiri"
 
 #. module: deltatech_service_equipment_base
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_main_attachment_id
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_main_attachment_id
-msgid "Main Attachment"
-msgstr ""
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__localization
+msgid "Localization"
+msgstr "Localizare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__lost
+msgid "Lost"
+msgstr "Pierdut"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__manufacturer_id
 msgid "Manufacturer"
-msgstr "Producator"
+msgstr "Producător"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__measurement_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__measurement_id
+msgid "Measurement"
+msgstr "Măsurătoare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__name
+msgid "Measurement Name"
+msgstr "Denumire măsurătoare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__measurement_ids
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__measurement_template_ids
+#: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_measurement
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_type_form
+msgid "Measurements"
+msgstr "Măsurători"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_has_error
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Eroare livrare mesaj"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_ids
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesaje"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_meter
@@ -424,7 +565,6 @@ msgstr ""
 #: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_meter
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_form
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_reading_filter
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_tree
 msgid "Meter"
 msgstr "Contor"
 
@@ -440,26 +580,33 @@ msgstr "Categorie contor"
 #: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_meter_reading
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_reading_form
 msgid "Meter Reading"
-msgstr "Citiri contori"
+msgstr "Citiri contoare"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__meter_categ_id
+msgid "Meter category"
+msgstr "Categorie contor"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__meter_ids
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__template_meter_ids
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_type_form
 msgid "Meters"
-msgstr "Contori"
+msgstr "Contoare"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__model_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_model__name
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_filter
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__my_activity_date_deadline
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Termenul activității mele"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__name
@@ -469,15 +616,9 @@ msgid "Name"
 msgstr "Nume"
 
 #. module: deltatech_service_equipment_base
-#: code:addons/deltatech_service_equipment_base/models/service_equipment.py:0
-#: code:addons/deltatech_service_equipment_base/models/service_equipment.py:0
-#: code:addons/deltatech_service_equipment_base/models/service_equipment.py:0
+#. odoo-python
 #: code:addons/deltatech_service_equipment_base/models/service_equipment.py:0
 #: code:addons/deltatech_service_equipment_base/models/service_location.py:0
-#: code:addons/deltatech_service_equipment_base/models/service_location.py:0
-#: code:addons/deltatech_service_equipment_base/models/service_location.py:0
-#: code:addons/deltatech_service_equipment_base/models/service_location.py:0
-#, python-format
 msgid "New"
 msgstr "Nou"
 
@@ -485,30 +626,37 @@ msgstr "Nou"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_date_deadline
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Termenul următoarei activități"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_summary
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Rezumatul următoarei activități"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__activity_type_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Tipul următoarei activități"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__note
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__note
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__note
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__note
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__note
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__note
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_form
 msgid "Note"
-msgstr ""
+msgstr "Notă"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__note
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__note
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__note
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__note
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_form
 msgid "Notes"
 msgstr "Note"
 
@@ -516,37 +664,57 @@ msgstr "Note"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_needaction_counter
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Număr de acțiuni"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_has_error_counter
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Număr de erori"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_needaction_counter
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr ""
+msgid "Number of messages requiring action"
+msgstr "Număr de mesaje care necesită acțiune"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_has_error_counter
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Număr de mesaje cu eroare de livrare"
 
 #. module: deltatech_service_equipment_base
-#: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__message_unread_counter
-#: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__message_unread_counter
-msgid "Number of unread messages"
-msgstr ""
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__property_type__owned
+msgid "Owned"
+msgstr "Proprietate"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__part_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__part_id
+msgid "Part"
+msgstr "Piesă"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part__name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__name
+msgid "Part Name"
+msgstr "Denumire piesă"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_filter
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_location_filter
 msgid "Partner"
 msgstr "Partener"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__part_ids
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__part_template_ids
+#: model:ir.ui.menu,name:deltatech_service_equipment_base.menu_service_part
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_type_form
+msgid "Parts"
+msgstr "Piese"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__previous_counter_value
@@ -569,6 +737,16 @@ msgid "Product Serial Number"
 msgstr "Număr serial produs"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__property_type
+msgid "Property Type"
+msgstr "Tip proprietate"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__quantity
+msgid "Quantity"
+msgstr "Cantitate"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_enter_reading__read_by
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_reading__read_by
 msgid "Read by"
@@ -577,13 +755,23 @@ msgstr "Citită de"
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_form
 msgid "Recheck Value"
-msgstr ""
+msgstr "Recalculează valorile"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__name
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__name
 msgid "Reference"
 msgstr "Referință"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__property_type__rented
+msgid "Rented"
+msgstr "Închiriat"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields.selection,name:deltatech_service_equipment_base.selection__service_equipment__state__reserved
+msgid "Reserved"
+msgstr "Rezervat"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__technician_user_id
@@ -601,7 +789,7 @@ msgstr "Utilizator responsabil"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_has_sms_error
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Eroare livrare SMS"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_filter
@@ -612,9 +800,39 @@ msgid "Search"
 msgstr "Caută"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__sequence
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_check__sequence
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__sequence
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_part__sequence
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__sequence
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__sequence
+msgid "Sequence"
+msgstr "Secvență"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__serial_no
 msgid "Serial Number"
 msgstr "Număr serial"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__product_id
+msgid "Service"
+msgstr "Serviciu"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_check
+msgid "Service Check"
+msgstr "Verificare service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_check_template
+msgid "Service Check Template"
+msgstr "Șablon verificare service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_check
+msgid "Service Checks"
+msgstr "Verificări service"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment
@@ -623,9 +841,24 @@ msgid "Service Equipment"
 msgstr "Echipament"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_check
+msgid "Service Equipment Check"
+msgstr "Verificare echipament"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_measurement
+msgid "Service Equipment Measurement"
+msgstr "Măsurătoare echipament"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_model
 msgid "Service Equipment Model"
-msgstr ""
+msgstr "Model echipament"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_part
+msgid "Service Equipment Part"
+msgstr "Piesă echipament"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_type
@@ -633,9 +866,29 @@ msgid "Service Equipment Type"
 msgstr "Tip echipament"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_equipment_category
+msgid "Service Equipment category"
+msgstr "Categorie echipament"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_location
 msgid "Service Location"
-msgstr "Loc Funcțional"
+msgstr "Loc funcțional"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_measurement
+msgid "Service Measurement"
+msgstr "Măsurătoare service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_measurement_template
+msgid "Service Measurement Template"
+msgstr "Șablon măsurătoare service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_measurement
+msgid "Service Measurements"
+msgstr "Măsurători service"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model,name:deltatech_service_equipment_base.model_service_meter_category
@@ -643,14 +896,29 @@ msgid "Service Meter Category"
 msgstr "Categorie contor"
 
 #. module: deltatech_service_equipment_base
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_tree
-msgid "Services Equipment"
-msgstr "Echipamente serice"
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_part
+msgid "Service Part"
+msgstr "Piesă service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_part_template
+msgid "Service Part Template"
+msgstr "Șablon piesă service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_part
+msgid "Service Parts"
+msgstr "Piese service"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model,name:deltatech_service_equipment_base.model_service_template_meter
+msgid "Service Template Meter"
+msgstr "Șablon contor"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_equipment_model
 msgid "Services Equipment Model"
-msgstr ""
+msgstr "Model echipament"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_equipment_type
@@ -658,19 +926,24 @@ msgid "Services Equipment Type"
 msgstr "Tip echipament"
 
 #. module: deltatech_service_equipment_base
+#: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_equipment_category
+msgid "Services Equipment category"
+msgstr "Categorie echipament"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.actions.act_window,name:deltatech_service_equipment_base.action_service_meter_category
 msgid "Services Meter Category"
 msgstr "Categorie contor"
 
 #. module: deltatech_service_equipment_base
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_meter_reading_tree
-msgid "Services equipment"
-msgstr "Echipament"
-
-#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__start_value
 msgid "Start Value"
-msgstr "Valoare start"
+msgstr "Valoare inițială"
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__state
+msgid "State"
+msgstr "Stare"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__activity_state
@@ -681,6 +954,15 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Stare bazată pe activități\n"
+"Întârziată: data scadentă a trecut deja\n"
+"Astăzi: data activității este astăzi\n"
+"Planificată: activități viitoare."
+
+#. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__storage_place
+msgid "Storage Place"
+msgstr "Loc de depozitare"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
@@ -694,21 +976,25 @@ msgid "Technician"
 msgstr "Tehnician"
 
 #. module: deltatech_service_equipment_base
+#. odoo-python
 #: code:addons/deltatech_service_equipment_base/wizard/enter_readings.py:0
-#, python-format
+msgid ""
+"The counter %(meter_name)s value must be greater than "
+"%(total_counter_value)s.<br/>"
+msgstr ""
+"Valoarea contorului %(meter_name)s trebuie să fie mai mare decât "
+"%(total_counter_value)s.<br/>"
+
+#. module: deltatech_service_equipment_base
+#. odoo-python
+#: code:addons/deltatech_service_equipment_base/wizard/enter_readings.py:0
 msgid "The counter %s has readings in the future!!!"
 msgstr "Contorul %s are citiri în viitor!"
 
 #. module: deltatech_service_equipment_base
-#: code:addons/deltatech_service_equipment_base/wizard/enter_readings.py:0
-#, python-format
-msgid "The counter %s value must be greater than %s.<br/>"
-msgstr "Valoarea contorului %s trebuie să fie mai mare de %s.<br/>"
-
-#. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_meter_reading__partner_id
 msgid "The owner of the equipment"
-msgstr ""
+msgstr "Proprietarul echipamentului"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__total_counter_value
@@ -716,15 +1002,25 @@ msgid "Total Counter Value"
 msgstr "Valoare totală contor"
 
 #. module: deltatech_service_equipment_base
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+msgid "Tracking"
+msgstr "Trasabilitate"
+
+#. module: deltatech_service_equipment_base
 #: model:ir.model.constraint,message:deltatech_service_equipment_base.constraint_service_meter_equipment_uom_uniq
 msgid "Two meter for one equipment with the same unit of measure? Impossible!"
 msgstr ""
+"Un echipament nu poate avea două contoare cu aceeași unitate de măsură."
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_check_template__equipment_type_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__type_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_type__name
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement_template__equipment_type_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__type
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__type
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_part_template__equipment_type_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_template_meter__type_id
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_filter
 msgid "Type"
 msgstr "Tip"
@@ -733,35 +1029,30 @@ msgstr "Tip"
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__activity_exception_decoration
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Tipul activității de excepție pe înregistrare."
 
 #. module: deltatech_service_equipment_base
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__uom_id
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_measurement__uom_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__uom_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter_category__uom_id
 msgid "Unit of Measure"
-msgstr "Unitate de masură"
+msgstr "Unitate de măsură"
 
 #. module: deltatech_service_equipment_base
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_unread
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: deltatech_service_equipment_base
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__message_unread_counter
-#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr ""
+#: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment_measurement__value
+msgid "Value"
+msgstr "Valoare"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__value_a
 msgid "Value A"
-msgstr ""
+msgstr "Coeficient A"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_meter__value_b
 msgid "Value B"
-msgstr ""
+msgstr "Coeficient B"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__vendor_id
@@ -772,23 +1063,18 @@ msgstr "Furnizor"
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_equipment__website_message_ids
 #: model:ir.model.fields,field_description:deltatech_service_equipment_base.field_service_location__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Mesaje website"
 
 #. module: deltatech_service_equipment_base
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_equipment__website_message_ids
 #: model:ir.model.fields,help:deltatech_service_equipment_base.field_service_location__website_message_ids
 msgid "Website communication history"
-msgstr ""
-
-#. module: deltatech_service_equipment_base
-#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
-msgid "_Apply"
-msgstr "Aplică"
+msgstr "Istoric comunicare website"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
 msgid "close"
-msgstr ""
+msgstr "închide"
 
 #. module: deltatech_service_equipment_base
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
@@ -796,6 +1082,6 @@ msgid "or"
 msgstr "sau"
 
 #. module: deltatech_service_equipment_base
-#: model:ir.model,name:deltatech_service_equipment_base.model_localization
-msgid "Localization"
-msgstr "Localizare"
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
+msgid "x"
+msgstr "x"
