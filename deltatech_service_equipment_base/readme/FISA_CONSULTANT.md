@@ -26,10 +26,10 @@ Modulul este baza suitei de service și aduce:
 - **tipurile de echipament**, cu șabloane de contoare, piese, verificări și măsurători.
 
 **Ce nu face modulul acesta**, deși descrierea tehnică le enumeră: facturarea pe baza citirilor și
-introducerea automată la sfârșit de perioadă a citirilor estimate. Acestea se află în modulele
-suitei care îl extind (`deltatech_service_equipment`, `deltatech_service_agreement`). Tot acolo
-se folosește asistentul **Introducere citiri contoare** și se creează automat contoarele din
-șabloanele tipului de echipament.
+introducerea automată la sfârșit de perioadă a citirilor estimate. Contractele de service sunt în
+`deltatech_service_agreement`, iar legătura lor cu echipamentele și citirile o face
+`deltatech_service_equipment`. Tot acesta din urmă aduce butonul **Adaugă citiri** (care deschide
+asistentul *Introducere citiri contoare*) și butonul **Creează contori** din fișa echipamentului.
 
 ## 2. Bază legală și context
 
@@ -45,15 +45,20 @@ utilizatorului:
 | Rol | Ce face | Drept Odoo |
 |---|---|---|
 | Responsabil service | configurează tipurile, categoriile, piesele; întreține echipamentele | **Serviciu / Manager** |
-| Tehnician / dispecer | creează locuri, echipamente, contoare și citiri | **Serviciu / Utilizator** |
-| Alți utilizatori interni | doar consultă echipamentele și contoarele | **Serviciu / Client** (orice utilizator intern are citire) |
+| Tehnician / dispecer | creează locuri, contoare și citiri; echipamente doar fără *Tip* | **Serviciu / Utilizator** |
+| Alți utilizatori interni | consultă listele; fișa unui echipament cu piese le dă eroare | **Serviciu / Client** (orice utilizator intern are citire) |
 
 Meniul **Configurare** e vizibil doar grupului **Manager**.
 
-**Atenție:** în practică, doar **Manager** poate deschide formularul unui echipament. Piesele,
-verificările și măsurătorile echipamentului au drepturi doar pentru acest grup, iar formularul le
-afișează în tab-uri. Un **Utilizator** poate crea echipamente, contoare și citiri, dar primește
-eroare de acces la deschiderea fișei echipamentului (vezi limitările).
+**Atenție:** piesele, verificările și măsurătorile (ale echipamentului și ale tipului) au drepturi
+doar pentru **Manager**. În practică, un **Utilizator**:
+- poate crea locuri, contoare și citiri;
+- poate crea un echipament doar **fără Tip**: alegerea *Tipului* dă imediat eroare de acces, pentru
+  că încarcă șabloanele de piese;
+- primește eroare la deschiderea unui echipament care are piese, verificări sau măsurători. Fișa unui
+  echipament fără ele se deschide.
+
+Cine lucrează pe fișele echipamentelor are nevoie de **Manager** (vezi limitările).
 
 Roluri recomandate la testare: un utilizator **Manager** pentru tot fluxul și un **Utilizator**
 pentru citiri.
@@ -110,8 +115,11 @@ Meniul **Serviciu → Configurare** (doar *Manager*):
 ![Tipul de echipament, cu șabloanele lui](screenshots/02_tip_echipament.png)
 
 Alegerea tipului pe un echipament nou îi completează piesele, verificările și măsurătorile din
-șabloane. Șabloanele de **contoare** nu creează contoare în acest modul: le folosește
-`deltatech_service_equipment`.
+șabloane. Șabloanele de **contoare** nu creează contoare în acest modul. Dacă folosiți
+`deltatech_service_equipment`, șabloanele de contoare se definesc pe **Categorie echipament**
+(*Configurare → Categorie echipament*), adică pe categoria aleasă în *Tipul* echipamentului: acel
+modul le ia de acolo, iar cele de pe tab-ul *Contoare* al tipului sunt ignorate. Contoarele se creează
+apoi cu butonul **Creează contori** din fișa echipamentului.
 
 ## 6. Flux de utilizare
 
@@ -133,7 +141,7 @@ adresa și tehnicianul (*Responsabil*). Tab-ul **Echipamente** arată echipament
   *Producător*, *Număr serial*, *Număr de inventar*, *Tip proprietate*;
 - **Identificare**: *Produs* stocabil și *Număr serial produs* (lotul / seria din stoc). Cu ambele
   completate, butonul **Trasabilitate** arată mișcările de stoc ale seriei, iar *Loc de depozitare*
-  arată unde se află seria;
+  arată unde se află seria. Alegerea seriei completează *Furnizorul* din ultima recepție a ei;
 - **Client** și **Tehnician**: alegerea *Locului funcțional* completează clientul, persoana de
   contact și responsabilul. *Localizare* e un text liber (ex. „Etaj 1, birou DTP”);
 - **Starea** se alege din bara de stare: *Activ, Defect, În reparație, Casat, Rezervat, Pierdut*.
@@ -157,7 +165,10 @@ Din tab-ul *Contoare* al echipamentului sau din *Serviciu → Date de bază → 
 inițială** — indexul de la punerea în funcțiune. Codul `M00001` se dă automat.
 
 Un **colector** nu se citește: în formularul lui alegeți contoarele pe care le adună. *Valoarea
-totală* a colectorului este suma ultimelor citiri ale acestora.
+totală* a colectorului e suma ultimelor citiri ale acestora **în momentul în care salvați lista de
+contoare adunate**: nu urmărește citirile introduse ulterior (vezi limitările). Consumul pe perioadă
+al colectorului se calculează însă din citirile contoarelor, deci e corect. *Valoarea estimată* a
+colectorului e egală cu *Valoarea totală*: estimarea se face pe fiecare contor.
 
 ![Contorul colector](screenshots/09_contor_colector.png)
 
@@ -168,7 +179,7 @@ Adăugați contoarele într-un colector **doar după ce au cel puțin o citire**
 *Serviciu → Serviciu → Citiri contoare* → **Nou(ă)**, sau butonul **Citiri contoare** din formularul
 contorului (echipamentul și contorul se completează). Completați *Data*, *Valoare contor* și
 *Citită de*. *Valoare anterioară* și *Diferență* se calculează din citirea precedentă (sau din
-*Valoarea inițială*, la prima citire). *Estimată* marchează o valoare neciteită efectiv.
+*Valoarea inițială*, la prima citire). *Estimată* marchează o valoare necitită efectiv.
 
 ![Lista citirilor](screenshots/10_citiri_contoare.png)
 
@@ -189,7 +200,8 @@ umflat. După o asemenea citire, apăsați **Recalculează valorile** pe contor.
 
 Coeficienții se recalculează singuri doar la **modificarea datei** unei citiri. La o citire nouă nu
 se recalculează. Apăsați **Calculează estimarea** după fiecare serie de citiri, înainte de a folosi
-valorile estimate (de exemplu în asistentul de citiri din `deltatech_service_equipment`).
+valorile estimate (de exemplu în asistentul deschis de butonul **Adaugă citiri** din
+`deltatech_service_equipment`).
 
 ## 7. Legături cu alte module / declarații
 
@@ -197,10 +209,15 @@ valorile estimate (de exemplu în asistentul de citiri din `deltatech_service_eq
   Manager*, ciclurile și perioadele de service.
 - **`stock`**, **`product`** (dependențe) — produsul și seria echipamentului, mișcările de stoc ale
   seriei (*Trasabilitate*).
-- **`deltatech_service_equipment`** — extinde modulul: creează contoarele din șabloanele tipului,
-  aduce asistentul **Introducere citiri contoare** (propune valoarea estimată la data aleasă și
-  avertizează când valoarea e mai mică decât ultima citire sau există citiri ulterioare) și leagă
-  echipamentele de contractele de service și de facturare.
+- **`deltatech_service_equipment`** — extinde modulul:
+  - butonul **Creează contori** creează contoarele din șabloanele **categoriei** alese pe tipul
+    echipamentului (nu din cele de pe tip);
+  - butonul **Adaugă citiri** deschide asistentul *Introducere citiri contoare*. Asistentul propune
+    valoarea estimată la data aleasă și avertizează când valoarea e mai mică decât ultima citire sau
+    când există citiri ulterioare;
+  - leagă echipamentele de contractele de service și de facturare.
+- **`deltatech_service_agreement`** — contractele de service și facturarea lor. Nu depinde de acest
+  modul; legătura cu echipamentele o face `deltatech_service_equipment`.
 - **`deltatech_service_consumable`** — raportul de eficiență al consumabilelor folosește consumul pe
   perioadă al contoarelor, calculat ca sumă a diferențelor citirilor.
 - Nu are legături contabile și nu influențează nicio declarație ANAF.
@@ -214,8 +231,8 @@ valorile estimate (de exemplu în asistentul de citiri din `deltatech_service_eq
 - [ ] Alegerea *Locului funcțional* completează clientul, contactul și responsabilul.
 - [ ] Prima citire are *Valoare anterioară* = *Valoarea inițială* a contorului; pe demo, M00001:
       12.000 → 14.800, diferență 2.800.
-- [ ] *Valoare totală contor* = ultima citire (28.150 pe M00001), iar colectorul M00003 arată
-      37.170.
+- [ ] *Valoare totală contor* = ultima citire (28.150 pe M00001). Colectorul M00003, creat după
+      citiri, arată 37.170; după o citire nouă pe M00001, totalul colectorului nu se schimbă.
 - [ ] După **Calculează estimarea**, *Valoare estimată* depășește ultima citire (pe demo, M00001:
       30.229,90 la data generării capturilor).
 - [ ] O citire cu dată intercalată, urmată de **Recalculează valorile**, dă diferențe corecte pe
@@ -226,7 +243,9 @@ valorile estimate (de exemplu în asistentul de citiri din `deltatech_service_eq
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |---|---|---|
 | Eroare de acces la deschiderea unui echipament, pentru un *Utilizator* de service | Piesele, verificările și măsurătorile echipamentului au drepturi doar pentru *Manager* | Dați grupul **Serviciu / Manager** celor care lucrează pe fișa echipamentului |
-| Eroare de unicitate la salvarea unui contor („duplicate key … service_meter_equipment_uom_uniq”) | Echipamentul are deja un contor cu aceeași unitate de măsură | Folosiți o unitate de măsură proprie contorului (secțiunea 4) |
+| Eroare de acces la alegerea *Tipului* pe un echipament | Tipul încarcă șabloanele de piese, verificări și măsurători, accesibile doar pentru *Manager* | Echipamentul se creează de un **Manager** sau fără *Tip* |
+| „Operațiunea nu poate fi finalizată: Un echipament nu poate avea două contoare cu aceeași unitate de măsură.” | Echipamentul are deja un contor cu aceeași unitate de măsură | Folosiți o unitate de măsură proprie contorului (secțiunea 4) |
+| Totalul colectorului a rămas în urmă față de contoarele lui | Totalul se calculează doar la salvarea listei de contoare adunate | În colector, scoateți un contor și salvați, apoi adăugați-l la loc și salvați din nou (două salvări separate); consumul pe perioadă nu e afectat |
 | „tuple index out of range” la salvarea sau deschiderea unui colector | Unul dintre contoarele adunate nu are încă nicio citire | Introduceți întâi o citire pe fiecare contor, apoi adăugați-l în colector |
 | Consum lunar prea mare după o citire introdusă cu dată în trecut | Citirea următoare a rămas cu valoarea anterioară veche | **Recalculează valorile** pe contor |
 | *Valoare estimată* egală cu ultima citire | Coeficienții de estimare nu au fost calculați | **Calculează estimarea** pe contor |
@@ -240,7 +259,7 @@ compania **Demo Service Imprimante SRL**, cu datele demo din secțiunea 4.
 
 | # | Fișier | Conținut |
 |---|---|---|
-| 1 | `01_categorii_contoare.png` | Categoriile de contoare: alb-negru, color, total (colector) |
+| 1 | `01_categorii_contoare.png` | Lista categoriilor de contoare |
 | 2 | `02_tip_echipament.png` | Tipul „Multifuncțional A3 color”, cu șabloanele lui |
 | 3 | `03_loc_functional.png` | Locul funcțional, cu tab-ul *Echipamente* |
 | 4 | `04_echipamente.png` | Lista echipamentelor |
@@ -276,18 +295,22 @@ calculează consumul primei luni.
 
 ### Limitări cunoscute
 
-- **Doar „Manager” poate deschide fișa echipamentului**: piesele, verificările și măsurătorile au
-  drepturi numai pentru acest grup, iar formularul le încarcă. *Utilizator* și *Client* primesc
-  eroare de acces.
+- **Fișa unui echipament cu piese, verificări sau măsurători și alegerea Tipului cer grupul
+  „Manager”**: aceste date au drepturi numai pentru el. *Utilizator* și *Client* primesc eroare de
+  acces.
 - **O citire cu dată în trecut nu actualizează citirea următoare**, care își păstrează valoarea
   anterioară și diferența veche. Consumul pe perioadă iese umflat (pe un exemplu verificat: 1.400
   în loc de 1.100) până la **Recalculează valorile**.
 - **Estimarea nu se recalculează la o citire nouă**, doar la modificarea datei unei citiri sau la
   **Calculează estimarea**.
 - **Un colector care adună un contor fără citiri dă eroare** („tuple index out of range”).
+- **Totalul colectorului nu urmărește citirile noi** ale contoarelor adunate: rămâne valoarea de la
+  ultima salvare a listei lor. Consumul pe perioadă al colectorului e corect.
+- **„Ultima citire” din formularul contorului** apare ca număr brut (ex. „28150.0”), spre deosebire
+  de *Valoare totală contor*.
 - **Locurile funcționale și echipamentele au același prefix de numerotare** (`E`).
 - **Un echipament nou nu are stare**: bara de stare pornește goală.
-- **Șabloanele de contoare ale tipului** nu creează contoare în acest modul; creează
-  `deltatech_service_equipment`.
+- **Șabloanele de contoare ale tipului** nu creează contoare în acest modul și sunt ignorate de
+  `deltatech_service_equipment`, care folosește șabloanele categoriei alese pe tip.
 - **Asistentul „Introducere citiri contoare”** e definit aici, dar nu are niciun buton sau meniu în
-  acest modul; îl deschide `deltatech_service_equipment`.
+  acest modul; îl deschide butonul **Adaugă citiri** din `deltatech_service_equipment`.
