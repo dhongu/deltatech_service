@@ -79,7 +79,7 @@ moștenite din modulul de bază (piese, verificări, măsurători), vezi fișa
 | Linie de contract (`service.agreement.line`) | serviciul facturat, prețul, echipamentul și contorul |
 | Consum (`service.consumption`) | cantitatea și prețul pe perioadă, din care se face factura |
 | Istoric (`service.history`) | jurnalul operațiilor pe echipament și contract |
-| Cont 704 / 4427 / 4111 | prin factura client (secțiunea 2) |
+| Cont 704 (706 la chirie) / 4427 / 4111 | prin factura client (secțiunea 2) |
 
 Date demo folosite în capturi: compania **Demo Service Imprimante SRL**, clientul **Tipografia Nord
 SRL** (sediul din Suceava), multifuncționalul **MF-0231** (Canon imageRUNNER 1643i), instalat la
@@ -273,7 +273,7 @@ echipamentului arată operațiile: instalare, adăugare în contract, dezinstala
   dată în trecut umflă consumul facturat până la **Recalculează valorile**.
 - **`deltatech_service_agreement`** (dependență) — contractele, tipurile de contract, perioadele,
   consumurile, pregătirea facturării și facturarea.
-- **`account`** — factura client și nota 4111 = 704 + 4427; **`stock`** — seria echipamentului,
+- **`account`** — factura client și nota 4111 = 704 (706 la chirie) + 4427; **`stock`** — seria echipamentului,
   locația de stoc și tipul de locație (*În stoc*, *În chirie*, *Client*).
 - **D300 / D394 / e-Factura**: factura emisă intră ca orice factură client în decontul de TVA și în
   D394. Facturile către clienții din România, persoane juridice și persoane fizice, se transmit în
@@ -307,7 +307,7 @@ echipamentului arată operațiile: instalare, adăugare în contract, dezinstala
 |---|---|---|
 | Prima factură are toată valoarea contorului („Index vechi: 0.0”) | *Valoare inițială* a contorului e 0, iar citirea de la instalare intră în consum cu diferența ei | Completați *Valoare inițială* = indexul de la instalare **înainte** de prima pregătire a facturării |
 | Consum 0 deși există citiri | *Data instalării* (ziua în care s-a apăsat **Instalare** sau **Adaugă la contract**) sau *Data contractului* e după citiri | Corectați *Data instalării* (după ambele operații) și *Data contractului* |
-| Diferență negativă mare după **Adaugă la contract**, apoi o factură cu tot indexul | În asistent s-a lăsat valoarea propusă 0 la *Citiri* | Ștergeți citirea 0 (dacă nu e facturată) și apăsați **Recalculează valorile** pe contor |
+| Diferență negativă mare după **Adaugă la contract**, apoi o factură cu tot indexul | În asistent s-a lăsat valoarea propusă 0 la *Citiri* | Ștergeți citirea 0 (dacă a intrat deja într-un consum, ștergeți întâi consumul, cât timp nu e facturat) și apăsați **Recalculează valorile** pe contor |
 | TVA 21 % pe factura unui client UE / export | Facturarea din consumuri nu aplică poziția fiscală | Corectați taxa și contul pe factura în ciornă |
 | Cantitate facturată de 1.000.000 de ori mai mare (sau mai mică) | Unitatea de facturare a contorului diferă de unitatea citirii; conversia e inversată | Folosiți aceeași unitate la citire și la facturare |
 | „Contractul … nu are citirile de contor efectuate.” | Tipul de contract cere citiri, iar *Citiri efectuate* nu e bifat | Introduceți citirile și bifați *Citiri efectuate*, sau grupul *Poate factura fără citiri de contor* |

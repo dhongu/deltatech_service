@@ -118,7 +118,8 @@ Alegerea tipului pe un echipament nou îi completează piesele, verificările ș
 șabloane. Șabloanele de **contoare** nu creează contoare în acest modul. Dacă folosiți
 `deltatech_service_equipment`, șabloanele de contoare se definesc pe **Categorie echipament**
 (*Configurare → Categorie echipament*), adică pe categoria aleasă în *Tipul* echipamentului: acel
-modul le ia de acolo, iar cele de pe tab-ul *Contoare* al tipului sunt ignorate. Contoarele se creează
+modul le ia de acolo, iar tab-ul *Contoare* al tipului afișează șabloanele categoriei (se editează
+pe categorie). Contoarele se creează
 apoi cu butonul **Creează contoare** din fișa echipamentului.
 
 ## 6. Flux de utilizare
@@ -313,7 +314,8 @@ calculează consumul primei luni.
   e definită doar pentru compania principală a bazei: în celelalte companii, un echipament sau un
   loc nou se numește „New”.
 - **Un echipament nou nu are stare**: bara de stare pornește goală.
-- **Șabloanele de contoare ale tipului** nu creează contoare în acest modul și sunt ignorate de
-  `deltatech_service_equipment`, care folosește șabloanele categoriei alese pe tip.
+- **Șabloanele de contoare ale tipului** nu creează contoare în acest modul. Cu
+  `deltatech_service_equipment` instalat, tab-ul *Contoare* al tipului afișează șabloanele categoriei
+  alese pe tip, iar acestea se editează pe categorie.
 - **Asistentul „Introducere citiri contoare”** e definit aici, dar nu are niciun buton sau meniu în
   acest modul; îl deschide butonul **Adaugă citiri** din `deltatech_service_equipment`.
