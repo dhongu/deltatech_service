@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 07:52+0000\n"
+"POT-Creation-Date: 2026-09-24 15:47+0000\n"
 "PO-Revision-Date: 2026-07-30 07:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -30,7 +30,7 @@ msgstr "<span class=\"o_stat_text\">Facturat</span>"
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equipment_form
 msgid "<span class=\"o_stat_text\">Meters</span>"
-msgstr "<span class=\"o_stat_text\">Contori</span>"
+msgstr "<span class=\"o_stat_text\">Contoare</span>"
 
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equipment_form
@@ -83,7 +83,7 @@ msgstr "Istoric contracte"
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equipment__agreement_type_id
 msgid "Agreement Type"
-msgstr "Tip acrod"
+msgstr "Tip contract"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.constraint,message:deltatech_service_equipment.constraint_service_consumption_agreement_line_period_uniq
@@ -177,7 +177,7 @@ msgstr "Contract servicii"
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equipment_form
 msgid "Create Meters"
-msgstr "Creează contori"
+msgstr "Creează contoare"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equi_operation__create_uid
@@ -214,7 +214,7 @@ msgstr "Client: %(customer_name)s"
 #: code:addons/deltatech_service_equipment/models/account_move.py:0
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.service_history_search
 msgid "Data"
-msgstr "Date"
+msgstr "Data"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equi_operation__date
@@ -332,8 +332,9 @@ msgid ""
 "\r"
 "Meters: %(counters)s"
 msgstr ""
-"Instalare echipament la %(partner_name)s, adresă %(address_name)s, amplasament %(emplacement)s.\r\n"
-"Contori: %(counters)s"
+"Instalare echipament la %(partner_name)s, adresă %(address_name)s, amplasament %(emplacement)s.\r"
+"\r"
+"Contoare: %(counters)s"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_product_product__equi_type_id
@@ -361,7 +362,7 @@ msgstr "Eroare"
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_move_form
 msgid "Export meters XLS"
-msgstr "Exportă contorii în XLS"
+msgstr "Exportă contoarele în XLS"
 
 #. module: deltatech_service_equipment
 #: model:ir.actions.act_window,name:deltatech_service_equipment.service_history_action
@@ -526,7 +527,7 @@ msgstr "Contor"
 #. module: deltatech_service_equipment
 #: model:ir.model,name:deltatech_service_equipment.model_service_meter_reading
 msgid "Meter Reading"
-msgstr "Citiri contori"
+msgstr "Citiri contoare"
 
 #. module: deltatech_service_equipment
 #. odoo-python
@@ -538,13 +539,13 @@ msgstr ""
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equipment_type__template_meter_ids
 msgid "Meters"
-msgstr "Contori"
+msgstr "Contoare"
 
 #. module: deltatech_service_equipment
 #. odoo-python
 #: code:addons/deltatech_service_equipment/wizard/service_equi_operation.py:0
 msgid "Meters: %(counters)s"
-msgstr "Contori: %(counters)s"
+msgstr "Contoare: %(counters)s"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__readings_status__
@@ -663,7 +664,7 @@ msgstr "Județ"
 #: model:ir.actions.act_window,name:deltatech_service_equipment.action_service_equi_rem
 #: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equi_operation__state__rem
 msgid "Removal"
-msgstr "Ştergere"
+msgstr "Dezinstalare"
 
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equi_operation_form
@@ -769,7 +770,7 @@ msgstr "Istoric service"
 #. odoo-python
 #: code:addons/deltatech_service_equipment/models/service_agreement.py:0
 msgid "Services Equipment"
-msgstr "Echipamente serice"
+msgstr "Echipamente service"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equipment__start_date
@@ -805,7 +806,7 @@ msgstr "Șablon contor"
 #. odoo-python
 #: code:addons/deltatech_service_equipment/wizard/service_billing_preparation.py:0
 msgid "The %s agreement does not have the meter readings made.\r\n"
-msgstr "Contractul %s nu are citirile de contor efectuate.\n"
+msgstr "Contractul %s nu are citirile de contor efectuate.\r\n"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields,help:deltatech_service_equipment.field_service_equipment__address_id
@@ -860,8 +861,9 @@ msgid ""
 "\r"
 "Meters: %(counters)s"
 msgstr ""
-"Dezinstalare echipament de la %(partner_name)s, adresă %(address_name)s, amplasament %(emplacement)s.\r\n"
-"Contori: %(counters)s"
+"Dezinstalare echipament de la %(partner_name)s, adresă %(address_name)s, amplasament %(emplacement)s.\r"
+"\r"
+"Contoare: %(counters)s"
 
 #. module: deltatech_service_equipment
 #: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__readings_status__unmade
@@ -871,7 +873,7 @@ msgstr "Neefectuate"
 #. module: deltatech_service_equipment
 #: model:ir.actions.server,name:deltatech_service_equipment.action_update_meter_status
 msgid "Update Meter Status"
-msgstr "Actualizează starea contorilor"
+msgstr "Actualizează starea citirilor"
 
 #. module: deltatech_service_equipment
 #: model:ir.actions.server,name:deltatech_service_equipment.action_update_totals
@@ -893,7 +895,7 @@ msgstr "Trebuie să facturați consumul înainte de dezinstalare"
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equi_operation_form
 msgid "close"
-msgstr "inchideți"
+msgstr "închide"
 
 #. module: deltatech_service_equipment
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment.view_service_equi_operation_form
