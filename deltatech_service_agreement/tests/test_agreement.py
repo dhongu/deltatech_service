@@ -45,7 +45,7 @@ class TestAgreement(TransactionCase):
         self.env["service.date.range"].generate_date_range()
         self.date_range = self.env["service.date.range"].search([], limit=1)
 
-    def test_agreement(self):
+    def _create_agreement_invoice(self):
         agreement = Form(self.env["service.agreement"])
         agreement.name = "Test Agreement"
         agreement.partner_id = self.partner_1
@@ -82,4 +82,53 @@ class TestAgreement(TransactionCase):
         action = wizard.do_billing()
 
         invoices = self.env["account.move"].search(action["domain"])
+        return agreement, consumptions, invoices
+
+    def _create_accountant(self):
+        # utilizator doar cu drepturi de facturare, fara drepturi pe modulul de service
+        return self.env["res.users"].create(
+            {
+                "name": "Test Accountant",
+                "login": "test_service_accountant",
+                "company_id": self.env.company.id,
+                "company_ids": [(6, 0, self.env.company.ids)],
+                "group_ids": [(6, 0, [self.env.ref("account.group_account_invoice").id])],
+            }
+        )
+
+    def test_agreement(self):
+        agreement, consumptions, invoices = self._create_agreement_invoice()
         invoices.action_post()
+        self.assertIn(agreement.last_invoice_id, invoices)
+
+    def test_accountant_post_invoice(self):
+        agreement, consumptions, invoices = self._create_agreement_invoice()
+        accountant = self._create_accountant()
+        invoices.with_user(accountant).action_post()
+        self.assertEqual(invoices.mapped("state"), ["posted"] * len(invoices))
+        self.assertIn(agreement.last_invoice_id, invoices)
+
+    def test_accountant_unlink_invoice(self):
+        agreement, consumptions, invoices = self._create_agreement_invoice()
+        self.assertTrue(consumptions.invoice_id)
+        accountant = self._create_accountant()
+        invoices.with_user(accountant).unlink()
+        self.assertFalse(invoices.exists())
+        self.assertEqual(set(consumptions.mapped("state")), {"draft"})
+
+    def test_accountant_unlink_unrelated_move(self):
+        # plata / nota contabila fara legatura cu service: nu trebuie sa ceara drepturi pe consumuri
+        accountant = self._create_accountant()
+        move = (
+            self.env["account.move"]
+            .with_user(accountant)
+            .create(
+                {
+                    "move_type": "out_invoice",
+                    "partner_id": self.partner_1.id,
+                    "invoice_line_ids": [(0, 0, {"name": "Line", "quantity": 1, "price_unit": 10})],
+                }
+            )
+        )
+        move.unlink()
+        self.assertFalse(move.exists())
