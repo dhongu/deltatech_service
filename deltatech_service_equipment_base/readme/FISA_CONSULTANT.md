@@ -29,7 +29,7 @@ Modulul este baza suitei de service și aduce:
 introducerea automată la sfârșit de perioadă a citirilor estimate. Contractele de service sunt în
 `deltatech_service_agreement`, iar legătura lor cu echipamentele și citirile o face
 `deltatech_service_equipment`. Tot acesta din urmă aduce butonul **Adaugă citiri** (care deschide
-asistentul *Introducere citiri contoare*) și butonul **Creează contori** din fișa echipamentului.
+asistentul *Introducere citiri contoare*) și butonul **Creează contoare** din fișa echipamentului.
 
 ## 2. Bază legală și context
 
@@ -119,7 +119,7 @@ Alegerea tipului pe un echipament nou îi completează piesele, verificările ș
 `deltatech_service_equipment`, șabloanele de contoare se definesc pe **Categorie echipament**
 (*Configurare → Categorie echipament*), adică pe categoria aleasă în *Tipul* echipamentului: acel
 modul le ia de acolo, iar cele de pe tab-ul *Contoare* al tipului sunt ignorate. Contoarele se creează
-apoi cu butonul **Creează contori** din fișa echipamentului.
+apoi cu butonul **Creează contoare** din fișa echipamentului.
 
 ## 6. Flux de utilizare
 
@@ -145,7 +145,8 @@ adresa și tehnicianul (*Responsabil*). Tab-ul **Echipamente** arată echipament
 - **Client** și **Tehnician**: alegerea *Locului funcțional* completează clientul, persoana de
   contact și responsabilul. *Localizare* e un text liber (ex. „Etaj 1, birou DTP”);
 - **Starea** se alege din bara de stare: *Activ, Defect, În reparație, Casat, Rezervat, Pierdut*.
-  Un echipament nou nu are nicio stare; alegeți-o la creare.
+  Un echipament nou nu are nicio stare; alegeți-o la creare. Cu `deltatech_service_equipment`
+  instalat, stările devin *Disponibil, În instalare, Instalat, Inactiv, De rezervă* (vezi fișa lui).
 
 Tab-ul **Contoare** conține contoarele echipamentului, cu valoarea totală și valoarea estimată.
 
@@ -210,7 +211,7 @@ valorile estimate (de exemplu în asistentul deschis de butonul **Adaugă citiri
 - **`stock`**, **`product`** (dependențe) — produsul și seria echipamentului, mișcările de stoc ale
   seriei (*Trasabilitate*).
 - **`deltatech_service_equipment`** — extinde modulul:
-  - butonul **Creează contori** creează contoarele din șabloanele **categoriei** alese pe tipul
+  - butonul **Creează contoare** creează contoarele din șabloanele **categoriei** alese pe tipul
     echipamentului (nu din cele de pe tip);
   - butonul **Adaugă citiri** deschide asistentul *Introducere citiri contoare*. Asistentul propune
     valoarea estimată la data aleasă și avertizează când valoarea e mai mică decât ultima citire sau
@@ -308,7 +309,9 @@ calculează consumul primei luni.
   ultima salvare a listei lor. Consumul pe perioadă al colectorului e corect.
 - **„Ultima citire” din formularul contorului** apare ca număr brut (ex. „28150.0”), spre deosebire
   de *Valoare totală contor*.
-- **Locurile funcționale și echipamentele au același prefix de numerotare** (`E`).
+- **Locurile funcționale și echipamentele au același prefix de numerotare** (`E`), iar numerotarea
+  e definită doar pentru compania principală a bazei: în celelalte companii, un echipament sau un
+  loc nou se numește „New”.
 - **Un echipament nou nu are stare**: bara de stare pornește goală.
 - **Șabloanele de contoare ale tipului** nu creează contoare în acest modul și sunt ignorate de
   `deltatech_service_equipment`, care folosește șabloanele categoriei alese pe tip.
