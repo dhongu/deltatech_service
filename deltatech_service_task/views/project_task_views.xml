@@ -22,23 +22,45 @@
                             <field name="part_id" />
                             <field name="quantity" />
                             <field name="note" />
-                            <field name="is_ok" />
+                            <field name="is_ok" readonly="is_not_applicable" />
+                            <field name="is_not_applicable" />
                         </list>
                         <kanban class="o_kanban_mobile">
                             <field name="part_id" />
                             <field name="quantity" />
                             <field name="is_ok" />
+                            <field name="is_not_applicable" />
                             <field name="note" />
                             <templates>
                                 <t t-name="card">
+                                    <!--
+                                        Denumirea pe rand propriu, iar cele doua bife dedesubt,
+                                        fiecare cu eticheta ei: pe latimea unui telefon, eticheta
+                                        pusa langa comutator rupe randul, iar doua comutatoare
+                                        suprapuse fara text nu se pot deosebi.
+                                    -->
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-12">
                                             <strong>
                                                 <field name="part_id" />
                                             </strong>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-muted">
+                                            OK
+                                        </div>
                                         <div class="col-4 text-end">
-                                            <field name="is_ok" widget="boolean_toggle" nolabel="1" />
+                                            <field name="is_ok" widget="boolean_toggle" nolabel="1"
+                                                   readonly="is_not_applicable" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-muted">
+                                            Not applicable
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="is_not_applicable" widget="boolean_toggle" nolabel="1" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -59,7 +81,8 @@
                                 <group>
                                     <field name="part_id" readonly="1" />
                                     <field name="quantity" />
-                                    <field name="is_ok" />
+                                    <field name="is_ok" readonly="is_not_applicable" />
+                                    <field name="is_not_applicable" />
                                     <field name="note" />
                                 </group>
                             </sheet>
@@ -72,22 +95,44 @@
                             <field name="sequence" widget="handle" />
                             <field name="check_id" />
                             <field name="note" />
-                            <field name="is_ok" />
+                            <field name="is_ok" readonly="is_not_applicable" />
+                            <field name="is_not_applicable" />
                         </list>
                         <kanban class="o_kanban_mobile">
                             <field name="check_id" />
                             <field name="is_ok" />
+                            <field name="is_not_applicable" />
                             <field name="note" />
                             <templates>
                                 <t t-name="card">
+                                    <!--
+                                        Denumirea pe rand propriu, iar cele doua bife dedesubt,
+                                        fiecare cu eticheta ei: pe latimea unui telefon, eticheta
+                                        pusa langa comutator rupe randul, iar doua comutatoare
+                                        suprapuse fara text nu se pot deosebi.
+                                    -->
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-12">
                                             <strong>
                                                 <field name="check_id" />
                                             </strong>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-muted">
+                                            OK
+                                        </div>
                                         <div class="col-4 text-end">
-                                            <field name="is_ok" widget="boolean_toggle" nolabel="1" />
+                                            <field name="is_ok" widget="boolean_toggle" nolabel="1"
+                                                   readonly="is_not_applicable" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-muted">
+                                            Not applicable
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="is_not_applicable" widget="boolean_toggle" nolabel="1" />
                                         </div>
                                     </div>
                                     <div class="row" t-if="record.note.raw_value">
@@ -102,7 +147,8 @@
                             <sheet>
                                 <group>
                                     <field name="check_id" readonly="1" />
-                                    <field name="is_ok" />
+                                    <field name="is_ok" readonly="is_not_applicable" />
+                                    <field name="is_not_applicable" />
                                     <field name="note" />
                                 </group>
                             </sheet>
@@ -114,14 +160,16 @@
                         <list editable="bottom" create="false" delete="false">
                             <field name="sequence" widget="handle" />
                             <field name="measurement_id" />
-                            <field name="value" />
+                            <field name="value" readonly="is_not_applicable" />
                             <field name="uom_id" />
                             <field name="note" />
+                            <field name="is_not_applicable" />
                         </list>
                         <kanban class="o_kanban_mobile">
                             <field name="measurement_id" />
                             <field name="value" />
                             <field name="uom_id" />
+                            <field name="is_not_applicable" />
                             <field name="note" />
                             <templates>
                                 <t t-name="card">
@@ -132,7 +180,16 @@
                                             </strong>
                                         </div>
                                         <div class="col-4 text-end">
-                                            <field name="value" /> <field name="uom_id" />
+                                            <field name="value" readonly="is_not_applicable" />
+                                            <field name="uom_id" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-muted">
+                                            Not applicable
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <field name="is_not_applicable" widget="boolean_toggle" nolabel="1" />
                                         </div>
                                     </div>
                                     <div class="row" t-if="record.note.raw_value">
@@ -147,8 +204,9 @@
                             <sheet>
                                 <group>
                                     <field name="measurement_id" readonly="1" />
-                                    <field name="value" />
+                                    <field name="value" readonly="is_not_applicable" />
                                     <field name="uom_id" />
+                                    <field name="is_not_applicable" />
                                     <field name="note" />
                                 </group>
                             </sheet>
