@@ -326,3 +326,15 @@ msgstr "Valoare"
 #: code:addons/deltatech_service_task/models/service_equipment.py:0
 msgid "equipment_id"
 msgstr ""
+
+#. module: deltatech_service_task
+#: model:ir.model.fields,field_description:deltatech_service_task.field_project_task_check__is_not_applicable
+#: model:ir.model.fields,field_description:deltatech_service_task.field_project_task_measurement__is_not_applicable
+#: model:ir.model.fields,field_description:deltatech_service_task.field_project_task_part__is_not_applicable
+msgid "Not Applicable"
+msgstr "Nu se aplică"
+
+#. module: deltatech_service_task
+#: model_terms:ir.ui.view,arch_db:deltatech_service_task.view_task_form2_inherited
+msgid "Not applicable"
+msgstr "Nu se aplică"

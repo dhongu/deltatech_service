@@ -70,3 +70,36 @@ class TestProjectTask(TransactionCase):
         html_report = report._render_qweb_html(report_name, task.ids)
         self.assertTrue(html_report)
         self.assertIn(task.name, str(html_report))
+
+    def test_not_applicable_status_in_report(self):
+        """O operatiune marcata "nu se aplica" apare in raport ca N/A, nu ca neconforma."""
+        task_form = Form(self.env["project.task"])
+        task_form.name = "Test Task Not Applicable"
+        task_form.service_equipment_id = self.equipment
+        task = task_form.save()
+
+        report_name = "deltatech_service_task.report_project_task_service_template"
+        report = self.env["ir.actions.report"]._get_report_from_name(report_name)
+
+        check = task.check_ids
+        self.assertTrue(check, "sablonul tipului trebuie sa fi adus verificarea pe sarcina")
+        self.assertFalse(check.is_not_applicable, "bifa porneste nepusa")
+
+        # Sarcina are si o piesa, si o verificare, ambele nebifate => ambele neconforme.
+        # Se numara aparitiile, ca sa se vada ca bifa schimba exact o linie, nu toata sectiunea.
+        before = str(report._render_qweb_html(report_name, task.ids))
+        self.assertEqual(before.count("Not OK"), 2)
+        self.assertNotIn("N/A", before)
+
+        check.is_not_applicable = True
+        after = str(report._render_qweb_html(report_name, task.ids))
+        self.assertEqual(after.count("N/A"), 1)
+        self.assertEqual(after.count("Not OK"), 1, "piesa ramane neconforma")
+
+        # masuratoarea inaplicabila nu-si mai arata valoarea
+        meas = task.measurement_ids
+        self.assertTrue(meas)
+        meas.write({"value": 42.0, "is_not_applicable": True})
+        rendered = str(report._render_qweb_html(report_name, task.ids))
+        self.assertNotIn("42.0", rendered)
+        self.assertEqual(rendered.count("N/A"), 2)
