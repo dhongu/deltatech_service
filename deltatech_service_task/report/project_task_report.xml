@@ -75,7 +75,8 @@
                                 <span t-field="part.quantity"/>
                             </td>
                             <td>
-                                <span t-if="part.is_ok">OK</span>
+                                <span t-if="part.is_not_applicable">N/A</span>
+                                <span t-elif="part.is_ok">OK</span>
                                 <span t-else="">Not OK</span>
                             </td>
                             <td>
@@ -101,7 +102,8 @@
                                 <span t-field="check.check_id"/>
                             </td>
                             <td>
-                                <span t-if="check.is_ok">OK</span>
+                                <span t-if="check.is_not_applicable">N/A</span>
+                                <span t-elif="check.is_ok">OK</span>
                                 <span t-else="">Not OK</span>
                             </td>
                             <td>
@@ -128,10 +130,11 @@
                                 <span t-field="meas.measurement_id"/>
                             </td>
                             <td class="text-end">
-                                <span t-field="meas.value"/>
+                                <span t-if="meas.is_not_applicable">N/A</span>
+                                <span t-else="" t-field="meas.value"/>
                             </td>
                             <td>
-                                <span t-field="meas.uom_id"/>
+                                <span t-if="not meas.is_not_applicable" t-field="meas.uom_id"/>
                             </td>
                             <td>
                                 <span t-field="meas.note"/>
@@ -190,7 +193,8 @@
                                         <span t-field="part.quantity"/>
                                     </td>
                                     <td>
-                                        <span t-if="part.is_ok">OK</span>
+                                        <span t-if="part.is_not_applicable">N/A</span>
+                                        <span t-elif="part.is_ok">OK</span>
                                         <span t-else="">Not OK</span>
                                     </td>
                                     <td>
@@ -216,7 +220,8 @@
                                         <span t-field="check.check_id"/>
                                     </td>
                                     <td>
-                                        <span t-if="check.is_ok">OK</span>
+                                        <span t-if="check.is_not_applicable">N/A</span>
+                                        <span t-elif="check.is_ok">OK</span>
                                         <span t-else="">Not OK</span>
                                     </td>
                                     <td>
@@ -243,10 +248,11 @@
                                         <span t-field="meas.measurement_id"/>
                                     </td>
                                     <td class="text-end">
-                                        <span t-field="meas.value"/>
+                                        <span t-if="meas.is_not_applicable">N/A</span>
+                                        <span t-else="" t-field="meas.value"/>
                                     </td>
                                     <td>
-                                        <span t-field="meas.uom_id"/>
+                                        <span t-if="not meas.is_not_applicable" t-field="meas.uom_id"/>
                                     </td>
                                     <td>
                                         <span t-field="meas.note"/>

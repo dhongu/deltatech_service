@@ -145,6 +145,11 @@ class ProjectTaskPart(models.Model):
     quantity = fields.Float(string="Quantity", default=1.0)
     note = fields.Text(string="Note")
     is_ok = fields.Boolean(string="Is OK")
+    is_not_applicable = fields.Boolean(
+        string="Not Applicable",
+        help="The operation does not apply to this equipment or configuration. It is excluded "
+        "from the follow-up flow: no deviation is reported for it, regardless of the note.",
+    )
 
 
 class ProjectTaskCheck(models.Model):
@@ -158,6 +163,11 @@ class ProjectTaskCheck(models.Model):
     check_id = fields.Many2one("service.check", string="Check", required=True)
     note = fields.Text(string="Note")
     is_ok = fields.Boolean(string="Is OK")
+    is_not_applicable = fields.Boolean(
+        string="Not Applicable",
+        help="The check does not apply to this equipment or configuration. It is excluded "
+        "from the follow-up flow: no deviation is reported for it, regardless of the note.",
+    )
 
 
 class ProjectTaskMeasurement(models.Model):
@@ -172,4 +182,12 @@ class ProjectTaskMeasurement(models.Model):
     value = fields.Float(string="Value")
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", related="measurement_id.uom_id", readonly=True)
     note = fields.Text(string="Note")
+    # Masuratorile nu au conformitate (is_ok), doar valoare si nota. Bifa exista si aici pentru
+    # masuratorile care nu au putut fi efectuate: fara ea, singurul mod de a le semnala ar fi o nota,
+    # iar nota trimite observatia mai departe ca abatere.
+    is_not_applicable = fields.Boolean(
+        string="Not Applicable",
+        help="The measurement could not be taken or does not apply to this equipment. It is "
+        "excluded from the follow-up flow: no deviation is reported for it, regardless of the note.",
+    )
     date_measurement = fields.Datetime(related="task_id.create_date", store=True, string="Data Măsurătorii")
