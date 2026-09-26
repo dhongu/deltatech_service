@@ -116,3 +116,5 @@ venv.bak/
 
 # Ignore specific files
 pandoc-*.deb
+# macOS
+.DS_Store
