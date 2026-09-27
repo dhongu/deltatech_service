@@ -23,7 +23,9 @@ class ServicePriceChange(models.TransientModel):
 
     price_unit = fields.Float(string="Unit Price", required=True, digits="Service Price")
 
-    currency_id = fields.Many2one("res.currency", string="Currency", required=True, default=_default_currency)
+    currency_id = fields.Many2one(
+        "res.currency", string="Currency", required=True, default=lambda self: self._default_currency()
+    )
     reference = fields.Char("Reference")
 
     @api.model

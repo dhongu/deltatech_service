@@ -155,7 +155,7 @@ class ServiceAgreement(models.Model):
     def _compute_attached_docs(self):
         for task in self:
             task.doc_count = self.env["ir.attachment"].search_count(
-                [("res_model", "=", "service.agreement"), ("res_id", "=", task.id)]
+                [("res_model", "=", "service.agreement"), ("res_id", "=", task._origin.id)]
             )
 
     def attachment_tree_view(self):
@@ -251,9 +251,9 @@ class ServiceAgreement(models.Model):
         # """
 
         for agreement in self:
-            if not agreement.last_invoice_id:
+            if not agreement.last_invoice_id and agreement._origin.id:
                 domain = [
-                    ("invoice_line_ids.agreement_id", "=", agreement.id),
+                    ("invoice_line_ids.agreement_id", "=", agreement._origin.id),
                     ("state", "=", "posted"),
                     ("move_type", "=", "out_invoice"),
                 ]
@@ -391,8 +391,8 @@ class ServiceAgreementLine(models.Model):
         domain=[("type", "=", "service")],
         required=False,
     )
-    quantity = fields.Float(string="Quantity", digits="Product Unit of Measure")
-    quantity_free = fields.Float(string="Quantity Free", digits="Product Unit of Measure")
+    quantity = fields.Float(string="Quantity", digits="Product Unit")
+    quantity_free = fields.Float(string="Quantity Free", digits="Product Unit")
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", ondelete="set null")
     price_unit = fields.Float(string="Unit Price", required=True, digits="Service Price", default=1)
     currency_id = fields.Many2one(

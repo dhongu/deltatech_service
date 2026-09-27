@@ -15,7 +15,13 @@ class TestAgreement(TransactionCase):
                 "name": "Test Product",
                 "company_id": self.env.company.id,
                 "taxes_id": [
-                    (6, 0, self.env["account.tax"].search([("company_id", "=", self.env.company.id)], limit=2).ids)
+                    (
+                        6,
+                        0,
+                        self.env["account.tax"]
+                        .search([("company_id", "=", self.env.company.id), ("type_tax_use", "=", "sale")], limit=2)
+                        .ids,
+                    )
                 ],
             }
         )
@@ -98,6 +104,8 @@ class TestAgreement(TransactionCase):
 
     def test_agreement(self):
         agreement, consumptions, invoices = self._create_agreement_invoice()
+        product_lines = invoices.invoice_line_ids.filtered("product_id")
+        self.assertEqual(product_lines.mapped("label"), [self.product_ab.display_name])
         invoices.action_post()
         self.assertIn(agreement.last_invoice_id, invoices)
 

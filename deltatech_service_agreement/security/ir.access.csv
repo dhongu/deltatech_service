@@ -1,0 +1,20 @@
+id,name,model_id,group_id/id,operation,domain
+access_service_consumption_user,access_service_consumption,service.consumption,deltatech_service_base.group_service_user,crud,
+access_service_consumption_public,access_service_consumption,service.consumption,base.group_user,r,
+service_consumption_comp_rule,Service Consumption multi-company,service.consumption,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_service_agreement_line_user,access_service_agreement_line,service.agreement.line,deltatech_service_base.group_service_user,ru,
+access_service_agreement_line_manager,access_service_agreement_line,service.agreement.line,deltatech_service_base.group_service_manager,crud,
+access_service_agreement_line_public,access_service_agreement_line,service.agreement.line,base.group_user,r,
+access_service_agreement_user,access_service_agreement,service.agreement,deltatech_service_base.group_service_user,ru,
+access_service_agreement_manager,access_service_agreement,service.agreement,deltatech_service_base.group_service_manager,crud,
+access_service_agreement_public,access_service_agreement,service.agreement,base.group_user,r,
+service_agreement_comp_rule,Service Agreement multi-company,service.agreement,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
+access_service_agreement_type_manager,access_service_agreement_type,service.agreement.type,deltatech_service_base.group_service_manager,crud,
+access_service_agreement_type_public,access_service_agreement_type,service.agreement.type,base.group_user,r,
+access_service_agreement_group_manager,access_service_agreement_group,service.agreement.group,deltatech_service_base.group_service_manager,crud,
+access_service_agreement_group_public,access_service_agreement_group,service.agreement.group,base.group_user,r,
+access_service_billing,access_service_billing,service.billing,base.group_user,crud,
+access_service_billing_preparation,access_service_billing_preparation,service.billing.preparation,base.group_user,crud,
+access_service_distribution,access_service_distribution,service.distribution,base.group_user,crud,
+access_service_price_change,access_service_price_change,service.price.change,base.group_user,crud,
+access_service_change_invoice_date,access_service_change_invoice_date,service.change.invoice.date,base.group_user,crud,

@@ -26,13 +26,13 @@ class ServiceConsumption(models.Model):
     )
     quantity = fields.Float(
         string="Quantity",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         required=True,
         default=1,
     )
     invoiced_qty = fields.Float(
         string="Invoiced Quantity",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         readonly=True,
         default=0.0,
     )

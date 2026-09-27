@@ -4,7 +4,7 @@
 {
     "name": "Services Agreement",
     "summary": "Manage Services Agreement",
-    "version": "19.0.2.0.11",
+    "version": "20.0.2.0.11",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Agreement",
@@ -18,8 +18,6 @@
     ],
     "license": "OPL-1",
     "data": [
-        "security/service_security.xml",
-        "security/ir.model.access.csv",
         "data/data.xml",
         "views/service_consumption_view.xml",
         "views/service_agreement_view.xml",
@@ -30,6 +28,7 @@
         "wizard/service_distribution_view.xml",
         "wizard/service_price_change_view.xml",
         "wizard/service_change_invoice_date_view.xml",
+        "security/ir.access.csv",
     ],
     "images": ["static/description/main_screenshot.png"],
     "application": False,

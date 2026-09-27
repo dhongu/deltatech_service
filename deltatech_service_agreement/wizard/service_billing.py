@@ -81,7 +81,9 @@ class ServiceBilling(models.TransientModel):
             "quantity": cons.quantity - cons.agreement_line_id.quantity_free,
             "price_unit": price_unit,
             "product_uom_id": cons.agreement_line_id.uom_id.id,
-            "name": name,
+            # in 20.0 `name` contine doar descrierea suplimentara, textul complet
+            # (produs + referinta consum) este in `label` (inverse -> `name`)
+            "label": name,
             # todo: de determinat contul
             "account_id": account_id.id,
             "tax_ids": [(6, 0, ([rec.id for rec in cons.product_id.taxes_id]))],

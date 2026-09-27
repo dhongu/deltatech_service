@@ -15,7 +15,7 @@ class ServiceDistribution(models.TransientModel):
         required=True,
         domain=[("type", "=", "service")],
     )
-    quantity = fields.Float(string="Quantity", required=True, digits="Product Unit of Measure")
+    quantity = fields.Float(string="Quantity", required=True, digits="Product Unit")
     amount = fields.Float(string="Amount", required=True)
     type = fields.Selection(
         [("qty", "Quantity"), ("val", "Value")],

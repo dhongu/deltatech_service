@@ -9,7 +9,7 @@
                     type="action"
                     class="oe_stat_button"
                     id="consumption_button"
-                    icon="fa-line-chart"
+                    icon="show_chart"
                     name="%(action_service_consumption)d"
                     context="{'search_default_invoice_id': id, 'search_default_draft':0 }"
                     invisible="move_type!='out_invoice'"
