@@ -42,7 +42,7 @@
                             type="action"
                             class="oe_stat_button"
                             id="meter_reading_button"
-                            icon="fa-tachometer"
+                            icon="speed"
                             name="%(action_service_meter_reading)d"
                             context="{'search_default_equipment_id': equipment_id,
   'default_equipment_id': equipment_id,

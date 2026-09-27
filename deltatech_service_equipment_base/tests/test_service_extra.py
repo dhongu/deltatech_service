@@ -113,6 +113,15 @@ class TestServiceExtra(TestService):
         self.assertEqual(r2.previous_counter_value, 10.0)
         self.assertEqual(r2.difference, 10.0)
 
+    def test_get_counter_value_sums_differences(self):
+        self._create_reading(self.meter, 10, "2024-01-01")
+        self._create_reading(self.meter, 25, "2024-02-01")
+        self._create_reading(self.meter, 40, "2024-03-01")
+        self.env.flush_all()
+        # diferențele din intervalul [begin, end): 15 (feb) + 15 (mar)
+        self.assertEqual(self.meter.get_counter_value("2024-02-01", "2024-04-01"), 30.0)
+        self.assertEqual(self.meter.get_counter_value("2025-01-01", "2025-02-01"), 0)
+
     def test_meter_reading_onchange_sets_equipment(self):
         reading = Form(self.env["service.meter.reading"])  # no equipment set
         reading.meter_id = self.meter

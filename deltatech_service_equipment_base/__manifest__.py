@@ -5,7 +5,7 @@
 {
     "name": "Services Equipment Base",
     "summary": "Service Equipment Management",
-    "version": "19.0.1.2.8",
+    "version": "20.0.1.2.8",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Equipment",
@@ -13,13 +13,12 @@
     "license": "OPL-1",
     "data": [
         "data/data.xml",
-        "security/service_security.xml",
-        "security/ir.model.access.csv",
         "views/service_location_view.xml",
         "views/service_equipment_view.xml",
         "views/service_meter_view.xml",
         "views/service_config_view.xml",
         "wizard/enter_readings_view.xml",
+        "security/ir.access.csv",
     ],
     "images": ["static/description/main_screenshot.png"],
     "development_status": "Production/Stable",

@@ -204,11 +204,9 @@ class ServiceMeter(models.Model):
                 ("date", "<", end_date),
                 ("meter_id", "=", self.id),
             ]
-            res = self.env["service.meter.reading"].read_group(
-                domain, fields=["difference", "meter_id"], groupby=["meter_id"]
-            )
+            res = self.env["service.meter.reading"]._read_group(domain, ["meter_id"], ["difference:sum"])
             if res:
-                value = res[0].get("difference", 0)
+                value = res[0][1] or 0
         else:
             for meter in self.meter_ids:
                 value += meter.get_counter_value(begin_date, end_date)
@@ -289,7 +287,7 @@ class ServiceMeterReading(models.Model):
                     [
                         ("meter_id", "=", reading.meter_id.id),
                         ("date", "<=", reading.date),
-                        ("id", "!=", reading.id),
+                        ("id", "!=", reading._origin.id),
                     ],
                     limit=1,
                     order="date desc, id desc",

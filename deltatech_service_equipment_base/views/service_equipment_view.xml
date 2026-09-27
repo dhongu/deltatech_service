@@ -33,7 +33,7 @@
                     <div class="oe_button_box" name="button_box" >
                          <button type="object"
                                 name= "action_view_stock_move_lines"
-                                class="oe_stat_button" icon="fa-exchange"
+                                class="oe_stat_button" icon="swap_horiz"
                                  string="Tracking" invisible="not product_id or not serial_id"
                                 />
                     </div>
@@ -98,14 +98,14 @@
                                                     <div class="col-xs-8">
                                                         <strong>
                                                             <span>
-                                                                <t t-esc="record.meter_categ_id.value" />
+                                                                <t t-out="record.meter_categ_id.value" />
                                                             </span>
                                                         </strong>
                                                     </div>
                                                     <div class="col-xs-4">
                                                         <strong>
                                                             <span class="pull-right text-right">
-                                                                <t t-esc="record.total_counter_value.value" />
+                                                                <t t-out="record.total_counter_value.value" />
                                                             </span>
                                                         </strong>
                                                     </div>
@@ -168,7 +168,7 @@
                                 <div class="o_kanban_record_headings mt4">
                                     <strong class="o_kanban_record_title">
                                         <span>
-                                            <t t-esc="record.name.value" />
+                                            <t t-out="record.name.value" />
                                         </span>
                                     </strong>
                                 </div>

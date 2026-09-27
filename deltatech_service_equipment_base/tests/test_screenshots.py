@@ -46,12 +46,12 @@ class TestServiceEquipmentScreenshots(ScreenshotCase or object):
         env.flush_all()
 
         Partner = env["res.partner"]
-        customer = Partner.create({"name": "Tipografia Nord SRL", "is_company": True, "city": "Suceava"})
+        customer = Partner.create({"name": "Tipografia Nord SRL", "vat": "RO14399840", "city": "Suceava"})
         contact = Partner.create({"name": "Ana Moraru", "parent_id": customer.id, "type": "contact"})
         address = Partner.create(
             {"name": "Sediu Suceava", "parent_id": customer.id, "type": "delivery", "street": "Str. Mărășești 12"}
         )
-        manufacturer = Partner.create({"name": "Konica Minolta", "is_company": True})
+        manufacturer = Partner.create({"name": "Konica Minolta"})
         technician = (
             env["res.users"]
             .with_context(no_reset_password=True)
