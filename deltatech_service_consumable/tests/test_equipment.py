@@ -2,8 +2,8 @@
 # See README.rst file on addons root folder for license details
 
 
+from odoo import Command
 from odoo.tests import Form
-from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.deltatech_service_agreement.tests.test_agreement import TestAgreement
 from odoo.addons.deltatech_service_equipment_base.tests.test_service import TestService
@@ -12,8 +12,8 @@ from odoo.addons.deltatech_service_equipment_base.tests.test_service import Test
 class TestAgreementEquipment(TestAgreement, TestService):
     def setUp(self):
         super().setUp()
-        self.get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_for_service = self.get_param("service.picking_type_for_service")
+        self.get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_for_service = self.get_str("service.picking_type_for_service")
         if not picking_type_for_service:
             picking_type_for_service = self.env["stock.picking.type"].create(
                 {
@@ -22,7 +22,7 @@ class TestAgreementEquipment(TestAgreement, TestService):
                     "sequence_code": "TEST",
                 }
             )
-            self.env["ir.config_parameter"].sudo().set_param(
+            self.env["ir.config_parameter"].sudo().set_str(
                 "service.picking_type_for_service", picking_type_for_service.id
             )
 
@@ -80,7 +80,7 @@ class TestAgreementEquipment(TestAgreement, TestService):
         agreement.compute_percent()
 
     def test_picking(self):
-        picking_type_id = safe_eval(self.get_param("service.picking_type_for_service", "False"))
+        picking_type_id = self.env["ir.config_parameter"].sudo().get_int("service.picking_type_for_service")
 
         picking_type_for_service = self.env["stock.picking.type"].browse(picking_type_id)
 
@@ -104,3 +104,66 @@ class TestAgreementEquipment(TestAgreement, TestService):
             self.product_ab.uom_id.id,
             self.product_ab.id,
         )
+
+    def test_picking_validate_costs(self):
+        # costurile consumabilelor livrate pe contract sunt negative (`stock.move.value` la ieșiri),
+        # iar procentul (-1 * costuri / facturat) iese pozitiv
+        picking_type_id = self.env["ir.config_parameter"].sudo().get_int("service.picking_type_for_service")
+        warehouse = self.env["stock.warehouse"].search([("company_id", "=", self.env.company.id)], limit=1)
+        stock_location = warehouse.lot_stock_id
+        customer_location = self.env.ref("stock.stock_location_customers")
+        product = self.env["product.product"].create(
+            {"name": "Toner", "is_storable": True, "standard_price": 10.0, "shelf_life": 100}
+        )
+        self.env["stock.quant"]._update_available_quantity(product, stock_location, 5)
+        agreement = self.env["service.agreement"].create(
+            {
+                "name": "Test Agreement",
+                "partner_id": self.partner_1.id,
+                "type_id": self.agreement_type.id,
+                "cycle_id": self.cycle.id,
+            }
+        )
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner_1.id,
+                "picking_type_id": picking_type_id,
+                "location_id": stock_location.id,
+                "location_dest_id": customer_location.id,
+                "agreement_id": agreement.id,
+                "equipment_id": self.equipment.id,
+                "move_ids": [
+                    Command.create(
+                        {
+                            "product_id": product.id,
+                            "product_uom_qty": 2,
+                            "location_id": stock_location.id,
+                            "location_dest_id": customer_location.id,
+                        }
+                    )
+                ],
+            }
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.move_ids.picked = True
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+        self.assertAlmostEqual(agreement.total_costs, -20.0)
+        agreement.compute_costs()
+        self.assertAlmostEqual(agreement.total_costs, -20.0)
+        agreement.write({"total_invoiced": 100.0})
+        agreement.compute_percent()
+        self.assertAlmostEqual(agreement.total_percent, 20.0)
+
+        self.env.flush_all()  # raportul e un view SQL
+        report = self.env["service.efficiency.report"]
+        groups = report.formatted_read_group(
+            [("equipment_id", "=", self.equipment.id)],
+            groupby=["equipment_id", "product_id"],
+            aggregates=["usage:sum", "shelf_life:sum"],
+        )
+        self.assertEqual(len(groups), 1)
+        self.assertIn("usage:sum", groups[0])
+        item = self.env["service.consumable.item"].create({"type_id": self.equipment_type.id, "product_id": product.id})
+        self.assertEqual(item.with_context(equipment_id=self.equipment.id).quantity, 200.0)

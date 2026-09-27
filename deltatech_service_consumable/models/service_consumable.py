@@ -33,15 +33,13 @@ class ServiceConsumableItem(models.Model):
         ondelete="restrict",
         domain=[("is_storable", "=", True)],
     )
-    quantity = fields.Float(
-        string="Quantity", compute="_compute_quantity", digits="Product Unit of Measure", compute_sudo=True
-    )
+    quantity = fields.Float(string="Quantity", compute="_compute_quantity", digits="Product Unit", compute_sudo=True)
     shelf_life = fields.Float(string="Shelf Life", related="product_id.shelf_life")
     uom_shelf_life = fields.Many2one(string="Shelf Life UoM", related="product_id.uom_shelf_life")
     colors = fields.Char("HTML Colors Index", default="['#a9d70b', '#f9c802', '#ff0000']")
     max_qty = fields.Float(
         string="Quantity Max",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         help="Maximum Quantity allowed",
     )
 
@@ -52,9 +50,9 @@ class ServiceConsumableItem(models.Model):
             rec.equipment_id = equipment
 
     def _compute_quantity(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
+        get_str = self.env["ir.config_parameter"].sudo().get_str
         # todo: se pus acest tip intr-un camp din companie
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
             raise RedirectWarning(
@@ -96,13 +94,12 @@ class ServiceConsumableItem(models.Model):
                         move_qtys += move.product_id.shelf_life * move.product_uom_qty
 
                 eff = self.env["service.efficiency.report"]
-                res = eff.read_group(
+                res = eff.formatted_read_group(
                     domain=[("product_id", "=", item.product_id.id), ("equipment_id", "=", equipment_id)],
-                    fields=["equipment_id", "product_id", "location_dest_id", "usage", "shelf_life"],
                     groupby=["equipment_id", "product_id", "location_dest_id"],
-                    lazy=False,
+                    aggregates=["usage:sum", "shelf_life:sum"],
                 )
-                usage = next((line["usage"] for line in res), 0.0)
+                usage = next((line["usage:sum"] for line in res), 0.0)
                 item.quantity = move_qtys - usage
             else:
                 item.quantity = 0

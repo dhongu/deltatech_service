@@ -20,7 +20,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="picking_button"
-                    icon="fa-sign-out"
+                    icon="logout"
                     name="picking_button"
                 >
                     <div class="o_form_field o_stat_info">
@@ -36,7 +36,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="picking_button"
-                    icon="fa-sign-out"
+                    icon="logout"
                     name="delivered_button"
                 >
                     <span class="o_stat_text">Products delivered</span>

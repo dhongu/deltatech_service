@@ -14,8 +14,8 @@ class ServiceAgreement(models.Model):
 
     def picking_button(self):
         self.ensure_one()
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
 
         pickings = self.env["stock.picking"].search([("agreement_id", "in", self.ids), ("state", "=", "done")])
         context = {
@@ -42,8 +42,8 @@ class ServiceAgreement(models.Model):
         picking_type_for_service type (see button_validate function)
         :return: nothing
         """
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
         for agreement in self:
             partners = self.env["res.partner"]
             partners |= agreement.partner_id

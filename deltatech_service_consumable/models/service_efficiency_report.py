@@ -3,6 +3,7 @@
 
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class ServiceEfficiencyReport(models.Model):
@@ -14,7 +15,7 @@ class ServiceEfficiencyReport(models.Model):
     agreement_id = fields.Many2one("service.agreement", string="Contract Services")
     usage = fields.Float(
         string="Usage",
-        digits="Product UoM",
+        digits="Product Unit",
         readonly=True,
         compute="_compute_usage",
         store=True,
@@ -25,7 +26,7 @@ class ServiceEfficiencyReport(models.Model):
         help="Unit of Measure for Usage",
         index=True,
     )
-    shelf_life = fields.Float(string="Shelf Life", digits="Product UoM")
+    shelf_life = fields.Float(string="Shelf Life", digits="Product Unit")
 
     def _select(self):
         select_str = (
@@ -58,43 +59,49 @@ class ServiceEfficiencyReport(models.Model):
         self.usage = 0.0
 
     @api.model
-    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        res = super().read_group(
-            domain,
-            fields,
-            groupby,
-            offset=offset,
-            limit=limit,
-            orderby=orderby,
-            lazy=lazy,
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None):
+        # In 20.0 `read_group` are altă semnătură și întoarce tupluri; gruparea din interfață (și
+        # `_compute_quantity`) trece prin `formatted_read_group`. `usage` nu se poate agrega în SQL:
+        # se calculează pe fiecare grup din contorul echipamentului, ca în 19.0.
+        res = super().formatted_read_group(
+            domain, groupby, aggregates, having=having, offset=offset, limit=limit, order=order
         )
-
-        if "usage" in fields:
+        usage_specs = [spec for spec in aggregates if spec.split(":")[0] == "usage"]
+        if usage_specs:
             for line in res:
-                begin_date = "2000-01-01"
-                end_date = "2999-12-31"
-                product_id = False
-                uom_usage = False
-                equipment_id = False
-                domain = line.get("__domain", [])
-                for cond in domain:
-                    if cond[0] == "date":
-                        if cond[1] == ">=" or cond[1] == ">":
-                            begin_date = cond[2]
-                        if cond[1] == "<" or cond[1] == "<=":
-                            end_date = cond[2]
-                    if cond[0] == "equipment_id":
-                        equipment_id = cond[2]
-                    if cond[0] == "product_id":
-                        product_id = cond[2]
-                    if cond[0] == "uom_usage":
-                        uom_usage = cond[2]
-
-                usage = self.get_usage(begin_date, end_date, equipment_id, uom_usage, product_id)
-
-                line["usage"] = usage
-
+                usage = self._get_usage_from_domain(Domain(domain) & Domain(line.get("__extra_domain", [])))
+                for spec in usage_specs:
+                    line[spec] = usage
         return res
+
+    @api.model
+    def _get_usage_from_domain(self, domain):
+        begin_date = "2000-01-01"
+        end_date = "2999-12-31"
+        product_id = False
+        uom_usage = False
+        equipment_id = False
+        for cond in Domain(domain).iter_conditions():
+            field_name, operator, value = cond.field_expr, cond.operator, cond.value
+            if isinstance(value, models.BaseModel):
+                value = value.id
+            elif isinstance(value, list | tuple | set | frozenset):
+                # `Domain` normalizează `=` în `in` pe many2one
+                if len(value) != 1:
+                    continue
+                value = next(iter(value))
+            if field_name == "date":
+                if operator in (">=", ">"):
+                    begin_date = value
+                if operator in ("<", "<="):
+                    end_date = value
+            if field_name == "equipment_id":
+                equipment_id = value
+            if field_name == "product_id":
+                product_id = value
+            if field_name == "uom_usage":
+                uom_usage = value
+        return self.get_usage(begin_date, end_date, equipment_id, uom_usage, product_id)
 
     @api.model
     def get_usage(self, begin_date, end_date, equipment_id, uom_usage, product_id):

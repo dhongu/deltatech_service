@@ -22,10 +22,9 @@ class StockPicking(models.Model):
         res = super().button_validate()
         for picking in self:
             if picking.agreement_id:
-                svls = picking.move_ids.stock_valuation_layer_ids
-                value = 0.0
-                for svl in svls:
-                    value += svl.value
+                # `stock.move.value` (fostul `stock.valuation.layer.value`) e negativ la ieșiri:
+                # costurile pe contract sunt negative, ca în 18.0 (vezi `compute_percent`)
+                value = sum(picking.move_ids.mapped("value"))
                 cons_value = picking.agreement_id.total_costs + value
                 picking.agreement_id.sudo().write({"total_costs": cons_value})
             if picking.equipment_id:
@@ -36,8 +35,8 @@ class StockPicking(models.Model):
         # returns False if all is ok, returns string with error if products exceeds max
         # can be called at picking validation
         self.ensure_one()
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
         if not picking_type_id:
             raise UserError(self.env._("Please define the picking type for service."))
         else:

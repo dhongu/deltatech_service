@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+access_service_consumable_item,access_service_consumable_item,service.consumable.item,base.group_user,crud,
+access_service_efficiency_report,access_service_efficiency_report,service.efficiency.report,base.group_user,crud,

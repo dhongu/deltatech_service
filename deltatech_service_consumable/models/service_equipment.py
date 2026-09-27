@@ -37,8 +37,8 @@ class ServiceEquipment(models.Model):
     def new_piking_button(self):
         # todo: de pus in config daca livrarea se face la adresa din echipamente sau contract
 
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
         picking_type = self.env["stock.picking.type"].browse(picking_type_id)
         context = {
             "default_equipment_id": self.id,
@@ -54,7 +54,7 @@ class ServiceEquipment(models.Model):
                 value = {
                     "name": item.product_id.name,
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "uom_id": item.product_id.uom_id.id,
                     "product_uom_qty": 1,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
@@ -74,8 +74,8 @@ class ServiceEquipment(models.Model):
         }
 
     def delivered_button(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
 
         if not picking_type_id:
             action = self.env.ref("stock.action_stock_config_settings").sudo()
@@ -104,8 +104,8 @@ class ServiceEquipment(models.Model):
         }
 
     def picking_button(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
 
         pickings = self.env["stock.picking"].search([("equipment_id", "in", self.ids)])
         context = {

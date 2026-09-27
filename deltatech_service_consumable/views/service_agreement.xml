@@ -10,7 +10,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="picking_button"
-                    icon="fa-sign-out"
+                    icon="logout"
                     name="picking_button"
                 >
                     <div class="o_form_field o_stat_info">
@@ -27,7 +27,7 @@
                 </button>
             </button>
             <button name="show_invoices" position="after">
-                <button class="oe_stat_button" id="totals_button" icon="fa-percent" name="totals_button">
+                <button class="oe_stat_button" id="totals_button" icon="percent" name="totals_button">
                     <div class="o_form_field o_stat_info">
                         <span class="o_stat_value">
                             <field string="Total percent" name="total_percent" />
