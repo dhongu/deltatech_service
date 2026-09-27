@@ -1,0 +1,10 @@
+{
+  "title": "Service Equipment Management",
+  "summary": "Track equipment, meter readings & billing in one place",
+  "icon": "wrench",
+  "features": [
+    "Equipment lifecycle & status tracking",
+    "Meter readings with auto-estimates",
+    "Billing based on consumption"
+  ]
+}
