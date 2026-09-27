@@ -32,7 +32,7 @@
                     decoration-danger="location_type == 'unavailable'"
                 />
                 <field name="last_reading" optional="show" />
-                <field name="next_reading" optional="show" widget="remaining_days" />
+                <field name="next_reading" optional="show" widget="relative_date" />
                 <field name="installation_date" optional="show" />
 
                 <field name="location_id" optional="hide" />
@@ -115,7 +115,7 @@
                     type="action"
                     class="oe_stat_button"
                     id="meter_button"
-                    icon="fa-slack"
+                    icon="oi_slack"
                     name="%(deltatech_service_equipment_base.action_service_meter)d"
                     context="{'search_default_equipment_id': id,'default_equipment_id': id}"
                     groups="deltatech_service_base.group_service_user"
@@ -127,7 +127,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="invoice_button"
-                    icon="fa-pencil-square-o"
+                    icon="edit_square"
                     name="invoice_button"
                     groups="account.group_account_invoice"
                 >
@@ -142,7 +142,7 @@
                     type="action"
                     class="oe_stat_button"
                     id="consumption_button"
-                    icon="fa-line-chart"
+                    icon="show_chart"
                     name="%(deltatech_service_agreement.action_service_consumption)d"
                     context="{'search_default_equipment_id': id,  'search_default_done': 1,  'default_partner_id': partner_id }"
                     groups="account.group_account_invoice"
@@ -159,7 +159,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="common_history_button"
-                    icon="fa-book"
+                    icon="book"
                     name="common_history_button"
                     groups="deltatech_service_base.group_service_user"
                 >
@@ -196,7 +196,7 @@
                         <field name="last_reading" />
                     </group>
                     <group>
-                        <field name="next_reading" widget="remaining_days" />
+                        <field name="next_reading" widget="relative_date" />
                         <field name="readings_status" widget="badge" decoration-success="readings_status == 'done'" />
 
                     </group>

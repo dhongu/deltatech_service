@@ -19,7 +19,9 @@ class ServiceEquipmentCategory(models.Model):
 class ServiceEquipmentType(models.Model):
     _inherit = "service.equipment.type"
 
-    categ_id = fields.Many2one("service.equipment.category", string="Category")
+    # câmp vechi: șabloanele vin din `category_id` (deltatech_service_equipment_base); eticheta
+    # proprie evită WARNING-ul „Two fields ... have the same label" din 20.0
+    categ_id = fields.Many2one("service.equipment.category", string="Legacy Category")
     template_meter_ids = fields.One2many("service.template.meter", related="category_id.template_meter_ids")
 
     @api.depends("categ_id")

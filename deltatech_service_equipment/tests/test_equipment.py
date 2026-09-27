@@ -34,6 +34,8 @@ class TestAgreementEquipment(TestAgreement, TestService):
         agreement.type_id = self.agreement_type
         agreement.cycle_id = self.cycle
         agreement.meter_reading_status = True
+        # citirile din perioada facturată trebuie să fie după data contractului
+        agreement.date_agreement = self.date_range.date_start
 
         with agreement.agreement_line.new() as agreement_line:
             agreement_line.product_id = self.product_ab
@@ -71,8 +73,20 @@ class TestAgreementEquipment(TestAgreement, TestService):
         action = wizard.do_billing()
 
         invoices = self.env["account.move"].search(action["domain"])
+        self.assertEqual(len(invoices), 1)
+        # textul consumului pe contor (echipament + indecși) ajunge pe linia facturii
+        line = invoices.invoice_line_ids.filtered(lambda li: li.agreement_line_id.equipment_id == self.equipment)
+        self.assertEqual(line.quantity, 200)
+        self.assertIn("Old index", line.label)
+        self.assertIn(self.equipment.name, line.label)
         invoices.action_post()
-        # invoices.generate_excel_meters_report()
+        # 20.0: atașamentul se scrie în `raw` (bytes brute), descărcarea pe `field=raw`
+        action = invoices[0].generate_excel_meters_report()
+        self.assertIn("field=raw", action["url"])
+        attachment = self.env["ir.attachment"].search(
+            [("res_model", "=", "account.move"), ("res_id", "=", invoices[0].id)], order="id desc", limit=1
+        )
+        self.assertTrue(bytes(attachment.raw.content).startswith(b"PK"))
 
         self.equipment.compute_totals()
         self.equipment.invoice_button()

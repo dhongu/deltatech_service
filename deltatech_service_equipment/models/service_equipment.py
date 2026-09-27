@@ -18,14 +18,10 @@ class ServiceEquipment(models.Model):
 
     # base_equipment_id = fields.Many2one("maintenance.equipment", required=True, ondelete="cascade")
 
+    # lista de stări o înlocuiește pe cea din deltatech_service_equipment_base; o listă
+    # literală redefinită dă în 20.0 WARNING „overrides existing selection" (pică checklog)
     state = fields.Selection(
-        [
-            ("available", "Available"),
-            ("installing", "In installing"),
-            ("installed", "Installed"),
-            ("inactive", "Inactive"),
-            ("backuped", "Backuped"),
-        ],
+        selection="_get_state_selection",
         default="available",
         string="Status",
         copy=False,
@@ -123,6 +119,16 @@ class ServiceEquipment(models.Model):
         "EAN Code already exist!",
     )
 
+    @api.model
+    def _get_state_selection(self):
+        return [
+            ("available", self.env._("Available")),
+            ("installing", self.env._("In installing")),
+            ("installed", self.env._("Installed")),
+            ("inactive", self.env._("Inactive")),
+            ("backuped", self.env._("Backuped")),
+        ]
+
     @api.depends("serial_id.quant_ids")
     def _compute_location(self):
         for equipment in self:
@@ -151,9 +157,11 @@ class ServiceEquipment(models.Model):
                     for line in invoice.invoice_line_ids:
                         if line.agreement_line_id.equipment_id == equipment:
                             total_invoiced += line.price_subtotal
-            get_param = self.env["ir.config_parameter"].sudo().get_param
-            picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
-            if picking_type_id:
+            get_str = self.env["ir.config_parameter"].sudo().get_str
+            picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
+            # `stock.picking.equipment_id` vine din deltatech_service_consumable, iar valoarea
+            # mișcării (`stock.move.value`, fostul `stock.valuation.layer`) din stock_account
+            if picking_type_id and "equipment_id" in self.env["stock.picking"]._fields:
                 pickings = self.env["stock.picking"].search(
                     [
                         ("equipment_id", "=", equipment.id),
@@ -161,7 +169,9 @@ class ServiceEquipment(models.Model):
                         ("state", "=", "done"),
                     ]
                 )
-                total_consumables = sum(pickings.mapped("move_ids.stock_valuation_layer_ids.value")) or 0.0
+                moves = pickings.move_ids
+                if "value" in moves._fields:
+                    total_consumables = sum(moves.mapped("value")) or 0.0
             equipment.write(
                 {
                     "total_invoiced": total_invoiced,
@@ -304,7 +314,7 @@ class ServiceEquipment(models.Model):
         }
 
     @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
         res_serial = []
         if name and len(name) > 3:
             equipment_ids = self.search(
@@ -313,7 +323,7 @@ class ServiceEquipment(models.Model):
             )
             if equipment_ids:
                 res_serial = [(equipment_id.id, equipment_id.display_name) for equipment_id in equipment_ids]
-        res = super().name_search(name, args, operator=operator, limit=limit) + res_serial
+        res = super().name_search(name, domain, operator=operator, limit=limit) + res_serial
         return res
 
     def _compute_display_name(self):

@@ -2,7 +2,6 @@
 # See README.rst file on addons root folder for license details
 
 
-import base64
 from io import BytesIO
 
 import xlsxwriter
@@ -108,12 +107,12 @@ class AccountInvoice(models.Model):
         worksheet.write(crt_row, 7, total_readings, style)  # "{:,.0f}".format(total_readings), style)
 
         workbook.close()
-        data_file = base64.b64encode(temp_file.getvalue())
+        data_file = temp_file.getvalue()
         file_name = f"export_contori_{self.name}.xls" or self.invoice_date
         attachment = self.env["ir.attachment"].create(
             {
                 "name": file_name,
-                "datas": data_file,
+                "raw": data_file,
                 "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "res_model": "account.move",
                 "res_id": self.id,
@@ -121,7 +120,7 @@ class AccountInvoice(models.Model):
         )
         return {
             "type": "ir.actions.act_url",
-            "url": "/web/content?model={}&download=True&field=datas&id={}&filename={}".format(
+            "url": "/web/content?model={}&download=True&field=raw&id={}&filename={}".format(
                 "ir.attachment", attachment.id, file_name
             ),
             "target": "new",

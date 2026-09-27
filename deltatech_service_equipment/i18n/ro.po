@@ -112,12 +112,14 @@ msgid "Apply"
 msgstr "Aplică"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__state__available
+#. odoo-python
+#: code:addons/deltatech_service_equipment/models/service_equipment.py:0
 msgid "Available"
 msgstr "Disponibil"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__state__backuped
+#. odoo-python
+#: code:addons/deltatech_service_equipment/models/service_equipment.py:0
 msgid "Backuped"
 msgstr "De rezervă"
 
@@ -143,10 +145,14 @@ msgid "Cancel"
 msgstr "Anulează"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equipment_type__categ_id
 #: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_template_meter__categ_id
 msgid "Category"
 msgstr "Categorie"
+
+#. module: deltatech_service_equipment
+#: model:ir.model.fields,field_description:deltatech_service_equipment.field_service_equipment_type__categ_id
+msgid "Legacy Category"
+msgstr "Categorie (veche)"
 
 #. module: deltatech_service_equipment
 #: model:mail.message.subtype,name:deltatech_service_equipment.mt_equipment_change_status
@@ -403,7 +409,8 @@ msgid "In Stock"
 msgstr "În stoc"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__state__installing
+#. odoo-python
+#: code:addons/deltatech_service_equipment/models/service_equipment.py:0
 msgid "In installing"
 msgstr "În instalare"
 
@@ -413,7 +420,8 @@ msgid "In rental"
 msgstr "În chirie"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__state__inactive
+#. odoo-python
+#: code:addons/deltatech_service_equipment/models/service_equipment.py:0
 msgid "Inactive"
 msgstr "Inactiv"
 
@@ -436,7 +444,8 @@ msgid "Installation Date"
 msgstr "Data instalării"
 
 #. module: deltatech_service_equipment
-#: model:ir.model.fields.selection,name:deltatech_service_equipment.selection__service_equipment__state__installed
+#. odoo-python
+#: code:addons/deltatech_service_equipment/models/service_equipment.py:0
 msgid "Installed"
 msgstr "Instalat"
 

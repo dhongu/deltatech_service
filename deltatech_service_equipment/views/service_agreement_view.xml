@@ -11,7 +11,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="service_equipment"
-                    icon="fa-cogs"
+                    icon="settings_applications"
                     name="service_equipment"
                 >
                         <field string="Equipments" name="equipment_count" widget="statinfo" />
@@ -20,7 +20,7 @@
                     type="object"
                     class="oe_stat_button"
                     id="common_history_button"
-                    icon="fa-book"
+                    icon="book"
                     name="common_history_button"
                     groups="deltatech_service_base.group_service_user"
                 >

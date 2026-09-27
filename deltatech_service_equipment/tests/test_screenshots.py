@@ -81,9 +81,7 @@ class TestServiceEquipmentFlowScreenshots(AccountTestInvoicingCommon, Screenshot
         month_2_end = cls.install_date + relativedelta(months=2, days=-1)
 
         Partner = env["res.partner"]
-        cls.customer = Partner.create(
-            {"name": "Tipografia Nord SRL", "is_company": True, "city": "Suceava", "vat": "RO18547290"}
-        )
+        cls.customer = Partner.create({"name": "Tipografia Nord SRL", "city": "Suceava", "vat": "RO18547290"})
         cls.address = Partner.create(
             {"name": "Sediu Suceava", "parent_id": cls.customer.id, "type": "delivery", "street": "Str. Mărășești 12"}
         )
@@ -127,7 +125,7 @@ class TestServiceEquipmentFlowScreenshots(AccountTestInvoicingCommon, Screenshot
                 "readings_required": True,
             }
         )
-        manufacturer = Partner.create({"name": "Canon", "is_company": True})
+        manufacturer = Partner.create({"name": "Canon"})
         model = env["service.equipment.model"].create({"name": "imageRUNNER 1643i"})
         salesman = (
             env["res.users"]
