@@ -1,3 +1,7 @@
+## 19.0.1.2.9 (2026-09-30)
+
+- Own module icon in the flat style of the other modules.
+
 ## 19.0.1.2.8 (2026-09-24)
 
 - Consultant sheet aligned with `deltatech_service_equipment`: the equipment states it replaces, the
