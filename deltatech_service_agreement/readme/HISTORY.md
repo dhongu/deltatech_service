@@ -1,3 +1,7 @@
+## 20.0.2.0.12 (2026-09-30)
+
+- Own module icon in the flat style of the other modules.
+
 ## 19.0.2.0.11 (2026-09-24)
 
 - Posting, cancelling or deleting an invoice or a payment no longer fails with an
