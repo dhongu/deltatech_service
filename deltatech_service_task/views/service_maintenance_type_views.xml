@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_service_maintenance_type_list" model="ir.ui.view">
+        <field name="name">service.maintenance.type.list</field>
+        <field name="model">service.maintenance.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="color" widget="color_picker" />
+                <field name="active" widget="boolean_toggle" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_service_maintenance_type" model="ir.actions.act_window">
+        <field name="name">Maintenance Types</field>
+        <field name="res_model">service.maintenance.type</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'active_test': False}</field>
+    </record>
+
+    <menuitem
+        name="Maintenance Types"
+        id="menu_service_maintenance_type"
+        action="action_service_maintenance_type"
+        parent="deltatech_service_base.menu_service_config"
+        sequence="95"
+    />
+
+    <!-- Marcajul operatiunilor pe sablonul tipului de echipament -->
+    <record id="view_service_equipment_type_form_maintenance" model="ir.ui.view">
+        <field name="name">service.equipment.type.form.maintenance</field>
+        <field name="model">service.equipment.type</field>
+        <field name="inherit_id" ref="deltatech_service_equipment_base.view_service_equipment_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='part_template_ids']/list/field[@name='part_id']" position="after">
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+            <xpath expr="//field[@name='check_template_ids']/list/field[@name='check_id']" position="after">
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+            <xpath
+                expr="//field[@name='measurement_template_ids']/list/field[@name='measurement_id']"
+                position="after"
+            >
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Marcajul pe liniile echipamentului: independent de sablon, ajustabil punctual -->
+    <record id="view_service_equipment_form_maintenance" model="ir.ui.view">
+        <field name="name">service.equipment.form.maintenance</field>
+        <field name="model">service.equipment</field>
+        <field name="inherit_id" ref="deltatech_service_equipment_base.view_service_equipment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='part_ids']/list/field[@name='part_id']" position="after">
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+            <xpath expr="//field[@name='check_ids']/list/field[@name='check_id']" position="after">
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+            <xpath expr="//field[@name='measurement_ids']/list/field[@name='measurement_id']" position="after">
+                <field name="maintenance_type_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form2_maintenance_type" model="ir.ui.view">
+        <field name="name">project.task.form.maintenance.type</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="deltatech_service_task.view_task_form2_inherited" />
+        <field name="arch" type="xml">
+            <field name="service_equipment_id" position="after">
+                <field name="maintenance_type_id" options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

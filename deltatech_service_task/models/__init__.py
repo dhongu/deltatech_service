@@ -3,3 +3,4 @@
 
 from . import project_task
 from . import service_equipment
+from . import service_maintenance_type
