@@ -12,6 +12,23 @@ class ServiceEquipment(models.Model):
     check_history_count = fields.Integer(compute="_compute_task_history")
     measurement_history_count = fields.Integer(compute="_compute_task_history")
 
+    def _values_from_type_templates(self):
+        """Adauga la copierea din sablon tipurile de mentenanta marcate pe fiecare operatiune.
+
+        Se copiaza valoarea, nu legatura: liniile echipamentului raman independente de sablon, deci o
+        ajustare pe un echipament nu atinge sablonul si nici celelalte echipamente de acelasi tip.
+        """
+        parts, checks, measurements = super()._values_from_type_templates()
+        type_ = self.type_id
+        for commands, templates in (
+            (parts, type_.part_template_ids),
+            (checks, type_.check_template_ids),
+            (measurements, type_.measurement_template_ids),
+        ):
+            for command, template in zip(commands, templates, strict=True):
+                command[2]["maintenance_type_ids"] = [(6, 0, template.maintenance_type_ids.ids)]
+        return parts, checks, measurements
+
     def _compute_task_history(self):
         for equipment in self:
             equipment.task_count = self.env["project.task"].search_count([("service_equipment_id", "=", equipment.id)])

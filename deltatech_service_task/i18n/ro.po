@@ -338,3 +338,57 @@ msgstr "Nu se aplică"
 #: model_terms:ir.ui.view,arch_db:deltatech_service_task.view_task_form2_inherited
 msgid "Not applicable"
 msgstr "Nu se aplică"
+
+#. module: deltatech_service_task
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_maintenance_type__active
+msgid "Active"
+msgstr "Activ"
+
+#. module: deltatech_service_task
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_maintenance_type__color
+msgid "Color"
+msgstr "Culoare"
+
+#. module: deltatech_service_task
+#: model:ir.model,name:deltatech_service_task.model_service_maintenance_type
+#: model:ir.model.fields,field_description:deltatech_service_task.field_project_task__maintenance_type_id
+msgid "Maintenance Type"
+msgstr "Tip mentenanță"
+
+#. module: deltatech_service_task
+#: model:ir.actions.act_window,name:deltatech_service_task.action_service_maintenance_type
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_check_template__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_equipment_check__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_equipment_measurement__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_equipment_part__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_maintenance_types_mixin__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_measurement_template__maintenance_type_ids
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_part_template__maintenance_type_ids
+#: model:ir.ui.menu,name:deltatech_service_task.menu_service_maintenance_type
+msgid "Maintenance Types"
+msgstr "Tipuri mentenanță"
+
+#. module: deltatech_service_task
+#: model:ir.model,name:deltatech_service_task.model_service_maintenance_types_mixin
+msgid "Maintenance Types Applicability"
+msgstr "Aplicabilitate tipuri mentenanță"
+
+#. module: deltatech_service_task
+#: model:ir.model.fields,help:deltatech_service_task.field_service_check_template__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_equipment_check__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_equipment_measurement__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_equipment_part__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_maintenance_types_mixin__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_measurement_template__maintenance_type_ids
+#: model:ir.model.fields,help:deltatech_service_task.field_service_part_template__maintenance_type_ids
+msgid ""
+"Maintenance types in which this operation is performed. Leave empty if it is"
+" performed in all of them."
+msgstr ""
+"Tipurile de mentenanță la care se execută operațiunea. Lăsați gol dacă se "
+"execută la toate."
+
+#. module: deltatech_service_task
+#: model:ir.model.fields,field_description:deltatech_service_task.field_service_maintenance_type__name
+msgid "Name"
+msgstr "Nume"
