@@ -1,3 +1,9 @@
+## 19.0.1.2.10
+
+- Schimbarea tipului pe echipament completează din șablon doar listele de operațiuni goale; nu mai
+  rescrie ajustările făcute punctual pe echipament.
+- Buton „Preia operațiunile din șablon”, cu confirmare, pentru resincronizarea deliberată din șablon.
+
 ## 19.0.1.2.9 (2026-09-30)
 
 - Own module icon in the flat style of the other modules.

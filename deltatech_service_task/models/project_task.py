@@ -21,6 +21,9 @@ class ProjectTask(models.Model):
     check_ids = fields.One2many("project.task.check", "task_id", string="Checks", copy=True)
     measurement_ids = fields.One2many("project.task.measurement", "task_id", string="Measurements", copy=True)
     employee_ids = fields.Many2many("hr.employee", string="Team", sudo=True)
+    # Filtreaza operatiunile preluate de pe echipament: se copiaza doar cele marcate cu acest tip si
+    # cele nemarcate. Fara tip, se copiaza toate, ca pana acum.
+    maintenance_type_id = fields.Many2one("service.maintenance.type", string="Maintenance Type")
 
     @api.depends("service_equipment_id.type_id", "child_ids.service_equipment_id.type_id")
     def _compute_equipment_type_summary(self):
@@ -60,6 +63,11 @@ class ProjectTask(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            # Subsarcina pe echipament face parte din aceeasi interventie ca lucrarea-parinte
+            parent_id = vals.get("parent_id") or self.env.context.get("default_parent_id")
+            if parent_id and "maintenance_type_id" not in vals:
+                vals["maintenance_type_id"] = self.browse(parent_id).maintenance_type_id.id
         records = super().create(vals_list)
         for record in records:
             if "user_ids" in record._fields:
@@ -77,6 +85,23 @@ class ProjectTask(models.Model):
         if self.service_location_id and self.service_location_id.partner_id:
             self.partner_id = self.service_location_id.partner_id
 
+    @api.onchange("maintenance_type_id")
+    def _onchange_maintenance_type_id(self):
+        """Refiltreaza operatiunile cand se schimba tipul de mentenanta pe o sarcina cu echipament.
+
+        Doar cat timp nu s-a lucrat pe ele: o linie bifata (OK / N/A) sau o masuratoare completata ar
+        fi pierdute la refacerea listei.
+        """
+        if not self.service_equipment_id:
+            return
+        lucrat = (
+            any(line.is_ok or line.is_not_applicable for line in self.part_ids)
+            or any(line.is_ok or line.is_not_applicable for line in self.check_ids)
+            or any(line.is_not_applicable or line.value for line in self.measurement_ids)
+        )
+        if not lucrat:
+            self._onchange_service_equipment_id()
+
     @api.onchange("service_equipment_id")
     def _onchange_service_equipment_id(self):
         self = self.sudo()
@@ -86,8 +111,11 @@ class ProjectTask(models.Model):
             if self.service_equipment_id.partner_id:
                 self.partner_id = self.service_equipment_id.partner_id
 
+            def pentru_tipul_sarcinii(lines):
+                return lines.filtered(lambda line: line._is_for_maintenance_type(self.maintenance_type_id))
+
             part_list = []
-            for equipment_part in self.service_equipment_id.part_ids:
+            for equipment_part in pentru_tipul_sarcinii(self.service_equipment_id.part_ids):
                 part_list.append(
                     (
                         0,
@@ -100,10 +128,12 @@ class ProjectTask(models.Model):
                         },
                     )
                 )
-            self.part_ids = part_list
+            # Lista se inlocuieste, nu se completeaza: pe o sarcina salvata, operatiunile vechi (alt
+            # echipament sau alt tip de mentenanta) se adunau peste cele noi
+            self.part_ids = [(5, 0, 0)] + part_list
 
             check_list = []
-            for equipment_check in self.service_equipment_id.check_ids:
+            for equipment_check in pentru_tipul_sarcinii(self.service_equipment_id.check_ids):
                 check_list.append(
                     (
                         0,
@@ -115,10 +145,10 @@ class ProjectTask(models.Model):
                         },
                     )
                 )
-            self.check_ids = check_list
+            self.check_ids = [(5, 0, 0)] + check_list
 
             measurement_list = []
-            for equipment_measurement in self.service_equipment_id.measurement_ids:
+            for equipment_measurement in pentru_tipul_sarcinii(self.service_equipment_id.measurement_ids):
                 measurement_list.append(
                     (
                         0,
@@ -130,7 +160,7 @@ class ProjectTask(models.Model):
                         },
                     )
                 )
-            self.measurement_ids = measurement_list
+            self.measurement_ids = [(5, 0, 0)] + measurement_list
 
 
 class ProjectTaskPart(models.Model):

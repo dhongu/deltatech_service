@@ -2,6 +2,7 @@
 # See README.rst file on addons root folder for license details
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class ServiceEquipment(models.Model):
@@ -87,54 +88,88 @@ class ServiceEquipment(models.Model):
         action["domain"] = [("product_id", "in", self.product_id.id), ("lot_id", "=", self.serial_id.id)]
         return action
 
+    def _values_from_type_templates(self):
+        """Liniile de operatiuni, asa cum le declara sablonul tipului de echipament."""
+        self.ensure_one()
+        parts = [
+            (
+                0,
+                0,
+                {
+                    "part_id": t.part_id.id,
+                    "quantity": 1.0,
+                    "sequence": t.sequence,
+                    "note": t.note,
+                },
+            )
+            for t in self.type_id.part_template_ids
+        ]
+        checks = [
+            (
+                0,
+                0,
+                {
+                    "check_id": t.check_id.id,
+                    "sequence": t.sequence,
+                    "note": t.note,
+                },
+            )
+            for t in self.type_id.check_template_ids
+        ]
+        measurements = [
+            (
+                0,
+                0,
+                {
+                    "measurement_id": t.measurement_id.id,
+                    "sequence": t.sequence,
+                    "note": t.note,
+                },
+            )
+            for t in self.type_id.measurement_template_ids
+        ]
+        return parts, checks, measurements
+
     @api.onchange("type_id")
     def onchange_type_id(self):
-        if self.type_id:
-            part_list = []
-            for part_template in self.type_id.part_template_ids:
-                part_list.append(
-                    (
-                        0,
-                        0,
-                        {
-                            "part_id": part_template.part_id.id,
-                            "quantity": 1.0,
-                            "sequence": part_template.sequence,
-                            "note": part_template.note,
-                        },
-                    )
-                )
-            self.part_ids = part_list
+        """Preia operatiunile din sablon, dar NUMAI in listele goale.
 
-            check_list = []
-            for check_template in self.type_id.check_template_ids:
-                check_list.append(
-                    (
-                        0,
-                        0,
-                        {
-                            "check_id": check_template.check_id.id,
-                            "sequence": check_template.sequence,
-                            "note": check_template.note,
-                        },
-                    )
-                )
-            self.check_ids = check_list
+        Pana acum rescria necondiționat toate cele trei liste. Efectul: un echipament pe care cineva
+        ajustase punctual operatiunile isi pierdea tacut configurarea daca i se atingea tipul, chiar
+        si din greseala — iar la un echipament cu zeci de verificari ajustate manual, pierderea nu se
+        observa imediat. Umplerea automata se pastreaza doar acolo unde nu poate distruge nimic, la
+        primul contact cu sablonul. Resincronizarea deliberata se face din buton
+        (`action_update_from_template`), care spune explicit ce urmeaza sa se piarda.
+        """
+        if not self.type_id:
+            return
+        parts, checks, measurements = self._values_from_type_templates()
+        if not self.part_ids:
+            self.part_ids = parts
+        if not self.check_ids:
+            self.check_ids = checks
+        if not self.measurement_ids:
+            self.measurement_ids = measurements
 
-            measurement_list = []
-            for measurement_template in self.type_id.measurement_template_ids:
-                measurement_list.append(
-                    (
-                        0,
-                        0,
-                        {
-                            "measurement_id": measurement_template.measurement_id.id,
-                            "sequence": measurement_template.sequence,
-                            "note": measurement_template.note,
-                        },
+    def action_update_from_template(self):
+        """Rescrie operatiunile din sablonul tipului, inlocuind ce exista pe echipament."""
+        for equipment in self:
+            if not equipment.type_id:
+                raise UserError(
+                    self.env._(
+                        "Equipment %(equipment)s has no type, so there is no template to load the operations from.",
+                        equipment=equipment.display_name,
                     )
                 )
-            self.measurement_ids = measurement_list
+            parts, checks, measurements = equipment._values_from_type_templates()
+            equipment.write(
+                {
+                    "part_ids": [(5, 0, 0)] + parts,
+                    "check_ids": [(5, 0, 0)] + checks,
+                    "measurement_ids": [(5, 0, 0)] + measurements,
+                }
+            )
+        return True
 
     @api.model_create_multi
     def create(self, vals_list):
