@@ -4,7 +4,7 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## CONSUMABLE-001 — P2: Equipment usage is converted with the old factor convention
 
-- **Status:** Open.
+- **Status:** Fixed in 19.0.1.1.8 — `get_usage()` now converts with `meter.uom_id._compute_quantity(usage, uom, round=False)` (no rounding to the target unit, so the report keeps the exact figure); covered by `tests/test_efficiency_report.py` (dozen → unit, unit → dozen, same unit). Priority P2 confirmed.
 - **Location:** `models/service_efficiency_report.py`, `get_usage()`, lines 125–126.
 - **Trigger:** Compute usage when the selected report unit differs from the meter unit.
 - **Actual behavior:** The conversion divides by the source factor and multiplies by the target factor, reversing the Odoo 19 quantity conversion.
@@ -16,4 +16,4 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## Review limitations
 
-Findings are based on local source inspection and the isolated reproductions stated above. No database-backed integration tests were run. No fixes have been applied.
+Findings are based on local source inspection and the isolated reproductions stated above. No database-backed integration tests were run during the review. CONSUMABLE-001 was fixed on 2026-10-01 with database-backed regression tests.
