@@ -16,7 +16,7 @@ class ServiceLocation(models.Model):
         "res.partner",
         string="Contact Person",
         tracking=True,
-        domain=[("type", "=", "contact"), ("is_company", "=", False)],
+        domain=[("type", "=", "contact"), "|", ("parent_id", "!=", False), ("is_company", "=", False)],
     )
     technician_user_id = fields.Many2one("res.users", string="Responsible", tracking=True)
     note = fields.Text(string="Notes")
