@@ -1,7 +1,7 @@
 # Identified bugs
 
-Reviewed: 2026-10-01  
-Target version: Odoo 20.0  
+Reviewed: 2026-10-01
+Target version: Odoo 20.0
 Scope: Initial static review. Full database integration tests have not been run.
 
 ## [P1] Incorrect unit conversion when generating meter consumption

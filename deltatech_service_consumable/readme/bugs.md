@@ -1,7 +1,7 @@
 # Identified bugs
 
-Reviewed: 2026-10-01  
-Target version: Odoo 20.0  
+Reviewed: 2026-10-01
+Target version: Odoo 20.0
 Scope: Initial static review. Full database integration tests have not been run.
 
 ## [P2] Incorrect usage conversion in the efficiency report
