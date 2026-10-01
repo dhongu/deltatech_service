@@ -1,0 +1,19 @@
+# Known bugs
+
+Review date: 2026-10-01. Target version: Odoo 19.
+
+## SERVICE-001 — P1: Delivery actions do not populate their stock moves
+
+- **Status:** Open.
+- **Location:** `models/service_notification.py`, lines 394–406; `models/service_order.py`, lines 265–277; `models/service_warranty.py`, lines 185–197.
+- **Trigger:** Create a delivery from a service notification, service order, or warranty containing products/components.
+- **Actual behavior:** The action context supplies product lines through `default_move_ids_without_package`. Odoo 19's picking form uses `move_ids`, so these defaults do not populate the current relation.
+- **Expected behavior:** The new delivery contains the products and quantities from the source service document.
+- **Impact:** The delivery opens without the intended product lines. Additionally, the prepared move values contain `name`, which has also been removed from the Odoo 19 stock move model; simply renaming the context key is insufficient.
+- **Evidence:** Local Odoo 19 model declarations and inspection of all three delivery actions; no custom compatibility relation was found.
+- **Suggested fix:** Use `default_move_ids` and migrate the stock move values to supported Odoo 19 fields, including the picking description where necessary.
+- **Validation needed:** Open and save a populated delivery from each of the three source document types.
+
+## Review limitations
+
+Verified against the local Odoo 19 source and, where stated, by isolated execution with mocked ORM objects. No database-backed integration tests were run. No fixes have been applied.
