@@ -156,14 +156,16 @@ class ServiceAgreementLine(models.Model):
                 )
 
                 quantity = 0
+                # fara unitate pe linia de contract, factura foloseste unitatea produsului
+                agreement_line = consumption.agreement_line_id
+                to_uom = agreement_line.uom_id or agreement_line.product_id.uom_id
 
                 for reading in readings:
                     from_uom = reading.meter_id.uom_id
-                    to_uom = consumption.agreement_line_id.uom_id
-
-                    amount = reading.difference / from_uom.factor
-                    if to_uom:
-                        amount = amount * to_uom.factor
+                    if from_uom and to_uom:
+                        amount = from_uom._compute_quantity(reading.difference, to_uom, round=False)
+                    else:
+                        amount = reading.difference
 
                     quantity += amount
 
