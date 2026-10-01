@@ -16,7 +16,7 @@ class ServiceEquipment(models.Model):
         "res.partner",
         string="Contact Person",
         tracking=True,
-        domain=[("type", "=", "contact"), ("is_company", "=", False)],
+        domain=[("type", "=", "contact"), "|", ("parent_id", "!=", False), ("is_company", "=", False)],
     )
     service_location_id = fields.Many2one("service.location", string="Functional Location")
     localization = fields.Char(string="Localization", readonly=False)

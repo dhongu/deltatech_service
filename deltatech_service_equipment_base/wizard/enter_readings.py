@@ -11,7 +11,9 @@ class ServiceEnterReading(models.TransientModel):
 
     date = fields.Date(string="Date", index=True, required=True, default=fields.Date.today())
 
-    read_by = fields.Many2one("res.partner", string="Read by", domain=[("is_company", "=", False)])
+    read_by = fields.Many2one(
+        "res.partner", string="Read by", domain=["|", ("parent_id", "!=", False), ("is_company", "=", False)]
+    )
     note = fields.Text(string="Notes")
     items = fields.One2many("service.enter.reading.item", "enter_reading_id")
     error = fields.Text(compute="_compute_error")

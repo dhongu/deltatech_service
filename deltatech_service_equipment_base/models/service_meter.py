@@ -271,7 +271,9 @@ class ServiceMeterReading(models.Model):
         store=True,
     )
 
-    read_by = fields.Many2one("res.partner", string="Read by", domain=[("is_company", "=", False)])
+    read_by = fields.Many2one(
+        "res.partner", string="Read by", domain=["|", ("parent_id", "!=", False), ("is_company", "=", False)]
+    )
     note = fields.Text(string="Notes")
     imported = fields.Boolean(string="Imported")
     company_id = fields.Many2one("res.company", required=True, default=lambda self: self.env.company)
