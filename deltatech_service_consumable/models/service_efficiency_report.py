@@ -127,9 +127,6 @@ class ServiceEfficiencyReport(models.Model):
 
             if meter_find:
                 usage = meter_find.get_counter_value(begin_date, end_date)
-                from_uom = meter_find.uom_id
-                to_uom = uom
-                usage = usage / from_uom.factor
-                usage = usage * to_uom.factor
+                usage = meter_find.uom_id._compute_quantity(usage, uom, round=False)
 
         return usage
