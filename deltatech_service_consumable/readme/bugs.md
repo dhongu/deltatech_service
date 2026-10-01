@@ -6,7 +6,7 @@ Scope: Initial static review. Full database integration tests have not been run.
 
 ## [P2] Incorrect usage conversion in the efficiency report
 
-**Status:** Open — documented, not fixed.
+**Status:** Fixed in 20.0.1.1.8 — `get_usage()` now converts with `meter.uom_id._compute_quantity(usage, uom, round=False)` (no rounding to the target unit, so the report keeps the exact figure); covered by `tests/test_efficiency_report.py` (dozen → unit, unit → dozen, same unit). Priority P2 confirmed.
 
 **Location:** `models/service_efficiency_report.py:132–133` (`get_usage()`). Line numbers refer to the reviewed source and may change.
 
