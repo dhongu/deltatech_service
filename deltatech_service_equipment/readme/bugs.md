@@ -6,7 +6,7 @@ Scope: Initial static review. Full database integration tests have not been run.
 
 ## [P1] Incorrect unit conversion when generating meter consumption
 
-**Status:** Open — documented, not fixed.
+**Status:** Fixed in 20.0.1.1.15 — the conversion now uses `uom.uom._compute_quantity()` (without rounding, as before) from the meter unit to the agreement line unit; when the line has no unit, the product unit is used, since the invoice line falls back to it. Covered by `tests/test_consumption_uom.py` (both directions, line without unit, same unit).
 
 **Location:** `models/service_agreement.py:164–166` (`after_create_consumption()`). Line numbers refer to the reviewed source and may change.
 

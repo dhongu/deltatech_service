@@ -4,4 +4,5 @@
 
 from . import test_equipment
 from . import test_equipment_extra
+from . import test_consumption_uom
 from . import test_screenshots

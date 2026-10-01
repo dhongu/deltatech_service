@@ -1,3 +1,10 @@
+## 20.0.1.1.15 (2026-10-01)
+
+- Consumption generated from meter readings converted the meter unit to the agreement
+  line unit with the inverse ratio (e.g. 2 dozen became 0.1667 units instead of 24).
+  The conversion now uses the standard Odoo unit conversion; a line without a unit
+  uses the product unit.
+
 ## 20.0.1.1.14 (2026-09-30)
 
 - Own module icon in the flat style of the other modules.
