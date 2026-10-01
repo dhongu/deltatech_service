@@ -262,11 +262,10 @@ class ServiceOrder(models.Model):
         )
 
         if self.component_ids:
-            context["default_move_ids_without_package"] = []
+            context["default_move_ids"] = []
 
             for item in self.component_ids:
                 value = {
-                    "name": item.product_id.name,
                     "product_id": item.product_id.id,
                     "product_uom": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
@@ -274,7 +273,7 @@ class ServiceOrder(models.Model):
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
                 }
-                context["default_move_ids_without_package"] += [(0, 0, value)]
+                context["default_move_ids"] += [(0, 0, value)]
 
         return {
             "name": self.env._("Delivery for service"),

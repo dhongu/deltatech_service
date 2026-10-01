@@ -391,11 +391,10 @@ class ServiceNotification(models.Model):
         )
 
         if self.item_ids:
-            context["default_move_ids_without_package"] = []
+            context["default_move_ids"] = []
 
             for item in self.item_ids:
                 value = {
-                    "name": item.product_id.name,
                     "product_id": item.product_id.id,
                     "product_uom": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
@@ -403,7 +402,7 @@ class ServiceNotification(models.Model):
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
                 }
-                context["default_move_ids_without_package"] += [(0, 0, value)]
+                context["default_move_ids"] += [(0, 0, value)]
                 context["notification_id"] = self.id
         return {
             "name": self.env._("Delivery for service"),
@@ -443,7 +442,6 @@ class ServiceNotification(models.Model):
             context["default_move_lines"] = []
             for item in self.item_ids:
                 value = {
-                    "name": item.product_id.name,
                     "product_id": item.product_id.id,
                     "product_uom": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
