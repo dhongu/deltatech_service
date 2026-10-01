@@ -4,7 +4,7 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## SERVICE-001 — P1: Delivery actions do not populate their stock moves
 
-- **Status:** Open.
+- **Status:** Fixed in 19.0.1.2.4. The three delivery actions now pass the lines as `default_move_ids` and no longer send `name`; the picking description is computed from the product by Odoo. Covered by `tests/test_delivery.py` (one test per source document: the delivery is saved and its moves carry the product, quantity and operation type).
 - **Location:** `models/service_notification.py`, lines 394–406; `models/service_order.py`, lines 265–277; `models/service_warranty.py`, lines 185–197.
 - **Trigger:** Create a delivery from a service notification, service order, or warranty containing products/components.
 - **Actual behavior:** The action context supplies product lines through `default_move_ids_without_package`. Odoo 19's picking form uses `move_ids`, so these defaults do not populate the current relation.
@@ -16,4 +16,4 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## Review limitations
 
-Verified against the local Odoo 19 source and, where stated, by isolated execution with mocked ORM objects. No database-backed integration tests were run. No fixes have been applied.
+Verified against the local Odoo 19 source and, where stated, by isolated execution with mocked ORM objects. SERVICE-001 was reproduced and fixed with database-backed tests on 2026-10-01.

@@ -4,4 +4,5 @@
 
 from . import test_notification
 from . import test_order
+from . import test_delivery
 from . import common
