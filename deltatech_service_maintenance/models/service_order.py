@@ -4,7 +4,7 @@
 
 import uuid
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
@@ -314,10 +314,12 @@ class ServiceOrder(models.Model):
         action = self.get_action_sale_order()
         context = {
             "default_partner_id": self.partner_id.id,
-            "default_partner_shipping_id": self.address_id.id,
             "default_service_order_id": self.id,
             "default_notification_id": self.notification_id.id,
         }
+        # without an address the delivery address is computed from the partner
+        if self.address_id:
+            context["default_partner_shipping_id"] = self.address_id.id
 
         route = self.work_center_id.sale_route_id
 
@@ -332,10 +334,10 @@ class ServiceOrder(models.Model):
                     value = {
                         "product_id": item.product_id.id,
                         "product_uom_qty": item.quantity,
-                        "route_id": route.id,
-                        "state": "draft",
                         "order_id": sale_order.id,
                     }
+                    if route:
+                        value["route_ids"] = [Command.set(route.ids)]
                     self.env["sale.order.line"].create(value)
                 else:
                     sale_line.write({"product_uom_qty": item.quantity})
@@ -351,7 +353,6 @@ class ServiceOrder(models.Model):
                         "product_id": item.operation_id.product_id.id,
                         "name": item.operation_id.name,
                         "product_uom_qty": item.duration,
-                        "state": "draft",
                         "order_id": sale_order.id,
                     }
                     self.env["sale.order.line"].create(value)
@@ -362,36 +363,17 @@ class ServiceOrder(models.Model):
             context["pricelist_id"] = self.partner_id.property_product_pricelist.id
             sale_order = self.env["sale.order"].with_context(**context).new()
 
+            sale_line = self.env["sale.order.line"]
             context["default_order_line"] = []
             for item in self.component_ids:
-                value = {
-                    "product_id": item.product_id.id,
-                    "product_uom_qty": item.quantity,
-                    "route_id": route.id,
-                    "state": "draft",
-                    "order_id": sale_order.id,
-                }
-                line = self.env["sale.order.line"].new(value)
-                line.product_id_change()
-                for field in ["name", "price_unit", "product_uom", "tax_id"]:
-                    value[field] = line._fields[field].convert_to_write(line[field], line)
-
-                context["default_order_line"] += [(0, 0, value)]
+                value = sale_line._prepare_service_line_values(sale_order, item.product_id, item.quantity, route=route)
+                context["default_order_line"] += [Command.create(value)]
 
             for item in self.operation_ids:
-                value = {
-                    "product_id": item.operation_id.product_id.id,
-                    "name": item.operation_id.name,
-                    "product_uom_qty": item.duration,
-                    "state": "draft",
-                    "order_id": sale_order.id,
-                }
-                line = self.env["sale.order.line"].new(value)
-                line.product_id_change()
-                for field in ["price_unit", "product_uom", "tax_id"]:
-                    value[field] = line._fields[field].convert_to_write(line[field], line)
-
-                context["default_order_line"] += [(0, 0, value)]
+                value = sale_line._prepare_service_line_values(
+                    sale_order, item.operation_id.product_id, item.duration, name=item.operation_id.name
+                )
+                context["default_order_line"] += [Command.create(value)]
 
         action["context"] = context
         return action

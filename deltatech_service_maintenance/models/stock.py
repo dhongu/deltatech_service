@@ -76,21 +76,37 @@ class StockPicking(models.Model):
                 raise UserError(
                     self.env._("You are not allowed to validate a delivery for a warranty. Please request approval.")
                 )
+        # only the transfers completed by this call update the warranty costs: a wizard
+        # (backorder, immediate transfer) returns before completion
+        not_done = self.filtered(lambda p: p.state != "done")
         res = super().button_validate()
-        for picking in self:
-            if picking.warranty_id:
-                for move in picking.move_ids:
-                    value = 0.0
-                    for layer in move.stock_valuation_layer_ids:
-                        value = +layer.value
-                    line = picking.warranty_id.item_ids.filtered(
-                        lambda p, product_id=move.product_id: p.product_id == product_id
-                    )
-                    if not line or len(line) > 1:
-                        raise UserError(self.env._("No lines or multiple lines in linked warranty found"))
-                    else:
-                        line.write({"price_unit": value / line.quantity if line.quantity else 0.0})
+        for picking in not_done.filtered(lambda p: p.warranty_id and p.state == "done"):
+            picking._update_warranty_costs()
         return res
+
+    def _update_warranty_costs(self):
+        """Write on the warranty items the actual unit cost of the delivered products.
+
+        Odoo 19 keeps the valuation on ``stock.move.value`` (always positive); outgoing
+        moves are the cost, incoming moves (returns) reduce it. The unit cost is the
+        delivered value divided by the delivered quantity, in the unit of the item.
+        """
+        self.ensure_one()
+        moves = self.move_ids.filtered(lambda m: m.state == "done")
+        for product, product_moves in moves.grouped("product_id").items():
+            line = self.warranty_id.item_ids.filtered(lambda p, product=product: p.product_id == product)
+            if len(line) != 1:
+                raise UserError(self.env._("No lines or multiple lines in linked warranty found"))
+            value = 0.0
+            quantity = 0.0
+            for move in product_moves:
+                sign = -1 if move.is_in else 1
+                value += sign * move.value
+                quantity += sign * move.product_uom._compute_quantity(move.quantity, product.uom_id, round=False)
+            price_unit = value / quantity if quantity else 0.0
+            if line.product_uom and line.product_uom != product.uom_id:
+                price_unit = product.uom_id._compute_price(price_unit, line.product_uom)
+            line.write({"price_unit": price_unit})
 
 
 class StockLot(models.Model):
