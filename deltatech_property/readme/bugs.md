@@ -4,7 +4,7 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## PROPERTY-001 — P1: Building area fields reference an absent compute method
 
-- **Status:** Open.
+- **Status:** Fixed in 19.0.1.0.3 — the 17 area-by-usage fields (`surface_office` ... `surface_access`) are computed by `_compute_surface_by_usage()` per building from `room_ids.usage` and `room_ids.surface`; `surface_cleaned_tot` (= administrative + industrial + external) and `surface_derating` (= internal + external) by `_compute_surface_totals()`. `surface_cleaned_adm`, `surface_cleaned_ind` and `surface_derating_int` had no documented formula and are now editable inputs. In the database the fields did not raise: they silently stayed at 0. Covered by tests in `tests/test_surface.py` (usage sums and usage change, every usage field, totals, two buildings in one batch).
 - **Location:** models/property_building.py, fields using compute=_compute_all_surface.
 - **Trigger:** Create or recompute building area fields such as surface_office, surface_cleaned_tot, or surface_derating.
 - **Actual behavior:** Many stored fields reference _compute_all_surface, but that method is absent from the model and its declared dependency sources. Reaching that computation fails instead of assigning the areas.
@@ -37,7 +37,7 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## Review limitations
 
-Findings are based on local source inspection and the isolated reproductions stated above. No database-backed integration tests were run. No fixes have been applied.
+Findings are based on local source inspection and the isolated reproductions stated above. No database-backed integration tests were run during the review. PROPERTY-001 was fixed on 2026-10-02 with database-backed tests.
 
 ## Reverification — 2026-10-01
 
