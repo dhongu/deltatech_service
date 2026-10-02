@@ -26,7 +26,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## EQUIPMENT-002 — P1: Equipment cost refresh still uses the removed stock valuation layer field
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.1.16 — `compute_totals()` reads the cost with the new `stock.move._get_service_signed_value()` (`models/stock_move.py`): `stock.move.value` of the done moves, negative for outgoing and positive for incoming (returns), i.e. the sign of the former valuation layers; non-valued moves count as zero. The picking search runs only when `stock.picking.equipment_id` exists (it is added by `deltatech_service_consumable`), so the refresh no longer fails on an invalid field without that module. Reproduced before the fix (`AttributeError`). Covered by tests in `tests/test_cost_refresh.py` (delivery/return signs, no deliveries, several deliveries) and, for the delivery-validation caller, `deltatech_service_consumable/tests/test_delivery_costs.py`.
 - **Location:** models/service_equipment.py, compute_totals().
 - **Trigger:** Refresh costs with a service picking type configured, including delivery validation that calls compute_totals().
 - **Actual behavior:** The method maps move_ids.stock_valuation_layer_ids.value, but Odoo 19 stock.move has no stock_valuation_layer_ids field.

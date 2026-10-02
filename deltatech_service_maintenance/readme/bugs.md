@@ -37,7 +37,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-003 — P1: Generating new quotations uses removed sale line APIs
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.5 — both `new_sale_order_button()` methods build the lines with the new `sale.order.line._prepare_service_line_values()` (`models/sale.py`), which reads `name`, `price_unit`, `product_uom_id` and `tax_ids` from the Odoo 19 computed fields of a new line instead of `product_id_change()`, `product_uom` and `tax_id`; `route_id` became `route_ids` (also when adding lines to an existing quotation) and the related `state` is no longer written. Without an address on the document, `default_partner_shipping_id` is no longer forced to empty (the saved quotation failed on the required delivery address). Reproduced before the fix (`ValueError: Invalid field 'route_id'`). Covered by tests in `tests/test_removed_api.py` (`TestServiceQuotation`: notification and service order with a component in Dozen, an operation and taxes, saved through the form; update of an existing quotation).
 - **Location:** models/service_notification.py and models/service_order.py, new_sale_order_button().
 - **Trigger:** Generate a new quotation from a notification or service order containing components or operations.
 - **Actual behavior:** Both methods call line.product_id_change(), absent from Odoo 19 sale.order.line. Their subsequent field conversion also accesses old product_uom and tax_id names instead of product_uom_id and tax_ids.
@@ -48,7 +48,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-004 — P1: Warranty delivery validation accesses removed valuation layers
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.5 — `button_validate()` updates the warranty only for pickings completed by the call, through the new `_update_warranty_costs()`: per product, the item unit price is the delivered value (`stock.move.value`, outgoing positive, returns subtracted) divided by the delivered quantity, converted to the item unit. The former code read the last valuation layer only (`value = +layer.value`) and divided by the item quantity. Reproduced before the fix (`AttributeError`). Covered by tests in `tests/test_removed_api.py` (`TestWarrantyDeliveryCosts`: direct validation, backorder wizard, item in Dozen).
 - **Location:** models/stock.py, StockPicking.button_validate().
 - **Trigger:** An authorized approver validates a picking linked to a warranty with stock moves.
 - **Actual behavior:** After parent validation the method iterates move.stock_valuation_layer_ids, a field absent in Odoo 19.

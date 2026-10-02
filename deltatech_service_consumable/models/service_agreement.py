@@ -59,7 +59,7 @@ class ServiceAgreement(models.Model):
                     ("partner_id", "in", partners.ids),
                 ]
             )
-            value = sum(pickings.move_ids.mapped("value"))
+            value = pickings.move_ids._get_service_signed_value()
             agreement.write({"total_costs": value})
 
     def compute_percent(self):

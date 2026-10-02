@@ -26,7 +26,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## CONSUMABLE-002 — P1: Validating agreement deliveries accesses a removed valuation field
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.1.9 — `button_validate()` no longer reads `stock_valuation_layer_ids`; it adds `stock.move._get_service_signed_value()` (from `deltatech_service_equipment` 19.0.1.1.16: `stock.move.value`, negative for outgoing and positive for incoming moves, the former valuation layer sign expected by `compute_percent()`) only for the pickings completed by the call, so the backorder wizard path counts after completion and a repeated call on a done transfer adds nothing. `compute_costs()` uses the same signed value instead of the unsigned `value` sum. Reproduced before the fix (`AttributeError`). Covered by tests in `tests/test_delivery_costs.py` (direct validation, repeated validation, backorder wizard, recompute equal to the accumulated cost).
 - **Location:** `models/stock_picking.py`, `button_validate()`.
 - **Trigger:** Validate a picking with `agreement_id` set.
 - **Actual behavior:** After calling the parent validator, the override reads `picking.move_ids.stock_valuation_layer_ids`. Odoo 19 no longer defines this field on `stock.move`; valuation is represented by the new move-level `value` field.

@@ -5,6 +5,30 @@
 
 from odoo import api, fields, models
 
+# room usage -> building field with the total area of the rooms of that usage
+SURFACE_BY_USAGE = {
+    usage: f"surface_{usage}"
+    for usage in [
+        "office",
+        "living",
+        "bedroom",
+        "meeting",
+        "lobby",
+        "staircase",
+        "kitchen",
+        "sanitary",
+        "laboratory",
+        "it_endowments",
+        "garage",
+        "warehouse",
+        "log_warehouse",
+        "archive",
+        "cloakroom",
+        "premises",
+        "access",
+    ]
+}
+
 
 class PropertyBuilding(models.Model):
     _name = "property.building"
@@ -67,52 +91,48 @@ class PropertyBuilding(models.Model):
         store=True,
     )  # Scc
 
-    surface_office = fields.Float(string="Surface office", compute="_compute_all_surface", store=True)  # Sbir
-    surface_living = fields.Float(string="Surface living", compute="_compute_all_surface", store=True)  #
-    surface_bedroom = fields.Float(string="Surface bedroom", compute="_compute_all_surface", store=True)  #
+    surface_office = fields.Float(string="Surface office", compute="_compute_surface_by_usage", store=True)  # Sbir
+    surface_living = fields.Float(string="Surface living", compute="_compute_surface_by_usage", store=True)  #
+    surface_bedroom = fields.Float(string="Surface bedroom", compute="_compute_surface_by_usage", store=True)  #
 
-    surface_meeting = fields.Float(string="Surface meeting", compute="_compute_all_surface", store=True)  # Ssed
-    surface_lobby = fields.Float(string="Surface lobby", compute="_compute_all_surface", store=True)  # Shol
-    surface_staircase = fields.Float(string="Surface staircase", compute="_compute_all_surface", store=True)  # Scs
-    surface_kitchen = fields.Float(string="Surface kitchen", compute="_compute_all_surface", store=True)  # Sof
-    surface_sanitary = fields.Float(string="Surface sanitary", compute="_compute_all_surface", store=True)  # Sgrs
+    surface_meeting = fields.Float(string="Surface meeting", compute="_compute_surface_by_usage", store=True)  # Ssed
+    surface_lobby = fields.Float(string="Surface lobby", compute="_compute_surface_by_usage", store=True)  # Shol
+    surface_staircase = fields.Float(string="Surface staircase", compute="_compute_surface_by_usage", store=True)  # Scs
+    surface_kitchen = fields.Float(string="Surface kitchen", compute="_compute_surface_by_usage", store=True)  # Sof
+    surface_sanitary = fields.Float(string="Surface sanitary", compute="_compute_surface_by_usage", store=True)  # Sgrs
 
-    surface_laboratory = fields.Float(string="Surface laboratory", compute="_compute_all_surface", store=True)  # Slb
+    surface_laboratory = fields.Float(
+        string="Surface laboratory", compute="_compute_surface_by_usage", store=True
+    )  # Slb
     surface_it_endowments = fields.Float(
-        string="Surface IT endowments", compute="_compute_all_surface", store=True
+        string="Surface IT endowments", compute="_compute_surface_by_usage", store=True
     )  # Sit
-    surface_garage = fields.Float(string="Surface garage", compute="_compute_all_surface", store=True)  # Sgar
-    surface_warehouse = fields.Float(string="Surface warehouse", compute="_compute_all_surface", store=True)  # Smag
+    surface_garage = fields.Float(string="Surface garage", compute="_compute_surface_by_usage", store=True)  # Sgar
+    surface_warehouse = fields.Float(
+        string="Surface warehouse", compute="_compute_surface_by_usage", store=True
+    )  # Smag
     surface_log_warehouse = fields.Float(
-        string="Surface logistic warehouse", compute="_compute_all_surface", store=True
+        string="Surface logistic warehouse", compute="_compute_surface_by_usage", store=True
     )  # Slog
-    surface_archive = fields.Float(string="Surface archive", compute="_compute_all_surface", store=True)  # Sarh
-    surface_cloakroom = fields.Float(string="Surface cloakroom", compute="_compute_all_surface", store=True)  # Sves
-    surface_premises = fields.Float(string="Surface premises", compute="_compute_all_surface", store=True)  # Steh
-    surface_access = fields.Float(string="Surface access", compute="_compute_all_surface", store=True)  # Sacc
+    surface_archive = fields.Float(string="Surface archive", compute="_compute_surface_by_usage", store=True)  # Sarh
+    surface_cloakroom = fields.Float(
+        string="Surface cloakroom", compute="_compute_surface_by_usage", store=True
+    )  # Sves
+    surface_premises = fields.Float(string="Surface premises", compute="_compute_surface_by_usage", store=True)  # Steh
+    surface_access = fields.Float(string="Surface access", compute="_compute_surface_by_usage", store=True)  # Sacc
 
-    surface_cleaned_adm = fields.Float(
-        string="Surface cleaned administratively",
-        compute="_compute_all_surface",
-        store=True,
-    )  # Sca
-    surface_cleaned_ind = fields.Float(
-        string="Surface cleaned industrial", compute="_compute_all_surface", store=True
-    )  # Sci
+    surface_cleaned_adm = fields.Float(string="Surface cleaned administratively")  # Sca
+    surface_cleaned_ind = fields.Float(string="Surface cleaned industrial")  # Sci
 
     surface_cleaned_ext = fields.Float(string="External surface cleaned")  # Scext
     surface_cleaned_tot = fields.Float(
-        string="Total surface cleaned", compute="_compute_all_surface", store=True
-    )  # Stc
+        string="Total surface cleaned", compute="_compute_surface_totals", store=True
+    )  # Stc = Sca + Sci + Scext
 
     surface_derating_ext = fields.Float(string="Surface derating external")  # Sdze
-    surface_derating_int = fields.Float(
-        string="Surface derating internal",
-        compute="_compute_all_surface",
-        store=True,  # Sdzi
-    )  # Sdzt = ∑ Sdzi+Sdze
+    surface_derating_int = fields.Float(string="Surface derating internal")  # Sdzi
     surface_derating = fields.Float(
-        string="Total surface derating", compute="_compute_all_surface", store=True
+        string="Total surface derating", compute="_compute_surface_totals", store=True
     )  # Sdzt = ∑ Sdzi+Sdze
 
     surface_disinsection = fields.Float(
@@ -165,6 +185,32 @@ class PropertyBuilding(models.Model):
     @api.onchange("purpose_id")
     def onchange_purpose_id(self):
         self.purpose_parent_id = self.purpose_id.parent_id
+
+    @api.depends("room_ids.usage", "room_ids.surface")
+    def _compute_surface_by_usage(self):
+        """Area of the rooms of each usage: ``surface_<usage>`` = ∑ surface of the rooms
+        whose ``usage`` is ``<usage>``."""
+        for building in self:
+            surfaces = dict.fromkeys(SURFACE_BY_USAGE, 0.0)
+            for room in building.room_ids:
+                if room.usage in surfaces:
+                    surfaces[room.usage] += room.surface
+            for usage, field_name in SURFACE_BY_USAGE.items():
+                building[field_name] = surfaces[usage]
+
+    @api.depends(
+        "surface_cleaned_adm",
+        "surface_cleaned_ind",
+        "surface_cleaned_ext",
+        "surface_derating_int",
+        "surface_derating_ext",
+    )
+    def _compute_surface_totals(self):
+        for building in self:
+            building.surface_cleaned_tot = (
+                building.surface_cleaned_adm + building.surface_cleaned_ind + building.surface_cleaned_ext
+            )
+            building.surface_derating = building.surface_derating_int + building.surface_derating_ext
 
     @api.depends("room_ids.surface_cleaning_floor", "room_ids.floor_type")
     def _compute_cleaning_floor(self):
