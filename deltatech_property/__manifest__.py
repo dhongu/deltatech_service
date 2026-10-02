@@ -5,7 +5,7 @@
 {
     "name": "Property Management",
     "summary": "Property Management",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Property",
@@ -19,6 +19,7 @@
         "views/property_room_view.xml",
         "data/data.xml",
         "security/ir.model.access.csv",
+        "security/property_security.xml",
     ],
     "application": True,
     "images": [
