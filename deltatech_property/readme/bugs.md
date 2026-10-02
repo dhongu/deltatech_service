@@ -49,7 +49,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## PROPERTY-004 — P1: Property access rights grant public and portal users unrestricted CRUD
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.0.4 — every ACL in `security/ir.model.access.csv` now requires `base.group_user` (public and portal users get no access). New `security/property_security.xml` adds record rules on `property.room`, `property.features` and `building.history` through `building_id`: multi-company (`building_id.company_id in company_ids`), users of `base.group_user` only on buildings whose equipment they follow, `maintenance.group_equipment_manager` on all. `property.land` and `property.building` already inherit the `maintenance.equipment` rules via `_inherits`. Covered by tests in `tests/test_security.py` (public/portal on every model, follower and non-follower internal user, equipment manager, other company).
 - **Location:** `security/ir.model.access.csv`; manifest security data.
 - **Trigger:** A public or portal user accesses property rooms, building history, features or configuration records through ORM-backed endpoints; an internal user accesses another company's property data.
 - **Actual behavior:** Eleven ACL entries have an empty group, granting read, write, create and unlink to every user. No property record rules limit company or parent access. Rooms, features and building history are independent models, so maintenance equipment permissions do not protect their records.
