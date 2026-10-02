@@ -23,3 +23,25 @@ Findings are based on local source inspection and the isolated reproductions sta
 Compared the current local `19.0` source with the original audit snapshot. Repository HEAD: `9ebc487`. This pass verifies source changes; module integration tests and upgrade migrations were not executed on an Odoo database.
 
 - **EQUIPMENT-001 — fixed in source:** the changed implementation addresses the originally documented failure. See the fix description and regression tests above. Deployment and database upgrade are outside this verification.
+
+## EQUIPMENT-002 — P1: Equipment cost refresh still uses the removed stock valuation layer field
+
+- **Status:** Open; reviewed 2026-10-02.
+- **Location:** models/service_equipment.py, compute_totals().
+- **Trigger:** Refresh costs with a service picking type configured, including delivery validation that calls compute_totals().
+- **Actual behavior:** The method maps move_ids.stock_valuation_layer_ids.value, but Odoo 19 stock.move has no stock_valuation_layer_ids field.
+- **Impact:** Cost refresh fails and callers that run it within delivery validation roll back their transaction.
+- **Evidence:** Inspected the method and local Community/Enterprise/custom definitions; no field definition remains. Odoo 19 defines value on stock.move instead. Source verification only.
+- **Suggested fix:** Use the supported Odoo 19 move valuation API and verify outgoing/return signs.
+- **Validation needed:** Cost refresh with zero and several deliveries, returns, and delivery-validation callers.
+
+## EQUIPMENT-003 — P2: Batch meter creation carries categories from previous equipment
+
+- **Status:** Open; reviewed 2026-10-02.
+- **Location:** `models/service_equipment.py`, `create_meters_button()`.
+- **Trigger:** Call meter creation for two equipment records with different meter templates.
+- **Actual behavior:** The `categs` accumulator is initialized outside the equipment loop, so each later equipment receives the categories gathered for earlier equipment too.
+- **Impact:** Extra meters are created for equipment whose type never requested them; uniqueness conflicts can roll back a larger batch.
+- **Evidence:** Executed the actual extracted method with recordset union and creation spies. Equipment 1 requested category 1, equipment 2 category 2; equipment 2 received both categories 1 and 2. No database-backed batch execution.
+- **Suggested fix:** Collect categories independently per equipment, and define repeat-call handling for existing meters.
+- **Validation needed:** Batch of different and identical templates, existing meters, and single-record baseline.

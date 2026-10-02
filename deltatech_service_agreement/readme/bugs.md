@@ -58,3 +58,36 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **AGREEMENT-002 — still open:** no relevant Python, XML, JavaScript or manifest change since the audit snapshot; the documented implementation remains in the current source.
 - **AGREEMENT-003 — still open:** no relevant Python, XML, JavaScript or manifest change since the audit snapshot; the documented implementation remains in the current source.
 - **AGREEMENT-004 — still open:** no relevant Python, XML, JavaScript or manifest change since the audit snapshot; the documented implementation remains in the current source.
+
+## AGREEMENT-005 — P1: Automatic billing cannot pass the preparation wizard contract
+
+- **Status:** Open; reviewed 2026-10-02.
+- **Location:** models/service_agreement.py, make_billing_automation(); wizard/service_billing_preparation.py.
+- **Trigger:** Run the billing cron for an eligible agreement without consumption in the current period.
+- **Actual behavior:** The cron finds service_period but creates the preparation wizard with no service_period_id, a required field with no default. Even if a user default supplies the period, the next step reads res["consumption_ids"], while preparation returns only an action dictionary without that key.
+- **Impact:** Automatic billing fails before invoice creation; finding the period does not pass it into the wizard.
+- **Evidence:** Inspected the complete preparation and automation implementations and their equipment extension. No period default is provided by the code, and the returned dictionary has no consumption_ids entry. No database cron execution.
+- **Suggested fix:** Pass an explicit unique period and company, obtain the created consumptions through a defined method result, and provide the billing journal explicitly.
+- **Validation needed:** Cron with ordinary defaults and a user-provided period default, missing/duplicate periods and generated consumptions.
+
+## AGREEMENT-006 — P1: Contract lines bypass the parent agreement company rules
+
+- **Status:** Open; reviewed 2026-10-02.
+- **Location:** security/service_security.xml; security/ir.model.access.csv; models/service_agreement.py.
+- **Trigger:** An internal user directly reads contract lines belonging to an unauthorized company, or a service user modifies such a line.
+- **Actual behavior:** All internal users have line read access and service users have line write access. Company rules cover service.agreement and service.consumption, but not the independent service.agreement.line model. It contains no parent-access enforcement.
+- **Impact:** Contract product, quantity and pricing information can be exposed, and writable line values changed across company boundaries.
+- **Evidence:** Read the full line model and security data; the stored company_id does not have an accompanying record rule. Parent record rules do not transfer through a Many2one. No database access tests.
+- **Suggested fix:** Apply company isolation and parent agreement permissions to line read/write/create/reassignment.
+- **Validation needed:** Direct searches and writes on lines of another company with the parent agreement inaccessible.
+
+## AGREEMENT-007 — P2: Adding a distributed amount discards the existing quantity multiplier
+
+- **Status:** Open; reviewed 2026-10-02.
+- **Location:** wizard/service_distribution.py, do_distribution().
+- **Trigger:** Distribute an amount of 12 with Add to existing enabled onto a consumption with quantity 3 and unit price 10.
+- **Actual behavior:** The value branch adds 12 to the old unit price and then sets quantity to 1. It preserves 10 instead of the existing amount 30.
+- **Impact:** The resulting consumption amount becomes 22 instead of 42, reducing the amount billed and misrepresenting an additive distribution.
+- **Evidence:** Executed the actual extracted method with a write spy: quantity 3, price 10 and added amount 12 became quantity 1, price 22. No database execution.
+- **Suggested fix:** Preserve the existing total quantity * price_unit before adding the distributed amount, or retain quantities with an explicitly defined allocation policy.
+- **Validation needed:** Quantity 0, 1 and 3, several consumptions, negative adjustments and replacing rather than adding an amount.
