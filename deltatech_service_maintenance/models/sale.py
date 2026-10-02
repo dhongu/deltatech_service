@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -54,3 +54,25 @@ class SaleOrder(models.Model):
             "context": context,
             "type": "ir.actions.act_window",
         }
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    @api.model
+    def _prepare_service_line_values(self, order, product, quantity, name=None, route=None):
+        """Values of a quotation line generated from a service document.
+
+        Odoo 19 removed ``product_id_change()``: description, price, unit and taxes are
+        computed fields of the sale line, read here from a new line of the given order.
+        """
+        values = {"product_id": product.id, "product_uom_qty": quantity}
+        if name:
+            values["name"] = name
+        if route:
+            values["route_ids"] = [Command.set(route.ids)]
+        line = self.new(dict(values, order_id=order.id))
+        for field_name in ["name", "price_unit", "product_uom_id", "tax_ids"]:
+            if field_name not in values:
+                values[field_name] = line._fields[field_name].convert_to_write(line[field_name], line)
+        return values
