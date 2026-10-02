@@ -17,3 +17,9 @@ Review date: 2026-10-01. Target version: Odoo 19.
 ## Review limitations
 
 Verified against the local Odoo 19 source and, where stated, by isolated execution with mocked ORM objects. SERVICE-001 was reproduced and fixed with database-backed tests on 2026-10-01.
+
+## Reverification — 2026-10-01
+
+Compared the current local `19.0` source with the original audit snapshot. Repository HEAD: `9ebc487`. This pass verifies source changes; module integration tests and upgrade migrations were not executed on an Odoo database.
+
+- **SERVICE-001 — fixed in source:** the changed implementation addresses the originally documented failure. See the fix description and regression tests above. Deployment and database upgrade are outside this verification.
