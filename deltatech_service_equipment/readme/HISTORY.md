@@ -1,3 +1,11 @@
+## 19.0.1.1.16 (2026-10-02)
+
+- Refreshing the equipment costs crashed on the removed `stock_valuation_layer_ids`
+  field when a service picking type was configured. The cost is now read from the move
+  valuation (`stock.move.value`), negative for deliveries and positive for returns, as the
+  former valuation layers were; without `deltatech_service_consumable` (which links the
+  transfers to the equipment) the refresh no longer fails (EQUIPMENT-002).
+
 ## 19.0.1.1.15 (2026-10-01)
 
 - Consumption generated from meter readings converted the meter unit to the agreement

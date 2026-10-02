@@ -153,7 +153,8 @@ class ServiceEquipment(models.Model):
                             total_invoiced += line.price_subtotal
             get_param = self.env["ir.config_parameter"].sudo().get_param
             picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
-            if picking_type_id:
+            # stock.picking.equipment_id is added by deltatech_service_consumable
+            if picking_type_id and "equipment_id" in self.env["stock.picking"]._fields:
                 pickings = self.env["stock.picking"].search(
                     [
                         ("equipment_id", "=", equipment.id),
@@ -161,7 +162,7 @@ class ServiceEquipment(models.Model):
                         ("state", "=", "done"),
                     ]
                 )
-                total_consumables = sum(pickings.mapped("move_ids.stock_valuation_layer_ids.value")) or 0.0
+                total_consumables = pickings.move_ids._get_service_signed_value()
             equipment.write(
                 {
                     "total_invoiced": total_invoiced,
