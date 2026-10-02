@@ -4,3 +4,4 @@
 
 from . import test_equipment
 from . import test_efficiency_report
+from . import test_delivery_costs
