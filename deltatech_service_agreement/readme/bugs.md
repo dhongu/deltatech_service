@@ -114,6 +114,28 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Suggested fix:** Define correction/refund behavior explicitly and preserve the intended adjustment amount. If net-negative invoices are unsupported, raise a clear error or create the appropriate credit note. Calculate invoiced_qty from the final allocated invoice quantities, without subtracting free allowances from negative corrections.
 - **Validation needed:** Negative-only corrections, mixed positive/negative lines, multiple negative lines with grouping enabled and disabled, differing prices and units, free allowances and consistency with stored revenues.
 
+## AGREEMENT-010 — P2: Price change wizard converts prices with the user default company
+
+- **Status:** Open. Found on 2026-10-03 while fixing AGREEMENT-001.
+- **Location:** `wizard/service_price_change.py`, `_default_currency()`, `onchange_scanned_ean()`, `do_price_change()`.
+- **Trigger:** A multi-company user whose default company (`env.user.company_id`) differs from the active company or from the company of the selected consumptions, with different company currencies (e.g. default company in RON, consumptions/product in EUR), runs Change price.
+- **Actual behavior:** The default wizard currency, the conversion of the product `list_price` in the onchange and the conversion back to `list_price` in `do_price_change()` all use `env.user.company_id` and its currency/rates, not the active company, the consumption company or the product company. This is the same class of error as AGREEMENT-001.
+- **Evidence:** source inspection of `wizard/service_price_change.py` (four uses of `env.user.company_id`); no reproduction in a database.
+- **Impact:** The proposed price and the `list_price` written back on the product are converted with the wrong currency/rates when the companies differ, so the product sale price can be changed by the exchange-rate factor.
+- **Suggested fix:** Use the consumption company (or the product company, falling back to `env.company`) for the default currency and as the conversion company/target currency, consistent with the AGREEMENT-001 fix.
+- **Validation needed:** Two companies with different currencies, user default company different from the active one; check the proposed price and the resulting product `list_price`.
+
+## AGREEMENT-011 — P3: Billing preparation default falls back to the user default company
+
+- **Status:** Open. Found on 2026-10-03 while fixing AGREEMENT-001.
+- **Location:** `wizard/service_billing_preparation.py`, `ServiceBillingPreparation.default_get()` (the `deltatech_service_equipment` extension of the same wizard does not use the company).
+- **Trigger:** `default_get()` called without `company_id` in the requested fields (e.g. programmatic creation of the wizard), for a user whose default company differs from the active one.
+- **Actual behavior:** The fallback sets `company_id` from `env.user.company_id` instead of `env.company`, and the prefilled agreements are searched with that company, while the field default itself uses `env.company`. Same class of error as AGREEMENT-001.
+- **Evidence:** source inspection of `deltatech_service_agreement/wizard/service_billing_preparation.py` and `deltatech_service_equipment/wizard/service_billing_preparation.py`; no reproduction in a database.
+- **Impact:** Limited: the form requests `company_id`, so the field default (`env.company`) normally applies; only callers that omit the field get agreements of the user default company.
+- **Suggested fix:** Use `self.env.company` in the fallback (or rely on the field default).
+- **Validation needed:** Call `default_get()` without `company_id` with an active company different from the user default company and check the company and the prefilled agreements.
+
 ## Additional review — 2026-10-03
 
 AGREEMENT-008 and AGREEMENT-009 were checked against local Odoo 19 source using isolated executions of actual AST-extracted code with synthetic objects. These checks confirm the method behavior, not database-backed invoice creation, concurrency or account.move validation. No fixes were applied. Existing report content and other local changes were preserved.

@@ -68,3 +68,14 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Evidence:** Executed the actual extracted method with a search spy: input domain `[('parent_id', '=', 42)]`, name `1` and limit 20 produced search domain `[('cod', 'ilike', '01')]` and limit 1. The building purpose field supplies the omitted parent restriction.
 - **Suggested fix:** Combine the caller's domain with the code criterion and honor its limit; retain access-aware ORM search.
 - **Validation needed:** Identical numeric codes under two parents, restricted dropdown selection and nonnumeric searches. Isolated execution only; no database tests.
+
+## PROPERTY-006 — P3: Two room fields share the label "Room usage"
+
+- **Status:** Open. Found on 2026-10-03 while fixing PROPERTY-004.
+- **Location:** `models/property_room.py`, fields `usage` (Selection) and `usage_id` (Many2one `room.usage`).
+- **Trigger:** Load the registry with `deltatech_property` installed.
+- **Actual behavior:** Both fields have `string="Room usage"`, so Odoo logs a warning at startup that two fields of `property.room` have the same label.
+- **Evidence:** source inspection of `models/property_room.py`; startup warning reported during the PROPERTY-004 work; not re-run here.
+- **Impact:** Log noise; the two fields are indistinguishable in filters, group-by, export and custom field selectors.
+- **Suggested fix:** Give each field a distinct label (e.g. "Room usage type" for `usage_id`), or retire one of them, and update `i18n`.
+- **Validation needed:** Start the server/update the module and check that the duplicate-label warning is gone.
