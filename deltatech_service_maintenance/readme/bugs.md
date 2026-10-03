@@ -122,3 +122,14 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Impact:** Dead code that fails on every call; no impact on the standard UI while the button stays commented out, but any re-enabled button or external call crashes.
 - **Suggested fix:** Remove the method (and the commented button), or port it to `move_ids` and drop the misleading `sale_order_id` context key.
 - **Validation needed:** If kept, a test calling the method on a picking with several moves and checking `default_item_ids`.
+
+## SERVICE-011 — P3: Notification user grouping helper uses the user default company and removed APIs
+
+- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Location:** `models/service_notification.py`, `ServiceNotification.company_user()` and the `_group_by_full` class attribute.
+- **Trigger:** None in Odoo 19: `_group_by_full` is no longer read by the ORM, so `company_user()` is never called by the framework; only a direct call reaches it.
+- **Actual behavior:** The helper takes the partner of `env.user.company_id` (the user default company, not `env.company`; same class as AGREEMENT-001 / AGREEMENT-010) and calls `res.users.name_get()`, which no longer exists in Odoo 19, so a direct call raises `AttributeError`.
+- **Evidence:** source inspection of `models/service_notification.py`; no use of `_group_by_full` in the Odoo 19 ORM/web sources and no other caller of `company_user` in the suite. No reproduction in a database.
+- **Impact:** Dead code; no functional impact today, but it would fail and use the wrong company if reconnected.
+- **Suggested fix:** Remove `company_user()` and `_group_by_full`; if grouping by technicians of the company is still wanted, implement it with `group_expand` on `user_id` based on `env.company`.
+- **Validation needed:** Group notifications by technician in the list/kanban views after the cleanup.
