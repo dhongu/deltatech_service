@@ -111,3 +111,14 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Evidence:** Inspected editable item UoM fields and each action dictionary: quantities are copied directly and every product_uom is product_id.uom_id. No database-backed delivery test.
 - **Suggested fix:** Preserve a valid source UoM or convert its quantity into the chosen move UoM.
 - **Validation needed:** Unit/Dozen source lines in each of the three document types and a same-unit baseline.
+
+## SERVICE-010 — P3: Picking "New Notification" method still reads the removed move relation
+
+- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Location:** `models/stock.py`, `StockPicking.new_notification()`.
+- **Trigger:** Call `new_notification()` on a `stock.picking` (RPC or custom code); the form button in `views/stock_view.xml` is commented out, so the method is not reachable from the standard UI.
+- **Actual behavior:** The method reads `self.move_lines`, a `stock.picking` relation removed in Odoo 19 (replaced by `move_ids`), so it raises `AttributeError` before returning the action. It also puts the picking id into the `sale_order_id` context key, copied from the sale order variant in `models/sale.py`.
+- **Evidence:** source inspection of `models/stock.py`, `views/stock_view.xml` (button commented out) and the Odoo 19 `stock.picking` fields; no reproduction in a database.
+- **Impact:** Dead code that fails on every call; no impact on the standard UI while the button stays commented out, but any re-enabled button or external call crashes.
+- **Suggested fix:** Remove the method (and the commented button), or port it to `move_ids` and drop the misleading `sale_order_id` context key.
+- **Validation needed:** If kept, a test calling the method on a picking with several moves and checking `default_item_ids`.
