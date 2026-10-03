@@ -418,6 +418,19 @@ class ServiceAgreementLine(models.Model):
 
     analytic_account_id = fields.Many2one("account.analytic.account", string="Analytic", ondelete="restrict")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # linia face parte din contract: cine o adauga trebuie sa poata modifica contractul
+        agreement_ids = {vals["agreement_id"] for vals in vals_list if vals.get("agreement_id")}
+        self.env["service.agreement"].browse(agreement_ids).check_access("write")
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if vals.get("agreement_id"):
+            # mutarea liniei pe alt contract: verificam accesul si pe contractul nou
+            self.env["service.agreement"].browse(vals["agreement_id"]).check_access("write")
+        return super().write(vals)
+
     @api.model
     def get_value_for_consumption(self):
         # calcul pret unitar din pretul produsului daca in contract este 0

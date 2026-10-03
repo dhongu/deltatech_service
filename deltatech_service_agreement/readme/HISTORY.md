@@ -1,3 +1,23 @@
+## 19.0.2.0.13 (2026-10-03)
+
+- Service billing converted consumption prices into the currency of the user's
+  default company, even when the invoice was issued for another company. A EUR 100
+  consumption of a EUR company, billed by a user whose default company uses RON,
+  became a 500 line on the EUR invoice. Prices are now converted into the invoice
+  currency (journal currency, otherwise the billing company currency) at the rates
+  of the billing company. The invoice currency is set explicitly, and income account
+  and taxes are taken for the billing company. Consumptions of another company are
+  rejected. **Amounts change** for users whose default company differs from the
+  billing company and for journals in a foreign currency.
+- Stored consumption revenues are now in the currency of the consumption company,
+  not in the currency of the default company of the user who triggered the
+  computation. The upgrade recomputes the revenues of invoiced consumptions, so
+  revenue figures change for multi-company / multi-currency databases.
+- Agreement lines had no record rule: any internal user could read, and any service
+  user could modify, lines of agreements of other companies. Lines now follow the
+  multi-company rule of their agreement. Creating a line on an agreement, or moving
+  a line to another agreement, requires write access on that agreement.
+
 ## 19.0.2.0.12 (2026-09-30)
 
 - Own module icon in the flat style of the other modules.

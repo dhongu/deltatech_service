@@ -25,6 +25,13 @@
             <field name="global" eval="True" />
             <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
         </record>
+        <!-- liniile urmeaza compania contractului (company_id e related stocat din agreement_id) -->
+        <record id="service_agreement_line_comp_rule" model="ir.rule">
+            <field name="name">Service Agreement Line multi-company</field>
+            <field name="model_id" ref="model_service_agreement_line" />
+            <field name="global" eval="True" />
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
         <record id="service_consumption_comp_rule" model="ir.rule">
             <field name="name">Service Consumption multi-company</field>
             <field name="model_id" ref="model_service_consumption" />
