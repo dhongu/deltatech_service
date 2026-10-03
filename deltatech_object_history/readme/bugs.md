@@ -4,7 +4,7 @@ Review date: 2026-10-02. Target version: Odoo 19.
 
 ## HISTORY-001 — P1: Document history is readable across unauthorized companies and parent documents
 
-- **Status:** Open.
+- **Status:** Fixed in 19.0.0.0.4 — global multi-company record rule on `object.history` (`security/object_history_security.xml`); `_search()` adds a per-model subquery on the parent document read rules and `_check_access()` rejects rows whose parent is not readable. History of a deleted parent or uninstalled model is visible only to *Object history admin*. New rows take the company of their document. Covered by tests in `tests/test_object_history_access.py` (two companies, unreadable parent, deleted parent, search/count/read).
 - **Location:** `security/ir.model.access.csv`; `models/object_history.py`; manifest security data.
 - **Trigger:** An ordinary internal user searches or reads `object.history` records belonging to another company or a document that the user cannot read.
 - **Actual behavior:** `base.group_user` has read access to every history row. No record rule restricts `company_id`, and the model does not check read access to the referenced `res_model` / `res_id`.

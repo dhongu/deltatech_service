@@ -1,3 +1,12 @@
+## 19.0.0.0.21 (2026-10-03)
+
+- Task parts, checks and measurements did not follow the access rules of their task:
+  a project user could search, read, modify or delete them for tasks of other
+  companies or of private projects. They now follow their task: reading requires
+  read access on the task; creating, modifying, deleting or moving a line to another
+  task requires write access on the task. Searches and counts return only the lines
+  of tasks the user can read.
+
 ## 19.0.0.0.20
 
 - Tip de mentenanță (`service.maintenance.type`, ex. primăvară / toamnă / intermediară), listă

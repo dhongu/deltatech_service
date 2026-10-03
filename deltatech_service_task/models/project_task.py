@@ -2,6 +2,8 @@
 # See README.rst file on addons root folder for license details
 
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
+from odoo.fields import Domain
 
 
 class ProjectTask(models.Model):
@@ -163,8 +165,64 @@ class ProjectTask(models.Model):
             self.measurement_ids = [(5, 0, 0)] + measurement_list
 
 
+class ProjectTaskLineAccessMixin(models.AbstractModel):
+    """Liniile de operatii ale sarcinii (piese, verificari, masuratori) urmeaza drepturile sarcinii.
+
+    Regulile de acces ale project.task (companie, proiecte private, portal) nu se transmit prin
+    Many2one, asa ca le aplicam explicit: citirea cere acces de citire pe sarcina, iar
+    crearea / modificarea / stergerea cer acces de scriere pe sarcina (inclusiv pe sarcina noua,
+    la mutarea liniei).
+    """
+
+    _name = "project.task.line.access.mixin"
+    _description = "Task operation line access (follows the parent task)"
+
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None, *, bypass_access=False, **kwargs):
+        if self.env.su or bypass_access:
+            return super()._search(domain, offset, limit, order, bypass_access=bypass_access, **kwargs)
+        self.browse().check_access("read")
+        task_query = self.env["project.task"].with_context(active_test=False)._search([])
+        domain = Domain(domain) & Domain("task_id", "in", task_query)
+        return super()._search(domain, offset, limit, order, **kwargs)
+
+    def _check_access(self, operation):
+        result = super()._check_access(operation)
+        if not self:
+            return result
+        candidates = self - result[0] if result else self
+        task_operation = "read" if operation == "read" else "write"
+        lines_sudo = candidates.sudo()
+        tasks = lines_sudo.task_id
+        allowed_tasks = tasks.with_env(self.env)._filtered_access(task_operation) if tasks else tasks
+        forbidden = candidates.browse(
+            [line.id for line in lines_sudo if line.task_id and line.task_id not in allowed_tasks]
+        )
+        if not forbidden:
+            return result
+        if result:
+            return result[0] + forbidden, result[1]
+        return forbidden, lambda: forbidden._make_task_access_error(operation)
+
+    def _make_task_access_error(self, operation):
+        return AccessError(
+            self.env._(
+                "You cannot %(operation)s the operation lines of a task you are not allowed to %(task_operation)s.",
+                operation=operation,
+                task_operation="read" if operation == "read" else "modify",
+            )
+        )
+
+    def write(self, vals):
+        if vals.get("task_id"):
+            # mutarea liniei pe alta sarcina: trebuie sa poti modifica si sarcina noua
+            self.env["project.task"].browse(vals["task_id"]).check_access("write")
+        return super().write(vals)
+
+
 class ProjectTaskPart(models.Model):
     _name = "project.task.part"
+    _inherit = ["project.task.line.access.mixin"]
     _description = "Project Task Part"
     _order = "sequence, id"
 
@@ -184,6 +242,7 @@ class ProjectTaskPart(models.Model):
 
 class ProjectTaskCheck(models.Model):
     _name = "project.task.check"
+    _inherit = ["project.task.line.access.mixin"]
     _description = "Project Task Check"
     _order = "sequence, id"
 
@@ -202,6 +261,7 @@ class ProjectTaskCheck(models.Model):
 
 class ProjectTaskMeasurement(models.Model):
     _name = "project.task.measurement"
+    _inherit = ["project.task.line.access.mixin"]
     _description = "Project Task Measurement"
     _order = "sequence, id"
 

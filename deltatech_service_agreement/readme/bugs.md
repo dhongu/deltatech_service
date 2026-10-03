@@ -4,7 +4,7 @@ Review date: 2026-10-01. Target version: Odoo 19.
 
 ## AGREEMENT-001 — P1: Service billing converts prices into the user default company currency
 
-- **Status:** Open.
+- **Status:** Fixed in 19.0.2.0.13 — `do_billing_step1()` converts into the invoice currency (journal currency, otherwise billing company currency) with the billing company rates; the invoice currency is set explicitly; income account and taxes are taken for the billing company; consumptions of another company are rejected; `_compute_revenues()` converts into the consumption company currency (post-migration recomputes stored revenues). Covered by tests in `tests/test_agreement_multicompany.py` (other company in EUR, EUR journal in a USD company, cross-company rejection).
 - **Location:** wizard/service_billing.py, do_billing_step1(); models/service_consumption.py, _compute_revenues().
 - **Trigger:** A user with default company A (RON) bills a EUR 100 consumption in company B (EUR), selecting B and its sales journal in the wizard.
 - **Actual behavior:** Price conversion targets env.user.company_id rather than the wizard/consumption company. At 5 RON/EUR the line price becomes 500, while the invoice is created for company B and its EUR journal. Stored consumption revenues use the same default-company conversion rather than the consumption company.
@@ -72,7 +72,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## AGREEMENT-006 — P1: Contract lines bypass the parent agreement company rules
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.2.0.13 — global multi-company record rule on `service.agreement.line` (`security/service_security.xml`); `create()` and `write()` with `agreement_id` require write access on the target agreement. Covered by tests in `tests/test_agreement_multicompany.py` (search, read, write, create and reassignment across companies).
 - **Location:** security/service_security.xml; security/ir.model.access.csv; models/service_agreement.py.
 - **Trigger:** An internal user directly reads contract lines belonging to an unauthorized company, or a service user modifies such a line.
 - **Actual behavior:** All internal users have line read access and service users have line write access. Company rules cover service.agreement and service.consumption, but not the independent service.agreement.line model. It contains no parent-access enforcement.
@@ -91,3 +91,29 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Evidence:** Executed the actual extracted method with a write spy: quantity 3, price 10 and added amount 12 became quantity 1, price 22. No database execution.
 - **Suggested fix:** Preserve the existing total quantity * price_unit before adding the distributed amount, or retain quantities with an explicitly defined allocation policy.
 - **Validation needed:** Quantity 0, 1 and 3, several consumptions, negative adjustments and replacing rather than adding an amount.
+
+## AGREEMENT-008 — P1: Previously opened billing wizards can invoice the same consumption twice
+
+- **Status:** Open; reviewed 2026-10-03.
+- **Location:** wizard/service_billing.py, default_get(), do_billing_step1(), do_billing().
+- **Trigger:** Open two billing wizards for the same draft consumption, apply the first, then apply the second. A repeated RPC invocation on the original wizard follows the same path.
+- **Actual behavior:** Draft-state selection happens only in default_get. Billing neither rejects nor skips consumptions that already have invoice_id or state done. It prepares the lines again, creates another invoice, and replaces the consumption invoice reference, leaving the first invoice in place.
+- **Impact:** The same service can be charged twice, while the consumption reference exposes only the most recently created invoice.
+- **Evidence:** Executed the actual do_billing_step1 method extracted from its AST with a synthetic consumption. After the first call set state done, assigned invoice_id=99 and called the method again: it prepared quantity 3 twice. Inspected the complete invoice creation path, consumption model and account-move hooks; no reuse guard exists. Invoice creation itself was not executed against a database.
+- **Suggested fix:** Revalidate the selected consumptions at execution time and enforce an atomic claim or lock so concurrent billing attempts cannot both pass. Keep invoice references intact on rejection.
+- **Validation needed:** Two pre-opened wizards applied sequentially, repeated calls and simultaneous transactions; assert one invoice and one stable consumption reference.
+
+## AGREEMENT-009 — P1: Negative service corrections are silently clipped and billed quantities disagree
+
+- **Status:** Open; reviewed 2026-10-03.
+- **Location:** wizard/service_billing.py, add_invoice_line(), do_billing_step1(), do_billing(), especially the negative-line loop.
+- **Trigger:** Bill a negative consumption correcting a previous period with no positive quantity of that product in the new invoice. Alternatively use several negative lines or a negative consumption with a free quantity allowance.
+- **Actual behavior:** Each negative line is capped against the sum of positive quantities in the current invoice. A lone quantity -2 becomes zero. With grouping disabled, quantities 3, -5, -5 become 3, -3, -3 because the same allowance is reused for each negative line. The consumption is still marked done, and invoiced_qty is recorded before clipping. For quantity -2 and free allowance 1, the initial invoice line is -2 but invoiced_qty is -3, even before clipping.
+- **Impact:** A correction for an earlier invoice can disappear entirely while remaining recorded as billed. Invoice quantities and stored invoiced quantities diverge, distorting revenue reporting and reconciliation. The clipping also fails to enforce its apparent aggregate limit when several corrections share a product.
+- **Evidence:** Executed the unmodified negative-line loop extracted from the actual do_billing AST: [-2] became [0], and [3, -5, -5] became [3, -3, -3]. Executed the actual do_billing_step1 method with quantity -2 and free allowance 1: invoiced_qty became -3. Checked add_invoice_line's explicit negative-quantity branch and the revenue computation. No account.move database execution.
+- **Suggested fix:** Define correction/refund behavior explicitly and preserve the intended adjustment amount. If net-negative invoices are unsupported, raise a clear error or create the appropriate credit note. Calculate invoiced_qty from the final allocated invoice quantities, without subtracting free allowances from negative corrections.
+- **Validation needed:** Negative-only corrections, mixed positive/negative lines, multiple negative lines with grouping enabled and disabled, differing prices and units, free allowances and consistency with stored revenues.
+
+## Additional review — 2026-10-03
+
+AGREEMENT-008 and AGREEMENT-009 were checked against local Odoo 19 source using isolated executions of actual AST-extracted code with synthetic objects. These checks confirm the method behavior, not database-backed invoice creation, concurrency or account.move validation. No fixes were applied. Existing report content and other local changes were preserved.
