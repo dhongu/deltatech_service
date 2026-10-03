@@ -63,13 +63,13 @@ class TestTaskLineAccess(TransactionCase):
     def test_search_only_lines_of_readable_tasks(self):
         for model in ("project.task.part", "project.task.check", "project.task.measurement"):
             all_lines = (
-                self._lines(self.task_a)[model] | self._lines(self.task_b)[model] | self._lines(self.task_private)[model]
+                self._lines(self.task_a)[model]
+                | self._lines(self.task_b)[model]
+                | self._lines(self.task_private)[model]
             )
             found = self.env[model].with_user(self.user).search([("id", "in", all_lines.ids)])
             self.assertEqual(found, self._lines(self.task_a)[model], model)
-            self.assertEqual(
-                self.env[model].with_user(self.user).search_count([("id", "in", all_lines.ids)]), 1, model
-            )
+            self.assertEqual(self.env[model].with_user(self.user).search_count([("id", "in", all_lines.ids)]), 1, model)
 
     def test_read_write_unlink_other_company(self):
         self._assert_lines_locked(self.task_b)
@@ -108,7 +108,9 @@ class TestTaskLineAccess(TransactionCase):
             line_as_user.write({"note": "ok"})
             self.assertEqual(line.note, "ok", model)
         new_part = (
-            self.env["project.task.part"].with_user(self.user).create({"task_id": self.task_a.id, "part_id": self.part.id})
+            self.env["project.task.part"]
+            .with_user(self.user)
+            .create({"task_id": self.task_a.id, "part_id": self.part.id})
         )
         new_part.unlink()
         # editing through the task form (one2many commands) keeps working
