@@ -29,7 +29,9 @@ class TestAgreementMultiCompany(AccountTestInvoicingCommon):
             {
                 "name": "Service fee",
                 "type": "service",
-                "taxes_id": [(6, 0, (cls.company_data["default_tax_sale"] | cls.company_b_data["default_tax_sale"]).ids)],
+                "taxes_id": [
+                    (6, 0, (cls.company_data["default_tax_sale"] | cls.company_b_data["default_tax_sale"]).ids)
+                ],
             }
         )
         cls.partner = cls.env["res.partner"].create({"name": "Service customer"})
@@ -181,7 +183,9 @@ class TestAgreementMultiCompany(AccountTestInvoicingCommon):
         line_b = self.agreement_b.agreement_line
         Line = self.env["service.agreement.line"].with_user(self.service_user_a)
         self.assertFalse(Line.search([("id", "=", line_b.id)]))
-        self.assertEqual(Line.search([("id", "in", (line_b | self.agreement_a.agreement_line).ids)]), self.agreement_a.agreement_line)
+        self.assertEqual(
+            Line.search([("id", "in", (line_b | self.agreement_a.agreement_line).ids)]), self.agreement_a.agreement_line
+        )
         with self.assertRaises(AccessError):
             line_b.with_user(self.service_user_a).read(["price_unit", "quantity"])
 

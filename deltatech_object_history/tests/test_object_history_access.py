@@ -37,7 +37,12 @@ class TestObjectHistoryAccess(TransactionCase):
         )
         # same company as the user, but attached to a document the user cannot read
         cls.history_hidden_parent = History.create(
-            {"name": "Hidden parent", "res_model": "res.partner", "res_id": cls.partner_b.id, "company_id": cls.company_a.id}
+            {
+                "name": "Hidden parent",
+                "res_model": "res.partner",
+                "res_id": cls.partner_b.id,
+                "company_id": cls.company_a.id,
+            }
         )
         # no parent document, other company
         cls.history_b = History.create({"name": "Other company", "company_id": cls.company_b.id})
@@ -45,8 +50,12 @@ class TestObjectHistoryAccess(TransactionCase):
         cls.history_free = History.create({"name": "Free note", "company_id": cls.company_a.id})
 
     def _search_as(self, user):
-        return self.env["object.history"].with_user(user).search(
-            [("id", "in", (self.history_a | self.history_hidden_parent | self.history_b | self.history_free).ids)]
+        return (
+            self.env["object.history"]
+            .with_user(user)
+            .search(
+                [("id", "in", (self.history_a | self.history_hidden_parent | self.history_b | self.history_free).ids)]
+            )
         )
 
     def test_search_filters_company_and_parent(self):
