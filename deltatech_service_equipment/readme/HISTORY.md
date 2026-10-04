@@ -1,3 +1,15 @@
+## 20.0.1.1.16 (2026-10-04)
+
+- New `stock.move._get_service_signed_value()`: the valuation (`stock.move.value`) of the
+  done moves, negative for deliveries and positive for returns, as the former valuation
+  layers were; non-valued moves count as zero. The equipment cost refresh uses it, and so
+  does the agreement cost update of `deltatech_service_consumable` (EQUIPMENT-002).
+  Port of 19.0.1.1.16 (dhongu/deltatech_service#104). Adapted for 20.0: Odoo 20 already
+  stores `stock.move.value` with the sign (negative for outgoing moves), so the helper
+  only sums the done moves instead of applying the sign from `is_out` / `is_in`; the
+  removed `stock_valuation_layer_ids` and the guard on `stock.picking.equipment_id` were
+  already handled on 20.0; the test uses `ir.config_parameter.set_str()`.
+
 ## 20.0.1.1.15 (2026-10-01)
 
 - Consumption generated from meter readings converted the meter unit to the agreement
