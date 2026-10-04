@@ -5,6 +5,7 @@ service_consumption_comp_rule,Service Consumption multi-company,service.consumpt
 access_service_agreement_line_user,access_service_agreement_line,service.agreement.line,deltatech_service_base.group_service_user,ru,
 access_service_agreement_line_manager,access_service_agreement_line,service.agreement.line,deltatech_service_base.group_service_manager,crud,
 access_service_agreement_line_public,access_service_agreement_line,service.agreement.line,base.group_user,r,
+service_agreement_line_comp_rule,Service Agreement Line multi-company,service.agreement.line,,crud,"['|',('company_id','=',False),('company_id', 'in', company_ids)]"
 access_service_agreement_user,access_service_agreement,service.agreement,deltatech_service_base.group_service_user,ru,
 access_service_agreement_manager,access_service_agreement,service.agreement,deltatech_service_base.group_service_manager,crud,
 access_service_agreement_public,access_service_agreement,service.agreement,base.group_user,r,

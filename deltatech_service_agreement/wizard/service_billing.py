@@ -55,7 +55,7 @@ class ServiceBilling(models.TransientModel):
 
         active_ids = self.env.context.get("active_ids", False)
         if "company_id" not in defaults:
-            defaults.update({"company_id": self.env.user.company_id.id})
+            defaults.update({"company_id": self.env.company.id})
         domain = [("state", "=", "draft"), ("company_id", "=", defaults["company_id"])]
         if active_ids:
             domain += [("id", "in", active_ids)]
@@ -73,8 +73,11 @@ class ServiceBilling(models.TransientModel):
         #     "out_invoice", cons.product_id, "", self.env.user.company_id
         # )
 
-        accounts = cons.product_id.product_tmpl_id.get_product_accounts()
+        # contul si taxele se iau pentru compania facturii, nu pentru compania implicita a utilizatorului
+        company = self.company_id
+        accounts = cons.product_id.product_tmpl_id.with_company(company).get_product_accounts()
         account_id = accounts["income"]
+        taxes = cons.product_id.taxes_id._filter_taxes_by_company(company)
 
         invoice_line = {
             "product_id": cons.product_id.id,
@@ -86,7 +89,7 @@ class ServiceBilling(models.TransientModel):
             "label": name,
             # todo: de determinat contul
             "account_id": account_id.id,
-            "tax_ids": [(6, 0, ([rec.id for rec in cons.product_id.taxes_id]))],
+            "tax_ids": [(6, 0, taxes.ids)],
             "agreement_line_id": cons.agreement_line_id.id,
             # "analytic_account_id": cons.analytic_account_id.id,  # nu mai e in 16.0
         }
@@ -128,14 +131,30 @@ class ServiceBilling(models.TransientModel):
 
             pre_invoice[cons.date_invoice][key]["agreement_ids"] = cons.agreement_id
 
+    def _get_invoice_currency(self):
+        """Moneda facturii: moneda jurnalului, altfel moneda companiei de facturare."""
+        self.ensure_one()
+        return self.journal_id.currency_id or self.company_id.currency_id
+
+    def _check_consumption_company(self):
+        self.ensure_one()
+        other_company = self.consumption_ids.filtered(lambda c: c.company_id and c.company_id != self.company_id)
+        if other_company:
+            raise UserError(
+                self.env._(
+                    "Consumptions of company %(other)s cannot be invoiced in company %(company)s.",
+                    other=", ".join(other_company.company_id.mapped("name")),
+                    company=self.company_id.name,
+                )
+            )
+
     def do_billing_step1(self, pre_invoice):
+        company = self.company_id
+        to_currency = self._get_invoice_currency()
         for cons in self.consumption_ids:
-            # convertire pret in moneda companeie
+            # convertire pret in moneda facturii, la cursul companiei de facturare
             date = cons.date_invoice or fields.Date.context_today(self)
-            currency = cons.currency_id.with_context(date=cons.date_invoice or fields.Date.context_today(self))
-            to_currency = self.env.user.company_id.currency_id
-            company = self.env.user.company_id
-            price_unit = currency._convert(cons.price_unit, to_currency, company, date)
+            price_unit = cons.currency_id._convert(cons.price_unit, to_currency, company, date)
             name = cons.product_id.name
 
             if cons.name and (cons.agreement_id.invoice_mode == "detail" or not self.group_service):
@@ -162,6 +181,7 @@ class ServiceBilling(models.TransientModel):
                 cons.write({"state": "none"})
 
     def do_billing(self):
+        self._check_consumption_company()
         pre_invoice = {}  # lista de facuri
         agreements = self.env["service.agreement"]
 
@@ -220,6 +240,7 @@ class ServiceBilling(models.TransientModel):
                     "partner_id": pre_invoice[date_invoice][key]["partner_id"],
                     "journal_id": self.journal_id.id,
                     "company_id": self.company_id.id,
+                    "currency_id": self._get_invoice_currency().id,
                     "invoice_date": date_invoice,
                     "invoice_payment_term_id": payment_term_id,
                     # todo: de determinat contul
