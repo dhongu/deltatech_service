@@ -29,3 +29,17 @@ Replace the manual conversion with from_uom._compute_quantity(usage, to_uom), ch
 ### Validation
 
 The field units and conversion semantics were checked against the local Odoo 20 core. The actual core UoM conversion method was executed in isolation: 2 units with factor 12 convert to 24 units with factor 1.
+
+## [P1] CONSUMABLE-002 — Validating agreement deliveries counted the cost before completion or twice
+
+**Status:** Fixed in 20.0.1.1.9 — `button_validate()` adds `stock.move._get_service_signed_value()` (from `deltatech_service_equipment` 20.0.1.1.16: the signed `stock.move.value` of the done moves, negative for outgoing and positive for incoming moves, as expected by `compute_percent()`) only for the pickings completed by the call, so the backorder wizard path counts after completion and a repeated call on a done transfer adds nothing. `compute_costs()` uses the same helper. Covered by `tests/test_delivery_costs.py` (direct validation, repeated validation, backorder wizard, recompute equal to the accumulated cost). Port of the 19.0 fix (dhongu/deltatech_service#104).
+
+**Location:** `models/stock_picking.py`, `button_validate()`; `models/service_agreement.py`, `compute_costs()`.
+
+### Cause
+
+On 19.0 the override read the removed `stock_valuation_layer_ids` field (`AttributeError`); the 20.0 migration had already replaced it with `stock.move.value`. On both versions the cost was added for every picking in `self`, also when `super().button_validate()` returned a wizard (picking not done yet) or the picking was already done.
+
+### Impact
+
+A backorder wizard or a repeated validation added the cost of a transfer to the agreement before completion or more than once, distorting `compute_percent()`.

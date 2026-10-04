@@ -29,3 +29,13 @@ Replace the manual factor calculation with from_uom._compute_quantity(reading.di
 ### Validation
 
 The field units and conversion semantics were checked against the local Odoo 20 core. The actual core UoM conversion method was executed in isolation: 2 units with factor 12 convert to 24 units with factor 1.
+
+## [P1] EQUIPMENT-002 — Equipment cost refresh used the removed stock valuation layers
+
+**Status:** Fixed in 20.0.1.1.16 — `compute_totals()` reads the cost with the new `stock.move._get_service_signed_value()` (`models/stock_move.py`): the sum of `stock.move.value` of the done moves, which in Odoo 20 is already negative for outgoing and positive for incoming moves (the sign of the former valuation layers); non-valued moves count as zero. The picking search runs only when `stock.picking.equipment_id` exists (added by `deltatech_service_consumable`). Covered by `tests/test_cost_refresh.py` and, for the delivery-validation caller, `deltatech_service_consumable/tests/test_delivery_costs.py`. Port of the 19.0 fix (dhongu/deltatech_service#104).
+
+**Location:** `models/service_equipment.py`, `compute_totals()`.
+
+### Cause
+
+On 19.0 the method read `move_ids.stock_valuation_layer_ids.value`, a field that no longer exists (`AttributeError`). The 20.0 migration had already replaced it with `stock.move.value` and guarded the search; the port only moves the computation into a shared helper used by `deltatech_service_consumable` as well.

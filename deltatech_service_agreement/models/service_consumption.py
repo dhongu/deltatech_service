@@ -123,13 +123,15 @@ class ServiceConsumption(models.Model):
         "Agreement line in period already exist!",
     )
 
-    @api.depends("price_unit", "invoiced_qty", "date_invoice")
+    @api.depends("price_unit", "invoiced_qty", "date_invoice", "currency_id", "company_id")
     def _compute_revenues(self):
+        # veniturile sunt in moneda companiei consumului, nu a companiei implicite a utilizatorului
         for consumption in self:
+            company = consumption.company_id or self.env.company
             consumption.revenues = consumption.currency_id._convert(
                 from_amount=consumption.price_unit * consumption.invoiced_qty,
-                to_currency=self.env.user.company_id.currency_id,
-                company=self.env.user.company_id,
+                to_currency=company.currency_id,
+                company=company,
                 date=consumption.date_invoice or fields.Date.today(),
             )
 

@@ -169,9 +169,7 @@ class ServiceEquipment(models.Model):
                         ("state", "=", "done"),
                     ]
                 )
-                moves = pickings.move_ids
-                if "value" in moves._fields:
-                    total_consumables = sum(moves.mapped("value")) or 0.0
+                total_consumables = pickings.move_ids._get_service_signed_value()
             equipment.write(
                 {
                     "total_invoiced": total_invoiced,
