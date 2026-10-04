@@ -19,12 +19,14 @@ class StockPicking(models.Model):
             picking.agreement_id = picking.equipment_id.agreement_id
 
     def button_validate(self):
+        # only the transfers completed by this call update the costs: a wizard
+        # (backorder, immediate transfer) returns before completion and a transfer
+        # already done must not be counted twice
+        not_done = self.filtered(lambda p: p.state != "done")
         res = super().button_validate()
-        for picking in self:
+        for picking in not_done.filtered(lambda p: p.state == "done"):
             if picking.agreement_id:
-                # `stock.move.value` (fostul `stock.valuation.layer.value`) e negativ la ieșiri:
-                # costurile pe contract sunt negative, ca în 18.0 (vezi `compute_percent`)
-                value = sum(picking.move_ids.mapped("value"))
+                value = picking.move_ids._get_service_signed_value()
                 cons_value = picking.agreement_id.total_costs + value
                 picking.agreement_id.sudo().write({"total_costs": cons_value})
             if picking.equipment_id:

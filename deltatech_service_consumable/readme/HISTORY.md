@@ -1,3 +1,15 @@
+## 20.0.1.1.9 (2026-10-04)
+
+- Validating a delivery linked to a service agreement added the move value to the
+  agreement costs on every call, also when the backorder wizard was returned (before
+  the transfer was done) or when the transfer was already done. The cost is now added
+  only for transfers completed by the call, with
+  `stock.move._get_service_signed_value()` (deliveries negative, returns positive, as
+  expected by `compute_percent()`); "Recompute costs" uses the same value
+  (CONSUMABLE-002). Port of 19.0.1.1.9 (dhongu/deltatech_service#104); on 20.0 the
+  removed `stock_valuation_layer_ids` was already replaced by the (signed) `stock.move.value`,
+  and the tests use `ir.config_parameter.set_str()` instead of the removed `set_param()`.
+
 ## 20.0.1.1.8 (2026-10-01)
 
 - Efficiency report: meter usage is converted to the report unit with `_compute_quantity()`
