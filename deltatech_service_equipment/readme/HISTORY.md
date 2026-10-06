@@ -1,3 +1,8 @@
+## 19.0.1.1.18 (2026-10-06)
+
+- The equipment dropdown shows address, emplacement and serial number in a second, dimmed
+  column; the plain name (`reference/address/emplacement/serial`) used on invoice lines is unchanged.
+
 ## 19.0.1.1.17 (2026-10-06)
 
 - Searching an equipment by serial number or EAN code ignored the domain of the field
