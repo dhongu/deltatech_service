@@ -22,8 +22,6 @@ class TestEquipmentDisplayNameFull(TransactionCase):
         self.assertEqual(bare.display_name, "EQ-BARE")
 
         ctx = {"formatted_display_name": True}
-        self.assertEqual(
-            equipment.with_context(**ctx).display_name, "EQ-FULL\t--Sediu Test · Etaj 2 · SN-0002--"
-        )
+        self.assertEqual(equipment.with_context(**ctx).display_name, "EQ-FULL\t--Sediu Test · Etaj 2 · SN-0002--")
         self.assertEqual(partial.with_context(**ctx).display_name, "EQ-PART\t--Hol--")
         self.assertEqual(bare.with_context(**ctx).display_name, "EQ-BARE")

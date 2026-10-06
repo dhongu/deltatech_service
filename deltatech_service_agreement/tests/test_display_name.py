@@ -25,6 +25,4 @@ class TestAgreementDisplayName(TransactionCase):
 
         agreement.date_agreement = False
         self.assertEqual(agreement.display_name, "CTR-TEST")
-        self.assertEqual(
-            agreement.with_context(formatted_display_name=True).display_name, "CTR-TEST\t--Client Test--"
-        )
+        self.assertEqual(agreement.with_context(formatted_display_name=True).display_name, "CTR-TEST\t--Client Test--")
