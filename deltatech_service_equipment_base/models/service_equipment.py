@@ -198,10 +198,16 @@ class ServiceEquipment(models.Model):
             if move_line:
                 self.vendor_id = move_line.picking_id.partner_id
 
+    @api.depends("name", "serial_id.name")
+    @api.depends_context("formatted_display_name")
     def _compute_display_name(self):
+        formatted = self.env.context.get("formatted_display_name")
         for equipment in self:
             display_name = equipment.name
-            if equipment.serial_id:
+            if formatted:
+                if equipment.serial_id.name:
+                    display_name = f"{equipment.name or ''}\t--{equipment.serial_id.name}--"
+            elif equipment.serial_id:
                 display_name += " / " + equipment.serial_id.name
             equipment.display_name = display_name
 
