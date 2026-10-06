@@ -5,3 +5,4 @@
 from . import test_service
 from . import test_service_extra
 from . import test_screenshots
+from . import test_display_name
