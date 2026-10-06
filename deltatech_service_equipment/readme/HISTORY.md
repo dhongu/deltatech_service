@@ -1,3 +1,10 @@
+## 19.0.1.1.17 (2026-10-06)
+
+- Searching an equipment by serial number or EAN code ignored the domain of the field
+  and the result limit, and could list the same equipment twice. The serial number and
+  the EAN code are now searched together with the name (also from the search bar), so
+  the domain and the limit apply to all results.
+
 ## 19.0.1.1.16 (2026-10-02)
 
 - Refreshing the equipment costs crashed on the removed `stock_valuation_layer_ids`
