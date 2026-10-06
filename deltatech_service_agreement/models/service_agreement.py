@@ -276,14 +276,24 @@ class ServiceAgreement(models.Model):
 
                 agreement.next_date_invoice = next_date  # fields.Date.to_string(next_date)
 
-    @api.depends("name", "date_agreement")
+    @api.depends("name", "date_agreement", "partner_id.name")
+    @api.depends_context("formatted_display_name", "uid")
     def _compute_display_name(self):
-        crt_lang = self.env.user.lang
-        lang = self.env["res.lang"].search([("code", "=", crt_lang)])
-        lang.ensure_one()
-        date_format = lang.date_format
+        date_format = self.env["res.lang"]._get_data(code=self.env.user.lang).date_format or "%m/%d/%Y"
+        formatted = self.env.context.get("formatted_display_name")
         for agreement in self:
-            if agreement.date_agreement:
+            if formatted:
+                details = " · ".join(
+                    part
+                    for part in (
+                        agreement.partner_id.name,
+                        agreement.date_agreement and agreement.date_agreement.strftime(date_format),
+                    )
+                    if part
+                )
+                name = agreement.name or ""
+                agreement.display_name = f"{name}\t--{details}--" if details else name
+            elif agreement.date_agreement:
                 agreement.display_name = agreement.name + " / " + agreement.date_agreement.strftime(date_format)
             else:
                 agreement.display_name = agreement.name

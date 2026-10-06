@@ -1,3 +1,9 @@
+## 19.0.2.0.14 (2026-10-06)
+
+- The agreement dropdown shows the partner and the agreement date in a second, dimmed column;
+  the plain name (`number / date`) is unchanged. The date format is read from the cached
+  language data instead of searching `res.lang` on every computation.
+
 ## 19.0.2.0.13 (2026-10-03)
 
 - Service billing converted consumption prices into the currency of the user's

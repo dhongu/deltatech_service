@@ -4,3 +4,4 @@
 
 from . import test_agreement
 from . import test_agreement_multicompany
+from . import test_display_name
