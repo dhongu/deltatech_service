@@ -41,9 +41,7 @@ class TestEquipmentNameSearch(TransactionCase):
         self.assertEqual(Equipment.search([("display_name", "ilike", "SNX-ALPHA-002")]), self.eq_b)
 
     def test_domain_respected(self):
-        res = self.env["service.equipment"].name_search(
-            "SNX-ALPHA", domain=[("partner_id", "=", self.partner_a.id)]
-        )
+        res = self.env["service.equipment"].name_search("SNX-ALPHA", domain=[("partner_id", "=", self.partner_a.id)])
         self.assertEqual(self._ids(res), [self.eq_a.id])
 
     def test_no_duplicates_and_limit(self):
