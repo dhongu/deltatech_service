@@ -839,6 +839,18 @@ msgid "On the way"
 msgstr "În curs"
 
 #. module: deltatech_service_maintenance
+#. odoo-python
+#: code:addons/deltatech_service_maintenance/models/service_warranty.py:0
+msgid "Only warranties waiting for approval can be approved."
+msgstr "Doar garanțiile care așteaptă aprobarea pot fi aprobate."
+
+#. module: deltatech_service_maintenance
+#. odoo-python
+#: code:addons/deltatech_service_maintenance/models/service_warranty.py:0
+msgid "Only warranty approvers or managers can approve warranties."
+msgstr "Doar aprobatorii sau managerii de garanții pot aproba garanțiile."
+
+#. module: deltatech_service_maintenance
 #: model:ir.ui.menu,name:deltatech_service_maintenance.menu_service_operating_parameter
 msgid "Operating Parameter"
 msgstr "Parametri de Operare"

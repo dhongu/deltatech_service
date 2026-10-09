@@ -4,7 +4,7 @@
 
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tools.safe_eval import safe_eval
 
 # flux garantii si reconditionari
@@ -229,6 +229,13 @@ class ServiceWarranty(models.Model):
         self.state = "approval_requested"
 
     def approve(self):
+        if not self.env.su and not (
+            self.env.user.has_group("deltatech_service_base.group_warranty_approve")
+            or self.env.user.has_group("deltatech_service_base.group_warranty_manager")
+        ):
+            raise AccessError(self.env._("Only warranty approvers or managers can approve warranties."))
+        if any(warranty.state != "approval_requested" for warranty in self):
+            raise UserError(self.env._("Only warranties waiting for approval can be approved."))
         self.state = "approved"
 
     def set_done(self):
