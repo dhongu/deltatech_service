@@ -12,6 +12,12 @@
   Corrections are now billed in full and the billed quantity is the same on the line and on the
   consumption. **Behavior change**: when the net value is negative a credit note is created instead of an
   invoice; a partial correction stays a negative line on the invoice.
+  Each correction now references the invoice it corrects: the line description says "Correction of
+  invoice <number> from <date>", the document reference lists the corrected invoices, and a credit note
+  correcting a single invoice is linked to it. The correction line uses the taxes of the original invoice
+  line (VAT rate of the original operation); if that line cannot be identified, a warning is posted in the
+  document chatter. A correction without a posted original invoice is refused in manual billing and its
+  agreement is skipped (with a log entry) by automatic billing.
 
 ## 19.0.2.0.15 (2026-10-09)
 

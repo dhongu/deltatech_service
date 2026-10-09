@@ -4,7 +4,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, format_date
 
 
 class ServiceBilling(models.TransientModel):
@@ -79,6 +79,37 @@ class ServiceBilling(models.TransientModel):
             return cons.quantity
         return max(cons.quantity - cons.agreement_line_id.quantity_free, 0.0)
 
+    @api.model
+    def _find_corrected_invoice(self, cons):
+        """Factura initiala corectata de un consum negativ.
+
+        Ultimul consum pozitiv facturat pe aceeasi linie de contract, dintr-o perioada
+        anterioara perioadei corectiei, cu factura de client postata. Gol daca nu exista.
+        """
+        Consumption = self.env["service.consumption"]
+        if cons.quantity >= 0 or not cons.agreement_line_id:
+            return self.env["account.move"]
+        domain = [
+            ("agreement_line_id", "=", cons.agreement_line_id.id),
+            ("id", "!=", cons.id),
+            ("state", "=", "done"),
+            ("quantity", ">", 0),
+            ("invoice_id.state", "=", "posted"),
+            ("invoice_id.move_type", "=", "out_invoice"),
+        ]
+        if cons.service_period_id:
+            domain.append(("service_period_id.date_start", "<", cons.service_period_id.date_start))
+        previous = Consumption.search(domain)
+        if not previous:
+            return self.env["account.move"]
+        previous = previous.sorted(lambda c: (c.service_period_id.date_start or fields.Date.today(), c.id))
+        return previous[-1].invoice_id
+
+    @api.model
+    def _get_corrections_without_invoice(self, consumptions):
+        """Consumurile negative pentru care nu se gaseste factura initiala."""
+        return consumptions.filtered(lambda c: c.quantity < 0 and not self._find_corrected_invoice(c))
+
     def add_invoice_line(self, cons, pre_invoice, price_unit, name, key):
         # nu mai exista get_invoice_line_account  in V14
         # account_id = self.env["account.move.line"].get_invoice_line_account(
@@ -104,14 +135,57 @@ class ServiceBilling(models.TransientModel):
             # "analytic_account_id": cons.analytic_account_id.id,  # nu mai e in 16.0
         }
 
+        # corectie: referinta la factura initiala (art. 319 alin. (20) lit. r) CF) si
+        # taxele liniei din factura initiala (cota operatiunii de baza)
+        corrected_invoice = self.env["account.move"]
+        warning = False
+        if cons.quantity < 0:
+            corrected_invoice = self._find_corrected_invoice(cons)
+            if not corrected_invoice:
+                raise UserError(
+                    self.env._(
+                        "The correction of product %(product)s on agreement %(agreement)s cannot be invoiced: "
+                        "no posted invoice was found for an earlier consumption of this agreement line.",
+                        product=cons.product_id.display_name,
+                        agreement=cons.agreement_id.name,
+                    )
+                )
+            invoice_line["name"] = "{} - {}".format(
+                name,
+                self.env._(
+                    "Correction of invoice %(invoice)s from %(date)s",
+                    invoice=corrected_invoice.name,
+                    date=format_date(self.env, corrected_invoice.invoice_date),
+                ),
+            )
+            original_lines = corrected_invoice.invoice_line_ids.filtered(
+                lambda line: line.product_id == cons.product_id
+            )
+            same_agreement_line = original_lines.filtered(lambda line: line.agreement_line_id == cons.agreement_line_id)
+            original_line = (same_agreement_line or original_lines)[:1]
+            if original_line:
+                invoice_line["tax_ids"] = [(6, 0, original_line.tax_ids.ids)]
+            else:
+                warning = self.env._(
+                    "The line of product %(product)s was not found on the corrected invoice %(invoice)s: "
+                    "check that the correction uses the VAT rate of the original operation.",
+                    product=cons.product_id.display_name,
+                    invoice=corrected_invoice.name,
+                )
+
         if pre_invoice[cons.date_invoice].get(key, False):
+            pre_invoice[cons.date_invoice][key]["corrected_invoices"] |= corrected_invoice
+            if warning:
+                pre_invoice[cons.date_invoice][key]["warnings"].append(warning)
             is_prod = False
             if (
-                self.group_service and cons.agreement_id.invoice_mode != "detail"
-            ) or cons.agreement_id.invoice_mode == "service":
+                (self.group_service and cons.agreement_id.invoice_mode != "detail")
+                or cons.agreement_id.invoice_mode == "service"
+            ) and not corrected_invoice:
                 for line in pre_invoice[cons.date_invoice][key]["lines"]:
                     if (
                         line["product_id"] == cons.product_id.id
+                        and line["quantity"] >= 0
                         and float_compare(
                             line["price_unit"],
                             invoice_line["price_unit"],
@@ -131,6 +205,8 @@ class ServiceBilling(models.TransientModel):
                 "lines": [invoice_line],
                 "cons": cons,
                 "partner_id": cons.partner_id.id,
+                "corrected_invoices": corrected_invoice,
+                "warnings": [warning] if warning else [],
                 # todo: dterminare cont
                 # 'account_id':cons.partner_id.property_account_receivable.id,
             }
@@ -256,7 +332,14 @@ class ServiceBilling(models.TransientModel):
                     "invoice_user_id": user_id,
                     # 'agreement_id':pre_invoice[key]['agreement_id'],
                 }
+                corrected_invoices = pre_invoice[date_invoice][key]["corrected_invoices"]
+                if corrected_invoices:
+                    invoice_value["ref"] = ", ".join(corrected_invoices.mapped("name"))
+                    if move_type == "out_refund" and len(corrected_invoices) == 1:
+                        invoice_value["reversed_entry_id"] = corrected_invoices.id
                 invoice_id = self.env["account.move"].create(invoice_value)
+                for warning in pre_invoice[date_invoice][key]["warnings"]:
+                    invoice_id.message_post(body=warning)
                 # todo: de determinat care e butonul de calcul tva
                 # invoice_id.button_compute(True)
                 pre_invoice[date_invoice][key]["cons"].write({"invoice_id": invoice_id.id})

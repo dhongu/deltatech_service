@@ -392,6 +392,16 @@ class ServiceAgreement(models.Model):
                 )
             )
             new_consumptions = preparation._prepare_consumptions()
+            # o corectie fara factura initiala nu se factureaza: contractul ei se sare
+            # (ramane in ciorna), celelalte contracte se factureaza
+            missing = self.env["service.billing"]._get_corrections_without_invoice(new_consumptions)
+            if missing:
+                _logger.warning(
+                    "Billing automation: agreements %s skipped, corrections %s have no original invoice.",
+                    missing.agreement_id.mapped("name"),
+                    missing.ids,
+                )
+                new_consumptions = new_consumptions.filtered(lambda c, a=missing.agreement_id: c.agreement_id not in a)
             by_journal = {}
             for consumption in new_consumptions:
                 journal = self._get_auto_billing_journal(consumption.agreement_id)

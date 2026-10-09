@@ -4,6 +4,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -124,19 +125,21 @@ class TestAgreementAutoBilling(AgreementBillingCommon):
 
 @tagged("post_install", "-at_install")
 class TestAgreementNegativeCorrections(AgreementBillingCommon):
-    """AGREEMENT-009: corectiile negative nu se taie, iar cantitatile facturate concorda."""
+    """AGREEMENT-009: corectiile negative nu se taie, cantitatile facturate concorda,
+    iar documentul face referire la factura corectata (art. 319 alin. (20) lit. r) CF)."""
 
     def _period(self, months_back):
-        """Perioada corectata: o corectie vine dintr-o perioada anterioara (unicitate pe linie si perioada)."""
+        """O corectie vine dintr-o perioada ulterioara facturii initiale (unicitate pe linie si perioada)."""
         if not months_back:
             return self.period
+        name = f"P1 correction -{months_back}"
+        Period = self.env["service.date.range"]
+        period = Period.search([("name", "=", name)])
+        if period:
+            return period
         date_start = self.period.date_start + relativedelta(months=-months_back)
-        return self.env["service.date.range"].create(
-            {
-                "name": f"P1 correction -{months_back}",
-                "date_start": date_start,
-                "date_end": date_start + relativedelta(months=1, days=-1),
-            }
+        return Period.create(
+            {"name": name, "date_start": date_start, "date_end": date_start + relativedelta(months=1, days=-1)}
         )
 
     def _consumption(self, agreement, quantity, months_back=0):
@@ -164,18 +167,36 @@ class TestAgreementNegativeCorrections(AgreementBillingCommon):
         action = wizard.do_billing()
         return self.env["account.move"].search(action["domain"])
 
+    def _original_invoice(self, agreement, quantity=10, months_back=3):
+        """Factura initiala, postata, a unei perioade anterioare corectiei."""
+        move = self._bill(self._consumption(agreement, quantity, months_back=months_back))
+        move.action_post()
+        return move
+
+    def _assert_references(self, move, original):
+        self.assertEqual(move.ref, original.name)
+        corrections = move.invoice_line_ids.filtered(lambda line: "Correction of invoice" in (line.name or ""))
+        self.assertTrue(corrections)
+        for line in corrections:
+            self.assertIn(original.name, line.name)
+            self.assertIn(fields.Date.to_string(original.invoice_date)[:4], line.name)
+
     def test_lone_negative_correction_becomes_credit_note(self):
         agreement = self._create_agreement("NEG-1")
-        consumption = self._consumption(agreement, -2)
+        original = self._original_invoice(agreement)
+        consumption = self._consumption(agreement, -2, months_back=1)
         move = self._bill(consumption)
         self.assertEqual(move.move_type, "out_refund")
         self.assertEqual(move.invoice_line_ids.quantity, 2)
         self.assertEqual(move.amount_untaxed, 200.0)
         self.assertEqual(consumption.invoiced_qty, -2)
         self.assertEqual(consumption.revenues, -200.0)
+        self._assert_references(move, original)
+        self.assertEqual(move.reversed_entry_id, original)
 
     def test_several_negative_lines_are_not_clipped(self):
         agreement = self._create_agreement("NEG-2")
+        original = self._original_invoice(agreement)
         consumptions = (
             self._consumption(agreement, 3)
             | self._consumption(agreement, -5, months_back=1)
@@ -188,18 +209,25 @@ class TestAgreementNegativeCorrections(AgreementBillingCommon):
         self.assertEqual(move.amount_untaxed, 700.0)
         self.assertEqual(sorted(consumptions.mapped("invoiced_qty")), [-5.0, -5.0, 3.0])
         self.assertEqual(sum(consumptions.mapped("revenues")), -700.0)
+        self._assert_references(move, original)
+        self.assertEqual(move.reversed_entry_id, original)
 
     def test_partial_correction_stays_negative_line_on_invoice(self):
         agreement = self._create_agreement("NEG-3")
+        original = self._original_invoice(agreement)
         consumptions = self._consumption(agreement, 5) | self._consumption(agreement, -2, months_back=1)
-        move = self._bill(consumptions)
+        move = self._bill(consumptions, group_service=True)
+        # corectia nu se contopeste cu linia pozitiva, chiar si cu gruparea pe serviciu
         self.assertEqual(move.move_type, "out_invoice")
         self.assertEqual(sorted(move.invoice_line_ids.mapped("quantity")), [-2.0, 5.0])
         self.assertEqual(move.amount_untaxed, 300.0)
         self.assertEqual(sum(consumptions.mapped("invoiced_qty")), 3.0)
+        self._assert_references(move, original)
+        self.assertFalse(move.reversed_entry_id)
 
     def test_negative_correction_ignores_free_quantity(self):
         agreement = self._create_agreement("NEG-4", quantity_free=1.0)
+        self._original_invoice(agreement)
         consumptions = self._consumption(agreement, 4) | self._consumption(agreement, -2, months_back=1)
         move = self._bill(consumptions)
         # 4 - 1 gratuit = 3 facturat; corectia -2 integral
@@ -207,3 +235,51 @@ class TestAgreementNegativeCorrections(AgreementBillingCommon):
         self.assertEqual(sorted(move.invoice_line_ids.mapped("quantity")), [-2.0, 3.0])
         self.assertEqual(sorted(consumptions.mapped("invoiced_qty")), [-2.0, 3.0])
         self.assertEqual(sum(move.invoice_line_ids.mapped("quantity")), sum(consumptions.mapped("invoiced_qty")))
+
+    def test_correction_without_original_invoice_is_refused(self):
+        agreement = self._create_agreement("NEG-5")
+        consumption = self._consumption(agreement, -2, months_back=1)
+        with self.assertRaisesRegex(UserError, "NEG-5"):
+            self._bill(consumption)
+
+    def test_correction_of_draft_invoice_is_refused(self):
+        """Doar o factura initiala postata poate fi corectata."""
+        agreement = self._create_agreement("NEG-6")
+        self._bill(self._consumption(agreement, 10, months_back=3))
+        consumption = self._consumption(agreement, -2, months_back=1)
+        with self.assertRaises(UserError):
+            self._bill(consumption)
+
+    def test_correction_uses_vat_rate_of_original_invoice(self):
+        base_tax = self.company_data["default_tax_sale"]
+        tax_19 = base_tax.copy({"name": "VAT 19% P1", "amount": 19.0})
+        tax_21 = base_tax.copy({"name": "VAT 21% P1", "amount": 21.0})
+        self.service_product.taxes_id = tax_19
+        agreement = self._create_agreement("NEG-7")
+        original = self._original_invoice(agreement)
+        self.assertEqual(original.invoice_line_ids.tax_ids, tax_19)
+        # cota s-a schimbat intre timp
+        self.service_product.taxes_id = tax_21
+        consumptions = self._consumption(agreement, 5) | self._consumption(agreement, -2, months_back=1)
+        move = self._bill(consumptions)
+        correction = move.invoice_line_ids.filtered(lambda line: line.quantity < 0)
+        regular = move.invoice_line_ids.filtered(lambda line: line.quantity > 0)
+        self.assertEqual(correction.tax_ids, tax_19)
+        self.assertEqual(regular.tax_ids, tax_21)
+
+
+@tagged("post_install", "-at_install")
+class TestAgreementAutoBillingCorrections(AgreementBillingCommon):
+    """Facturarea automata sare contractul cu o corectie fara factura initiala."""
+
+    def test_cron_skips_agreement_with_unreferenced_correction(self):
+        good = self._create_agreement("AUTO-OK", automation="auto")
+        bad = self._create_agreement("AUTO-NEG", quantity=-1.0, automation="auto")
+        (good | bad).write({"next_date_invoice": self.today})
+        self.env["service.agreement"].make_billing_automation()
+        good_consumption = self.env["service.consumption"].search([("agreement_id", "=", good.id)])
+        bad_consumption = self.env["service.consumption"].search([("agreement_id", "=", bad.id)])
+        self.assertTrue(good_consumption.invoice_id)
+        self.assertEqual(len(bad_consumption), 1)
+        self.assertFalse(bad_consumption.invoice_id)
+        self.assertEqual(bad_consumption.state, "draft")
