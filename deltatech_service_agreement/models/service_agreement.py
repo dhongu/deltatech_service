@@ -432,7 +432,9 @@ class ServiceAgreement(models.Model):
                         billing.do_billing()
                 except UserError as error:
                     # ex. numai consumuri sub cantitatea gratuita: nu blocam celelalte companii
-                    _logger.warning("Billing automation: consumptions %s not invoiced: %s", journal_consumptions.ids, error)
+                    _logger.warning(
+                        "Billing automation: consumptions %s not invoiced: %s", journal_consumptions.ids, error
+                    )
 
     def action_service_billing_preparation(self):
         action = self.env["ir.actions.actions"]._for_xml_id(

@@ -38,9 +38,7 @@ class AgreementBillingCommon(AccountTestInvoicingCommon):
         Period = cls.env["service.date.range"]
         period = Period.search([("date_start", "=", date_start), ("date_end", "=", date_end)])
         if not period:
-            period = Period.create(
-                {"name": f"P1 {date_start:%Y/%m}", "date_start": date_start, "date_end": date_end}
-            )
+            period = Period.create({"name": f"P1 {date_start:%Y/%m}", "date_start": date_start, "date_end": date_end})
         return period[:1]
 
     @classmethod
@@ -70,6 +68,10 @@ class AgreementBillingCommon(AccountTestInvoicingCommon):
             }
         )
         agreement.contract_open()
+        if "meter_reading_status" in agreement._fields:
+            # cu deltatech_service_equipment instalat, facturarea automata cere citirile
+            # contoarelor marcate ca facute (get_agreements_auto_billing)
+            agreement.meter_reading_status = True
         return agreement
 
 
