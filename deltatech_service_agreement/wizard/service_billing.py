@@ -67,6 +67,18 @@ class ServiceBilling(models.TransientModel):
         defaults["consumption_ids"] = [(6, 0, [rec.id for rec in res])]
         return defaults
 
+    @api.model
+    def _get_billed_quantity(self, cons):
+        """Cantitatea facturata pentru un consum, aceeasi pe linia facturii si in invoiced_qty.
+
+        O corectie (cantitate negativa) se factureaza integral, fara cantitatea gratuita;
+        un consum obisnuit se factureaza peste cantitatea gratuita, niciodata sub zero
+        (un ciclu gratuit apare pe factura cu cantitate 0, nu ca o corectie).
+        """
+        if cons.quantity < 0:
+            return cons.quantity
+        return max(cons.quantity - cons.agreement_line_id.quantity_free, 0.0)
+
     def add_invoice_line(self, cons, pre_invoice, price_unit, name, key):
         # nu mai exista get_invoice_line_account  in V14
         # account_id = self.env["account.move.line"].get_invoice_line_account(
@@ -81,7 +93,7 @@ class ServiceBilling(models.TransientModel):
 
         invoice_line = {
             "product_id": cons.product_id.id,
-            "quantity": cons.quantity - cons.agreement_line_id.quantity_free,
+            "quantity": self._get_billed_quantity(cons),
             "price_unit": price_unit,
             "product_uom_id": cons.agreement_line_id.uom_id.id,
             "name": name,
@@ -91,10 +103,6 @@ class ServiceBilling(models.TransientModel):
             "agreement_line_id": cons.agreement_line_id.id,
             # "analytic_account_id": cons.analytic_account_id.id,  # nu mai e in 16.0
         }
-
-        # este pt situatia in care se doreste stornarea unei pozitii
-        if cons.quantity < 0:
-            invoice_line["quantity"] = cons.quantity
 
         if pre_invoice[cons.date_invoice].get(key, False):
             is_prod = False
@@ -172,7 +180,7 @@ class ServiceBilling(models.TransientModel):
                 cons.write(
                     {
                         "state": "done",
-                        "invoiced_qty": cons.quantity - cons.agreement_line_id.quantity_free,
+                        "invoiced_qty": self._get_billed_quantity(cons),
                     }
                 )
             else:  # cons.quantity < cons.agreement_line_id.quantity_free:
@@ -221,18 +229,16 @@ class ServiceBilling(models.TransientModel):
                             agreement.payment_term_id.id or agreement.partner_id.property_payment_term_id.id
                         )
                         user_id = agreement.user_id.id
-                # check if negative values greater than positive ones for the same product
-                for invoice_line in pre_invoice[date_invoice][key]["lines"]:
-                    if invoice_line["quantity"] < 0:
-                        plus_qty = 0.0
-                        for positive_line in pre_invoice[date_invoice][key]["lines"]:
-                            if (
-                                positive_line["product_id"] == invoice_line["product_id"]
-                                and positive_line["quantity"] > 0.0
-                            ):
-                                plus_qty += positive_line["quantity"]
-                        if abs(invoice_line["quantity"]) >= plus_qty:
-                            invoice_line["quantity"] = -1 * plus_qty
+                lines = pre_invoice[date_invoice][key]["lines"]
+                # corectiile negative nu se mai taie: daca valoarea neta e negativa,
+                # documentul devine nota de credit (cantitati cu semn inversat), altfel
+                # corectia ramane linie negativa pe factura
+                move_type = "out_invoice"
+                net_amount = sum(line["quantity"] * line["price_unit"] for line in lines)
+                if float_compare(net_amount, 0.0, precision_digits=2) < 0:
+                    move_type = "out_refund"
+                    for line in lines:
+                        line["quantity"] = -line["quantity"]
                 invoice_value = {
                     # 'name': _('Invoice'),
                     "partner_id": pre_invoice[date_invoice][key]["partner_id"],
@@ -243,9 +249,9 @@ class ServiceBilling(models.TransientModel):
                     "invoice_payment_term_id": payment_term_id,
                     # todo: de determinat contul
                     # 'account_id': pre_invoice[date_invoice][key]['account_id'],
-                    "move_type": "out_invoice",
+                    "move_type": move_type,
                     "state": "draft",
-                    "invoice_line_ids": [(0, 0, x) for x in pre_invoice[date_invoice][key]["lines"]],
+                    "invoice_line_ids": [(0, 0, x) for x in lines],
                     "narration": comment,
                     "invoice_user_id": user_id,
                     # 'agreement_id':pre_invoice[key]['agreement_id'],
