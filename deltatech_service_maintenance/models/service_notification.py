@@ -185,7 +185,9 @@ class ServiceNotification(models.Model):
 
                 description = vals.get("description", False)
 
-                if description and (len(equipments) != 1):
+                # ean_code and agreement_id come from the optional deltatech_service_equipment
+                has_ean_code = "ean_code" in self.env["service.equipment"]._fields
+                if description and has_ean_code and (len(equipments) != 1):
                     keywords = description.split()
                     equipments_by_ean = self.env["service.equipment"]
                     for keyword in keywords:
@@ -204,7 +206,10 @@ class ServiceNotification(models.Model):
                         vals["user_id"] = equipments.technician_user_id.id
 
                     if not vals.get("partner_id", False):
-                        vals["partner_id"] = equipments.agreement_id.partner_id.id
+                        if "agreement_id" in equipments._fields:
+                            vals["partner_id"] = equipments.agreement_id.partner_id.id
+                        else:
+                            vals["partner_id"] = equipments.partner_id.id
 
             if vals.get("name", self.env._("New")) == self.env._("New"):
                 seq_date = None

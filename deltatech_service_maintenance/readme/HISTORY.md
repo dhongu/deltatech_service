@@ -1,3 +1,15 @@
+## 19.0.1.2.6 (2026-10-09)
+
+- Creating several service orders in one call (import, batch create) kept only the
+  last one; all orders are now created and returned (SERVICE-002).
+- Approving a warranty is checked on the server: only the warranty Approval or
+  Manager groups may approve, and only warranties waiting for approval
+  (SERVICE-006).
+- Creating a notification no longer fails when the optional equipment extension
+  (EAN code, service agreement on the equipment) is not installed; the equipment is
+  still detected from the contact and the customer is taken from the equipment
+  (SERVICE-008).
+
 ## 19.0.1.2.5 (2026-10-02)
 
 - "New quotation" on notifications and service orders crashed on the removed

@@ -7,3 +7,4 @@ from . import test_order
 from . import test_delivery
 from . import common
 from . import test_removed_api
+from . import test_p1_fixes

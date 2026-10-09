@@ -26,7 +26,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-002 — P1: Batch service order creation drops all entries except the last
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.6 — `service.order.create()` passes the complete `vals_list` to the superclass instead of the last dictionary of the loop, so every order of a batch is created and returned, each with its own sequence number. Reproduced before the fix (three values created one order). Covered by `tests/test_p1_fixes.py` (`TestServiceOrderBatchCreate`: batch, single and empty creation).
 - **Location:** models/service_order.py, create().
 - **Trigger:** Create two or more service orders in one ORM call.
 - **Actual behavior:** The override loops over vals_list but calls super().create(vals), passing only the last dictionary.
@@ -70,7 +70,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-006 — P1: Warranty approval permissions are enforced only by button visibility
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.6 — `approve()` checks on the server that the user belongs to the warranty Approval or Manager group (`AccessError` otherwise; superuser/`sudo()` calls are not blocked) and that every warranty is in *Approval requested* (`UserError` otherwise). Reproduced before the fix (a plain warranty user approved). Covered by `tests/test_p1_fixes.py` (`TestWarrantyApprovalRights`: user denied, approver, manager and `sudo()` allowed, repeated and invalid transitions refused).
 - **Location:** models/service_warranty.py, approve(); views/service_warranty_view.xml.
 - **Trigger:** A warranty user without the approval or manager group invokes approve through RPC.
 - **Actual behavior:** The button is restricted to approval/manager groups, but the public method simply assigns state=approved. Warranty users have write ACLs and no corresponding server-side approval check.
@@ -92,7 +92,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-008 — P1: Notification equipment detection requires fields outside the declared dependencies
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.6 — the notification `create()` searches the description keywords on `ean_code` and takes the customer from `agreement_id` only when the optional `deltatech_service_equipment` provides these fields; otherwise the keyword search is skipped and the customer comes from the base equipment `partner_id`. No new dependency was added. Reproduced before the fix (invalid field `ean_code`). Covered by `tests/test_p1_fixes.py` (`TestNotificationEquipmentDetection`: contact and description without the optional fields, EAN detection with them).
 - **Location:** models/service_notification.py, create(); __manifest__.py.
 - **Trigger:** Install maintenance with its declared dependencies, then create a notification with description keywords or a uniquely matched equipment contact.
 - **Actual behavior:** The create override searches equipment ean_code and reads equipment.agreement_id, but both fields are supplied by optional deltatech_service_equipment, absent from the maintenance dependency closure. Base equipment defines neither field.
