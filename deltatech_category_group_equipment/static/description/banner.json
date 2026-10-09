@@ -1,1 +1,7 @@
-{"title":"Equipment Category Groups","summary":"Group equipment by the groups of its product category","icon":"grid","lang":"en","features":["Category type grouping","Category class grouping","Derived from the product category"]}
+{
+  "title": "Equipment Category Groups",
+  "summary": "Group equipment by the groups of its product category",
+  "icon": "grid",
+  "lang": "en",
+  "features": ["Category type grouping", "Category class grouping", "Derived from the product category"]
+}
