@@ -94,7 +94,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## AGREEMENT-008 — P1: Previously opened billing wizards can invoice the same consumption twice
 
-- **Status:** Open; reviewed 2026-10-03.
+- **Status:** Not reproducible in the application flow (verified 2026-10-06 on a database, 19.0). `service.billing.consumption_ids` (Many2many) has `domain=[("invoice_id", "=", False)]`, which Odoo 19 applies on every read from the database (`Many2many.read()`). A second wizard confirmed in a separate request no longer sees the consumptions billed by the first one, stops with "No condition for create a new invoice" and creates no invoice; the consumption keeps its first `invoice_id`. The duplicate appears only when `do_billing()` runs twice on the same wizard within one transaction (no cache invalidation), which is how the audit reproduced it (method run in isolation); no application flow does that (`make_billing_automation` calls it once per wizard). Concurrent confirmations are serialized by PostgreSQL on the consumption write. No code change; the protection relies on the field domain, so removing or changing that domain would make the defect real.
 - **Location:** wizard/service_billing.py, default_get(), do_billing_step1(), do_billing().
 - **Trigger:** Open two billing wizards for the same draft consumption, apply the first, then apply the second. A repeated RPC invocation on the original wizard follows the same path.
 - **Actual behavior:** Draft-state selection happens only in default_get. Billing neither rejects nor skips consumptions that already have invoice_id or state done. It prepares the lines again, creates another invoice, and replaces the consumption invoice reference, leaving the first invoice in place.

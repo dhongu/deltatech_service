@@ -1,3 +1,7 @@
+## 19.0.2.0.15 (2026-10-09)
+
+- Apps Store banner (banner.json).
+
 ## 19.0.2.0.14 (2026-10-06)
 
 - The agreement dropdown shows the partner and the agreement date in a second, dimmed column;
