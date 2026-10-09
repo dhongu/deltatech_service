@@ -160,7 +160,7 @@ class ServiceOrder(models.Model):
                 vals["name"] = self.env["ir.sequence"].next_by_code(
                     "service.order", sequence_date=seq_date
                 ) or self.env._("New")
-        return super().create(vals)
+        return super().create(vals_list)
 
     @api.onchange("equipment_id", "date")
     def onchange_equipment_id(self):
