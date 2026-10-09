@@ -1,1 +1,7 @@
-{"title":"Object History for Service","summary":"Change history for agreements and equipment","icon":"clipboard","lang":"en","features":["History on service agreements","History on service equipment","Built on Object History"]}
+{
+  "title": "Object History for Service",
+  "summary": "Change history for agreements and equipment",
+  "icon": "clipboard",
+  "lang": "en",
+  "features": ["History on service agreements", "History on service equipment", "Built on Object History"]
+}
