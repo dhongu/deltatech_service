@@ -1,3 +1,7 @@
+## 20.0.2.0.14 (2026-10-09)
+
+- Apps Store banner (banner.json).
+
 ## 20.0.2.0.13 (2026-10-04)
 
 - Service billing converted consumption prices into the currency of the user's
