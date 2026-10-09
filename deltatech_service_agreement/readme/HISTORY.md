@@ -1,3 +1,24 @@
+## 19.0.2.0.16 (2026-10-09)
+
+- **Fixed** (AGREEMENT-005): the billing cron created the preparation wizard without the period it had
+  found and then read a `consumption_ids` key that the preparation never returned, so automatic billing
+  failed before any invoice. The cron now passes the period, company and agreements explicitly, collects
+  the consumptions generated for all agreements (manual preparation also kept only the last agreement's
+  consumptions in its result) and bills them per company and sale journal. Without exactly one service
+  period for the current month the cron logs a warning and does nothing.
+- **Fixed** (AGREEMENT-009): negative consumptions (corrections of a previous period) were capped at the
+  positive quantity of the same product on the new invoice, so a lone correction became 0 while the
+  consumption was still marked as billed, and the stored billed quantity differed from the invoice line.
+  Corrections are now billed in full and the billed quantity is the same on the line and on the
+  consumption. **Behavior change**: when the net value is negative a credit note is created instead of an
+  invoice; a partial correction stays a negative line on the invoice.
+  Each correction now references the invoice it corrects: the line description says "Correction of
+  invoice <number> from <date>", the document reference lists the corrected invoices, and a credit note
+  correcting a single invoice is linked to it. The correction line uses the taxes of the original invoice
+  line (VAT rate of the original operation); if that line cannot be identified, a warning is posted in the
+  document chatter. A correction without a posted original invoice is refused in manual billing and its
+  agreement is skipped (with a log entry) by automatic billing.
+
 ## 19.0.2.0.15 (2026-10-09)
 
 - Apps Store banner (banner.json).
