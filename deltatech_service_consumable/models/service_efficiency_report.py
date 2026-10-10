@@ -9,6 +9,9 @@ class ServiceEfficiencyReport(models.Model):
     _name = "service.efficiency.report"
     _inherit = "stock.picking.report"
     _description = "ServiceEfficiencyReport"
+    # SQL view (init() of stock.picking.report): without it the class gets the
+    # create_uid/write_date fields, which have no column in the view
+    _auto = False
 
     equipment_id = fields.Many2one("service.equipment", string="Equipment", index=True)
     agreement_id = fields.Many2one("service.agreement", string="Contract Services")

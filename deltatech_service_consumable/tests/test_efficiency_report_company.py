@@ -72,16 +72,14 @@ class TestEfficiencyReportCompany(TransactionCase):
 
     def _report_companies(self, user, companies):
         report = self.env["service.efficiency.report"].with_user(user).with_context(allowed_company_ids=companies.ids)
-        # search_fetch: the report model has log-access fields without columns in the view
-        rows = report.search_fetch([("picking_id", "in", self.pickings.ids)], ["company_id"])
-        return rows.company_id
+        rows = report.search([("picking_id", "in", self.pickings.ids)])
+        return rows.mapped("company_id")
 
     def test_deliveries_in_report_for_both_companies(self):
         self.assertEqual(self.picking_a.state, "done")
         self.assertEqual(self.picking_b.state, "done")
-        report = self.env["service.efficiency.report"].sudo()
-        rows = report.search_fetch([("picking_id", "in", self.pickings.ids)], ["company_id"])
-        self.assertEqual(rows.company_id, self.company_a | self.company_b)
+        rows = self.env["service.efficiency.report"].sudo().search([("picking_id", "in", self.pickings.ids)])
+        self.assertEqual(rows.mapped("company_id"), self.company_a | self.company_b)
 
     def test_single_company_user_sees_only_own_company(self):
         self.assertEqual(self._report_companies(self.user_a, self.company_a), self.company_a)
@@ -91,3 +89,15 @@ class TestEfficiencyReportCompany(TransactionCase):
         self.assertEqual(self._report_companies(self.user_ab, both), both)
         # after switching to company A only, company B rows are hidden
         self.assertEqual(self._report_companies(self.user_ab, self.company_a), self.company_a)
+
+    def test_full_read_of_report_rows(self):
+        """CONSUMABLE-004: no log-access fields without a column in the SQL view"""
+        report = self.env["service.efficiency.report"]
+        for fname in ("create_uid", "create_date", "write_uid", "write_date"):
+            self.assertNotIn(fname, report._fields)
+        rows = report.search([])
+        self.assertTrue(rows)
+        rows.invalidate_recordset()
+        values = rows.read()
+        self.assertEqual(len(values), len(rows))
+        self.assertTrue(rows.mapped("company_id"))
