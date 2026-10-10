@@ -1,3 +1,11 @@
+## 19.0.1.1.19 (2026-10-10)
+
+- Automatic billing requires *Readings done* only for agreement types with *Requires readings
+  for billing*, like the manual billing preparation; agreements without meters are billed again
+  on their date (EQUIPMENT-004).
+- *Readings done* is cleared after the agreement is billed, for the types that require readings,
+  so the next period is not billed on the previous readings (EQUIPMENT-005).
+
 ## 19.0.1.1.18 (2026-10-06)
 
 - The equipment dropdown shows address, emplacement and serial number in a second, dimmed

@@ -34,11 +34,9 @@ class ServiceAgreement(models.Model):
 
     def get_agreements_auto_billing(self):
         agreements = super().get_agreements_auto_billing()
-        for agreement in agreements:
-            # check if readings done
-            if not agreement.meter_reading_status:
-                agreements = agreements - agreement
-        return agreements
+        # same rule as the manual billing preparation: the readings are required only
+        # when the agreement type asks for them
+        return agreements.filtered(lambda a: not a.type_id.readings_required or a.meter_reading_status)
 
     def service_equipment(self):
         equipments = self.env["service.equipment"]

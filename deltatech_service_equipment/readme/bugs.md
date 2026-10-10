@@ -48,8 +48,17 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## EQUIPMENT-004 — P2: Automatic billing skips agreements without meters unless *Readings done* is ticked
 
-- **Status:** Open; found 2026-10-09 while fixing AGREEMENT-005.
+- **Status:** Fixed in 19.0.1.1.19. `get_agreements_auto_billing()` filters on `not type_id.readings_required or meter_reading_status`, the rule of the manual preparation.
 - **Location:** `models/service_agreement.py`, `get_agreements_auto_billing()`.
 - **Trigger:** With `deltatech_service_equipment` installed, an agreement whose type does not require meter readings is due for automatic billing.
 - **Actual behavior / impact:** The override removes every agreement without `meter_reading_status`, whatever its type; the manual billing preparation checks readings only when the agreement type requires them. Agreements without meters are not billed automatically until someone ticks *Readings done*.
 - **Suggested fix:** Filter only agreements whose type requires readings (same rule as the manual preparation), with a test for both cases.
+
+## EQUIPMENT-005 — P2: *Readings done* is never cleared, so later periods are billed on old readings
+
+- **Status:** Fixed in 19.0.1.1.19. `service.billing.do_billing()` clears `meter_reading_status` on the billed agreements whose type requires readings.
+- **Location:** `models/service_agreement.py` (`meter_reading_status`), billing wizard.
+- **Trigger:** Tick *Readings done* on an agreement whose type requires readings, bill it, wait for the next period.
+- **Actual behavior / impact:** Nothing reset the flag after billing, so the automatic billing (and the manual preparation check) kept accepting the agreement in the following periods without new readings.
+- **Suggested fix:** Clear the flag once the agreement is billed.
+
