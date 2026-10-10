@@ -133,3 +133,11 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Impact:** Dead code; no functional impact today, but it would fail and use the wrong company if reconnected.
 - **Suggested fix:** Remove `company_user()` and `_group_by_full`; if grouping by technicians of the company is still wanted, implement it with `group_expand` on `user_id` based on `env.company`.
 - **Validation needed:** Group notifications by technician in the list/kanban views after the cleanup.
+
+## SERVICE-012 — P2: Warranty approval can still be bypassed by writing the state
+
+- **Status:** Open; found 2026-10-10 during the SERVICE-006 fix.
+- **Location:** `models/service_warranty.py` (`state`), `views/service_warranty_view.xml` (clickable status bar for managers).
+- **Trigger:** A warranty manager clicks *Approved* on the status bar, or any user with write access writes `state` over RPC.
+- **Actual behavior / impact:** SERVICE-006 checks the group and the *Approval requested* state in `approve()`, but `state` itself is writable: the clickable status bar and a direct `write` skip `approve()` and its checks.
+- **Suggested fix:** Make the status bar non-clickable for the approval states (or remove `clickable`), and refuse changes of `state` to approved values in `write` outside the workflow methods (`sudo()` allowed).
