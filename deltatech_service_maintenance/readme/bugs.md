@@ -136,7 +136,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-012 — P2: Warranty approval can still be bypassed by writing the state
 
-- **Status:** Open; found 2026-10-10 during the SERVICE-006 fix.
+- **Status:** Fixed in 19.0.1.2.7. `write`/`create` refuse `state = "approved"` to the users outside the warranty Approval and Manager groups (`_check_approve_access`, shared with `approve()`); `sudo()` is not blocked. The managers keep the clickable status bar (they may approve anyway).
 - **Location:** `models/service_warranty.py` (`state`), `views/service_warranty_view.xml` (clickable status bar for managers).
 - **Trigger:** A warranty manager clicks *Approved* on the status bar, or any user with write access writes `state` over RPC.
 - **Actual behavior / impact:** SERVICE-006 checks the group and the *Approval requested* state in `approve()`, but `state` itself is writable: the clickable status bar and a direct `write` skip `approve()` and its checks.

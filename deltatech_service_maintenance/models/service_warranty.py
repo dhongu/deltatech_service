@@ -228,12 +228,15 @@ class ServiceWarranty(models.Model):
     def request_approval(self):
         self.state = "approval_requested"
 
-    def approve(self):
+    def _check_approve_access(self):
         if not self.env.su and not (
             self.env.user.has_group("deltatech_service_base.group_warranty_approve")
             or self.env.user.has_group("deltatech_service_base.group_warranty_manager")
         ):
             raise AccessError(self.env._("Only warranty approvers or managers can approve warranties."))
+
+    def approve(self):
+        self._check_approve_access()
         if any(warranty.state != "approval_requested" for warranty in self):
             raise UserError(self.env._("Only warranties waiting for approval can be approved."))
         self.state = "approved"
@@ -245,10 +248,19 @@ class ServiceWarranty(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        if any(vals.get("state") == "approved" for vals in vals_list):
+            self._check_approve_access()
         for vals in vals_list:
             if "name" not in vals or ("name" in vals and vals["name"] == "/"):
                 vals["name"] = self.env["ir.sequence"].next_by_code("service.warranty")
         return super().create(vals_list)
+
+    def write(self, vals):
+        # the state is writable by every warranty user: setting it to approved directly
+        # (RPC, import) must not skip the approval right checked in approve()
+        if vals.get("state") == "approved":
+            self._check_approve_access()
+        return super().write(vals)
 
 
 class ServiceWarrantyItem(models.Model):

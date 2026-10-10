@@ -1,3 +1,9 @@
+## 19.0.1.2.7 (2026-10-10)
+
+- Writing *Approved* directly in the warranty status (RPC, import) is refused to the users
+  who may not approve: the same right as the *Approve* button (SERVICE-012). The other
+  states and the managers' clickable status bar are unchanged.
+
 ## 19.0.1.2.6 (2026-10-09)
 
 - Creating several service orders in one call (import, batch create) kept only the
