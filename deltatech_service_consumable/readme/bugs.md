@@ -37,8 +37,16 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## CONSUMABLE-003 — P1: The service efficiency report bypasses company separation
 
-- **Status:** Open; found 2026-10-09 during the STOCKREPORT-003 fix.
+- **Status:** Fixed in 19.0.1.1.10. Global rule `[('company_id', 'in', company_ids)]` on `service.efficiency.report` (`security/service_efficiency_report_security.xml`, loaded on update), with a two-company regression test; found 2026-10-09 during the STOCKREPORT-003 fix.
 - **Location:** `service.efficiency.report` (inherits the `stock.picking.report` SQL view under another `_name`).
 - **Trigger:** A user with access to one company opens the service efficiency report in a multi-company database.
 - **Actual behavior / impact:** The company record rule added to `stock.picking.report` in `deltatech_stock_report` 19.0.1.0.6 is bound to that model and does not carry over to `service.efficiency.report`; the SQL view has `company_id` but no rule, so figures of every company are visible.
 - **Suggested fix:** Add the same global rule `[('company_id', 'in', company_ids)]` on `service.efficiency.report`, loaded on update, with a two-company test.
+
+## CONSUMABLE-004 — P2: Reading a full service efficiency report record fails
+
+- **Status:** Fixed in 19.0.1.1.10. `service.efficiency.report` declares `_auto = False`, so it no longer gets the log-access fields; regression test on a full `read()`; found 2026-10-10 during the CONSUMABLE-003 fix.
+- **Location:** `service.efficiency.report` (`models/service_efficiency_report.py`).
+- **Trigger:** Opening a report record, or any code that reads all its fields (`search()` followed by `mapped()`, `read()` without a field list).
+- **Actual behavior / impact:** The model class did not declare `_auto`, so at class creation it took `True` from `models.Model` and received `create_uid`, `create_date`, `write_uid` and `write_date`; the SQL view built by `stock.picking.report.init()` has none of these columns, and the read failed with "column service_efficiency_report.create_uid does not exist". Lists and pivots that request only the displayed fields worked.
+- **Suggested fix:** Declare `_auto = False` on the report model, like `stock.picking.report`.

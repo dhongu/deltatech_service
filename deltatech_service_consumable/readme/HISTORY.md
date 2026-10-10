@@ -1,3 +1,13 @@
+## 19.0.1.1.10 (2026-10-10)
+
+- Service efficiency report: a global company rule limits the rows to the user's active
+  companies. The report reuses the `stock.picking.report` SQL view under another model, so
+  the company rule of that report did not apply and a user saw the figures of every
+  company (CONSUMABLE-003).
+- Service efficiency report: opening a record or reading all its fields no longer fails
+  with "column create_uid does not exist"; the model is declared as a SQL view
+  (`_auto = False`) and no longer gets log-access fields (CONSUMABLE-004).
+
 ## 19.0.1.1.9 (2026-10-02)
 
 - Validating a delivery linked to a service agreement crashed with `AttributeError` on the

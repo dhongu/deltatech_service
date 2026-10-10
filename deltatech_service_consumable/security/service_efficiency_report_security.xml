@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- SQL view model inherited from stock.picking.report under another _name:
+         the stock.picking.report company rule does not apply here -->
+    <record id="service_efficiency_report_company_rule" model="ir.rule">
+        <field name="name">Service efficiency report: multi-company</field>
+        <field name="model_id" ref="model_service_efficiency_report" />
+        <field name="global" eval="True" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
