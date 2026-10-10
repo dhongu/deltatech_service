@@ -34,3 +34,11 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Evidence:** Inspected the override and local Odoo 19 stock/accounting models; no definition of `stock_valuation_layer_ids` exists in the Community, Enterprise or custom addon trees. This module's separate `compute_costs()` already reads move `value`.
 - **Suggested fix:** Use the Odoo 19 valuation API, update costs only after successful completion, and avoid double counting on repeated validation.
 - **Validation needed:** Agreement delivery validation with immediate completion and wizard paths, returns and repeated calls on completed transfers. No database-backed validation was executed in this pass.
+
+## CONSUMABLE-003 — P1: The service efficiency report bypasses company separation
+
+- **Status:** Open; found 2026-10-09 during the STOCKREPORT-003 fix.
+- **Location:** `service.efficiency.report` (inherits the `stock.picking.report` SQL view under another `_name`).
+- **Trigger:** A user with access to one company opens the service efficiency report in a multi-company database.
+- **Actual behavior / impact:** The company record rule added to `stock.picking.report` in `deltatech_stock_report` 19.0.1.0.6 is bound to that model and does not carry over to `service.efficiency.report`; the SQL view has `company_id` but no rule, so figures of every company are visible.
+- **Suggested fix:** Add the same global rule `[('company_id', 'in', company_ids)]` on `service.efficiency.report`, loaded on update, with a two-company test.

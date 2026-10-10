@@ -45,3 +45,11 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Evidence:** Executed the actual extracted method with recordset union and creation spies. Equipment 1 requested category 1, equipment 2 category 2; equipment 2 received both categories 1 and 2. No database-backed batch execution.
 - **Suggested fix:** Collect categories independently per equipment, and define repeat-call handling for existing meters.
 - **Validation needed:** Batch of different and identical templates, existing meters, and single-record baseline.
+
+## EQUIPMENT-004 — P2: Automatic billing skips agreements without meters unless *Readings done* is ticked
+
+- **Status:** Open; found 2026-10-09 while fixing AGREEMENT-005.
+- **Location:** `models/service_agreement.py`, `get_agreements_auto_billing()`.
+- **Trigger:** With `deltatech_service_equipment` installed, an agreement whose type does not require meter readings is due for automatic billing.
+- **Actual behavior / impact:** The override removes every agreement without `meter_reading_status`, whatever its type; the manual billing preparation checks readings only when the agreement type requires them. Agreements without meters are not billed automatically until someone ticks *Readings done*.
+- **Suggested fix:** Filter only agreements whose type requires readings (same rule as the manual preparation), with a test for both cases.
