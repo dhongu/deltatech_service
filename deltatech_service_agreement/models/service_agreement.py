@@ -1,11 +1,14 @@
 # ©  2008-2018 Deltatech
 # See README.rst file on addons root folder for license details
 
+import logging
 
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class ServiceAgreement(models.Model):
@@ -321,27 +324,107 @@ class ServiceAgreement(models.Model):
         return agreements
 
     @api.model
-    def make_billing_automation(self):
-        agreements = self.get_agreements_auto_billing()
+    def _get_auto_billing_period(self):
+        """Perioada de serviciu a lunii curente, unică; altfel None (cu avertisment în log)."""
         from_date = fields.Date.context_today(self) + relativedelta(day=1, months=0, days=0)
         to_date = fields.Date.context_today(self) + relativedelta(day=1, months=1, days=-1)
         domain = [("date_start", "=", from_date), ("date_end", "=", to_date)]
         service_period = self.env["service.date.range"].search(domain)
+        if len(service_period) != 1:
+            _logger.warning(
+                "Billing automation skipped: %s service periods found from %s to %s (exactly one is required).",
+                len(service_period),
+                from_date,
+                to_date,
+            )
+            return None
+        return service_period
+
+    @api.model
+    def _get_auto_billing_journal(self, agreement):
+        journal = agreement.type_id.journal_id
+        if not journal or journal.company_id != agreement.company_id:
+            journal = self.env["account.journal"].search(
+                [("type", "=", "sale"), ("company_id", "=", agreement.company_id.id)], limit=1
+            )
+        return journal
+
+    @api.model
+    def make_billing_automation(self):
+        agreements = self.get_agreements_auto_billing()
+        if not agreements:
+            return
+        service_period = self._get_auto_billing_period()
+        if not service_period:
+            return
         domain = [
-            ("service_period_id", "in", service_period.ids),
+            ("service_period_id", "=", service_period.id),
             ("agreement_id", "in", agreements.ids),
         ]
         consumptions = self.env["service.consumption"].search(domain)
-        for consumption in consumptions:  # check if has consumptions in current period
-            agreements = agreements - consumption.agreement_id
-        if agreements:
-            wizard_preparation = self.env["service.billing.preparation"]
-            wizard_preparation = wizard_preparation.with_context(active_ids=agreements.ids).create({})
-            res = wizard_preparation.do_billing_preparation()
-            if res:
-                self = self.with_context(auto=True)
-                wizard_billing = self.env["service.billing"].with_context(active_ids=res["consumption_ids"]).create({})
-                wizard_billing.do_billing()
+        # contractele care au deja consum in perioada curenta nu se mai pregatesc
+        agreements -= consumptions.agreement_id
+
+        # pregatirea si facturarea se fac explicit pe companie si pe jurnal: cron-ul
+        # ruleaza ca superuser, iar valorile implicite ale wizard-urilor (perioada,
+        # compania utilizatorului, jurnalul ultimului consum) nu sunt un contract stabil
+        for company in agreements.company_id:
+            company_agreements = agreements.filtered(lambda a, c=company: a.company_id == c)
+            preparation = (
+                self.env["service.billing.preparation"]
+                .with_company(company)
+                .create(
+                    {
+                        "service_period_id": service_period.id,
+                        "company_id": company.id,
+                        "agreement_ids": [(6, 0, company_agreements.ids)],
+                    }
+                )
+            )
+            new_consumptions = preparation._prepare_consumptions()
+            # o corectie fara factura initiala nu se factureaza: contractul ei se sare
+            # (ramane in ciorna), celelalte contracte se factureaza
+            missing = self.env["service.billing"]._get_corrections_without_invoice(new_consumptions)
+            if missing:
+                _logger.warning(
+                    "Billing automation: agreements %s skipped, corrections %s have no original invoice.",
+                    missing.agreement_id.mapped("name"),
+                    missing.ids,
+                )
+                new_consumptions = new_consumptions.filtered(lambda c, a=missing.agreement_id: c.agreement_id not in a)
+            by_journal = {}
+            for consumption in new_consumptions:
+                journal = self._get_auto_billing_journal(consumption.agreement_id)
+                by_journal.setdefault(journal, self.env["service.consumption"])
+                by_journal[journal] |= consumption
+            for journal, journal_consumptions in by_journal.items():
+                if not journal:
+                    _logger.warning(
+                        "Billing automation: no sale journal for company %s, consumptions %s not invoiced.",
+                        company.name,
+                        journal_consumptions.ids,
+                    )
+                    continue
+                billing = (
+                    self.env["service.billing"]
+                    .with_company(company)
+                    .with_context(auto=True)
+                    .create(
+                        {
+                            "company_id": company.id,
+                            "journal_id": journal.id,
+                            "consumption_ids": [(6, 0, journal_consumptions.ids)],
+                        }
+                    )
+                )
+                try:
+                    with self.env.cr.savepoint():
+                        billing.do_billing()
+                except UserError as error:
+                    # ex. numai consumuri sub cantitatea gratuita: nu blocam celelalte companii
+                    _logger.warning(
+                        "Billing automation: consumptions %s not invoiced: %s", journal_consumptions.ids, error
+                    )
 
     def action_service_billing_preparation(self):
         action = self.env["ir.actions.actions"]._for_xml_id(
