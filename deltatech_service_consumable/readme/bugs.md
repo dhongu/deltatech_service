@@ -37,7 +37,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## CONSUMABLE-003 — P1: The service efficiency report bypasses company separation
 
-- **Status:** Open; found 2026-10-09 during the STOCKREPORT-003 fix.
+- **Status:** Fixed in 19.0.1.1.10. Global rule `[('company_id', 'in', company_ids)]` on `service.efficiency.report` (`security/service_efficiency_report_security.xml`, loaded on update), with a two-company regression test; found 2026-10-09 during the STOCKREPORT-003 fix.
 - **Location:** `service.efficiency.report` (inherits the `stock.picking.report` SQL view under another `_name`).
 - **Trigger:** A user with access to one company opens the service efficiency report in a multi-company database.
 - **Actual behavior / impact:** The company record rule added to `stock.picking.report` in `deltatech_stock_report` 19.0.1.0.6 is bound to that model and does not carry over to `service.efficiency.report`; the SQL view has `company_id` but no rule, so figures of every company are visible.
