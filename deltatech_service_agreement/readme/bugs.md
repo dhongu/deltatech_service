@@ -94,7 +94,7 @@ Revalidate the selected consumptions at execution time and lock them so concurre
 
 ## [P1] AGREEMENT-009 — Negative service corrections are silently clipped and billed quantities disagree
 
-**Status:** Open — reported on 19.0 (2026-10-03, dhongu/deltatech_service#106); the same code is present on 20.0.
+**Status:** Fixed in 20.0.2.0.15. Reported on 19.0 (2026-10-03, dhongu/deltatech_service#106); the same code was present on 20.0.
 
 **Location:** `wizard/service_billing.py`, `add_invoice_line()`, `do_billing_step1()`, `do_billing()` (negative-line loop).
 

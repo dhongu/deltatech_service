@@ -5,7 +5,7 @@
 {
     "name": "Services Consumable",
     "summary": "Service Consumable",
-    "version": "20.0.1.1.9",
+    "version": "20.0.1.1.10",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Equipment",

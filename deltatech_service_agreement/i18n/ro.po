@@ -227,6 +227,12 @@ msgid "Contract Services"
 msgstr "Contract servicii"
 
 #. module: deltatech_service_agreement
+#. odoo-python
+#: code:addons/deltatech_service_agreement/wizard/service_billing.py:0
+msgid "Correction of invoice %(invoice)s from %(date)s"
+msgstr "Corecție factura %(invoice)s din %(date)s"
+
+#. module: deltatech_service_agreement
 #: model:ir.model.fields,field_description:deltatech_service_agreement.field_service_agreement__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_agreement.field_service_agreement_group__create_uid
 #: model:ir.model.fields,field_description:deltatech_service_agreement.field_service_agreement_line__create_uid
@@ -975,6 +981,30 @@ msgstr ""
 #: model:ir.model.fields.selection,name:deltatech_service_agreement.selection__service_agreement__state__closed
 msgid "Terminated"
 msgstr "Închis"
+
+#. module: deltatech_service_agreement
+#. odoo-python
+#: code:addons/deltatech_service_agreement/wizard/service_billing.py:0
+msgid ""
+"The correction of product %(product)s on agreement %(agreement)s "
+"cannot be invoiced: no posted invoice was found for an earlier "
+"consumption of this agreement line."
+msgstr ""
+"Corecția produsului %(product)s din contractul %(agreement)s nu poate "
+"fi facturată: nu s-a găsit nicio factură postată pentru un consum "
+"anterior al acestei linii de contract."
+
+#. module: deltatech_service_agreement
+#. odoo-python
+#: code:addons/deltatech_service_agreement/wizard/service_billing.py:0
+msgid ""
+"The line of product %(product)s was not found on the corrected invoice "
+"%(invoice)s: check that the correction uses the VAT rate of the "
+"original operation."
+msgstr ""
+"Linia produsului %(product)s nu a fost găsită pe factura corectată "
+"%(invoice)s: verificați dacă la corecție se aplică cota de TVA a "
+"operațiunii inițiale."
 
 #. module: deltatech_service_agreement
 #. odoo-python

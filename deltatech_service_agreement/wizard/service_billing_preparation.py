@@ -48,6 +48,19 @@ class ServiceBillingPreparation(models.TransientModel):
         defaults["agreement_ids"] = [(6, 0, [rec.id for rec in res])]
         return defaults
 
+    def _prepare_consumptions(self):
+        """Generează consumurile perioadei pentru contractele selectate și le întoarce.
+
+        Contractul folosit de facturarea automată: rezultatul conține consumurile tuturor
+        contractelor (nu doar ale ultimului), fără a depinde de acțiunea de fereastră.
+        """
+        self.ensure_one()
+        consumptions = self.env["service.consumption"]
+        for agreement in self.agreement_ids:
+            consumptions |= agreement.agreement_line.do_billing_preparation(self.service_period_id)
+        self.agreement_ids.compute_totals()
+        return consumptions
+
     def do_billing_preparation(self):
         # check for blocked partners
         # for agreement in self.agreement_ids:
@@ -56,10 +69,7 @@ class ServiceBillingPreparation(models.TransientModel):
         # if agreement.partner_id.parent_id and agreement.partner_id.parent_id.invoice_warn == "block":
         #     raise UserError(agreement.partner_id.parent_id.invoice_warn_msg)
 
-        consumptions = self.env["service.consumption"]
-        for agreement in self.agreement_ids:
-            consumptions = agreement.agreement_line.do_billing_preparation(self.service_period_id)
-        self.agreement_ids.compute_totals()
+        consumptions = self._prepare_consumptions()
         domain = [
             "|",
             ("id", "in", consumptions.ids),

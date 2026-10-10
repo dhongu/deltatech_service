@@ -1,1 +1,11 @@
-{"title": "Services Agreement", "summary": "Recurring service contracts, invoiced", "icon": "file", "lang": "en", "features": ["Contracts with currency and recurrence", "Periodic invoice generation", "Actual consumption before billing"]}
+{
+  "title": "Services Agreement",
+  "summary": "Recurring service contracts, invoiced",
+  "icon": "file",
+  "lang": "en",
+  "features": [
+    "Contracts with currency and recurrence",
+    "Periodic invoice generation",
+    "Actual consumption before billing"
+  ]
+}
