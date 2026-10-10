@@ -32,6 +32,14 @@ deltatech_service_equipment:
 .. contents::
    :local:
 
+Changelog
+=========
+
+19.0.1.0.1 (2026-09-30)
+-----------------------
+
+- Own module icon in the flat style of the other modules.
+
 Bug Tracker
 ===========
 
