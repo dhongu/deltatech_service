@@ -39,6 +39,13 @@ Services Equipment Base
 Changelog
 =========
 
+19.0.1.2.11 (2026-10-06)
+------------------------
+
+- The equipment dropdown shows the serial number in a second, dimmed
+  column; the plain name (``reference / serial``) used on invoices and
+  reports is unchanged.
+
 19.0.1.2.10
 -----------
 

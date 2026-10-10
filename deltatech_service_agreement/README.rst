@@ -38,6 +38,59 @@ Features:
 Changelog
 =========
 
+19.0.2.0.15 (2026-10-09)
+------------------------
+
+- Apps Store banner (banner.json).
+
+19.0.2.0.14 (2026-10-06)
+------------------------
+
+- The agreement dropdown shows the partner and the agreement date in a
+  second, dimmed column; the plain name (``number / date``) is
+  unchanged. The date format is read from the cached language data
+  instead of searching ``res.lang`` on every computation.
+
+19.0.2.0.13 (2026-10-03)
+------------------------
+
+- Service billing converted consumption prices into the currency of the
+  user's default company, even when the invoice was issued for another
+  company. A EUR 100 consumption of a EUR company, billed by a user
+  whose default company uses RON, became a 500 line on the EUR invoice.
+  Prices are now converted into the invoice currency (journal currency,
+  otherwise the billing company currency) at the rates of the billing
+  company. The invoice currency is set explicitly, and income account
+  and taxes are taken for the billing company. Consumptions of another
+  company are rejected. **Amounts change** for users whose default
+  company differs from the billing company and for journals in a foreign
+  currency.
+- Stored consumption revenues are now in the currency of the consumption
+  company, not in the currency of the default company of the user who
+  triggered the computation. The upgrade recomputes the revenues of
+  invoiced consumptions, so revenue figures change for multi-company /
+  multi-currency databases.
+- Agreement lines had no record rule: any internal user could read, and
+  any service user could modify, lines of agreements of other companies.
+  Lines now follow the multi-company rule of their agreement. Creating a
+  line on an agreement, or moving a line to another agreement, requires
+  write access on that agreement.
+
+19.0.2.0.12 (2026-09-30)
+------------------------
+
+- Own module icon in the flat style of the other modules.
+
+19.0.2.0.11 (2026-09-24)
+------------------------
+
+- Posting, cancelling or deleting an invoice or a payment no longer
+  fails with an access error on *Service consumption* for users who have
+  accounting rights but no service rights. The linked consumptions and
+  agreements are now updated with elevated rights, still limited to the
+  moves being processed. This also fixes the register-payment wizard,
+  which deletes the draft payment move.
+
 19.0.2.0.10 (2026-09-23)
 ------------------------
 
