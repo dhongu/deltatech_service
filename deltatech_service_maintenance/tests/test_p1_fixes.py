@@ -85,6 +85,27 @@ class TestWarrantyApprovalRights(TestServiceBase):
         with self.assertRaises(UserError):
             draft.with_user(self.warranty_manager).approve()
 
+    def test_plain_user_cannot_write_approved_state(self):
+        # SERVICE-012: writing the state directly does not skip the approval right
+        with self.assertRaises(AccessError):
+            self.warranty.with_user(self.warranty_user).write({"state": "approved"})
+        self.assertEqual(self.warranty.state, "approval_requested")
+        with self.assertRaises(AccessError):
+            self.env["service.warranty"].with_user(self.warranty_user).create(
+                {"type": "warranty", "partner_id": self.partner.id, "state": "approved"}
+            )
+
+    def test_approver_and_manager_can_write_approved_state(self):
+        self.warranty.with_user(self.warranty_approver).write({"state": "approved"})
+        self.assertEqual(self.warranty.state, "approved")
+        other = self.env["service.warranty"].create({"type": "warranty", "partner_id": self.partner.id})
+        other.with_user(self.warranty_manager).write({"state": "approved"})
+        self.assertEqual(other.state, "approved")
+
+    def test_plain_user_can_write_other_states(self):
+        self.warranty.with_user(self.warranty_user).write({"state": "progress"})
+        self.assertEqual(self.warranty.state, "progress")
+
 
 @tagged("post_install", "-at_install")
 class TestNotificationEquipmentDetection(TestServiceBase):
