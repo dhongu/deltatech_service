@@ -1,3 +1,14 @@
+## 20.0.1.1.10 (2026-10-10)
+
+- Service efficiency report: a global company restriction limits the rows to the user's
+  active companies. The report reuses the `stock.picking.report` SQL view under another
+  model, so the company restriction of that report did not apply and a user saw the figures
+  of every company (CONSUMABLE-003).
+- Service efficiency report: the model is declared as a SQL view (`_auto = False`) and does
+  not get log-access fields without a column in the view (CONSUMABLE-004).
+- Port of 19.0.1.1.10 (dhongu/deltatech_service#130). Adapted for 20.0: the 19.0 `ir.rule`
+  became a global row (no group) in `security/ir.access.csv`.
+
 ## 20.0.1.1.9 (2026-10-04)
 
 - Validating a delivery linked to a service agreement added the move value to the
