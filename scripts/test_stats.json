@@ -1,0 +1,81 @@
+{
+  "addons": {
+    "deltatech_category_group_equipment": {
+      "coverage": 100.0,
+      "lines": 7,
+      "tests": 0
+    },
+    "deltatech_object_history": {
+      "coverage": 67.6,
+      "lines": 102,
+      "tests": 1
+    },
+    "deltatech_object_history_service": {
+      "coverage": 63.4,
+      "lines": 41,
+      "tests": 0
+    },
+    "deltatech_property": {
+      "coverage": 89.2,
+      "lines": 296,
+      "tests": 3
+    },
+    "deltatech_property_agreement": {
+      "coverage": 100.0,
+      "lines": 13,
+      "tests": 0
+    },
+    "deltatech_service": {
+      "tests": 0
+    },
+    "deltatech_service_agreement": {
+      "coverage": 69.9,
+      "lines": 565,
+      "tests": 4
+    },
+    "deltatech_service_base": {
+      "coverage": 85.7,
+      "lines": 42,
+      "tests": 3
+    },
+    "deltatech_service_consumable": {
+      "coverage": 63.8,
+      "lines": 276,
+      "tests": 3
+    },
+    "deltatech_service_equipment": {
+      "coverage": 58.6,
+      "lines": 543,
+      "tests": 7
+    },
+    "deltatech_service_equipment_base": {
+      "coverage": 86.9,
+      "lines": 428,
+      "tests": 11
+    },
+    "deltatech_service_maintenance": {
+      "coverage": 56.2,
+      "lines": 880,
+      "tests": 7
+    },
+    "deltatech_service_maintenance_agreement": {
+      "coverage": 62.9,
+      "lines": 35,
+      "tests": 0
+    },
+    "deltatech_service_maintenance_plan": {
+      "coverage": 83.8,
+      "lines": 179,
+      "tests": 1
+    },
+    "deltatech_service_task": {
+      "coverage": 85.6,
+      "lines": 118,
+      "tests": 2
+    }
+  },
+  "branch": "18.0",
+  "commit": "492d69cda6e41da0246d2ba9ac57e1ce57478723",
+  "generated": "2026-10-12",
+  "source": "codecov:dhongu/deltatech_service"
+}
