@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 {
-    "name": "Deltatech Services Task",
+    "name": "Services Task",
     "summary": "Services Task Maintenance",
     "version": "19.0.0.0.21",
     "author": "Terrabit, Dorin Hongu",

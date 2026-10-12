@@ -1,7 +1,7 @@
 # ©  2023-now Deltatech
 # See README.rst file on addons root folder for license details
 {
-    "name": "Deltatech Object History for Service",
+    "name": "Object History for Service",
     "summary": "Extends Object History for Agreement an Equipment models",
     "version": "19.0.0.0.3",
     "author": "Terrabit, Dan Stoica",

@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 {
-    "name": "Deltatech Equipment Category Group",
+    "name": "Equipment Category Group",
     "summary": "Groups for equipments, related to internal categories groups",
     "version": "19.0.0.0.4",
     "author": "Terrabit, Dan Stoica",

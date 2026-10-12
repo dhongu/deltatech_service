@@ -3,7 +3,7 @@
 
 {
     "name": "Services Base",
-    "summary": "Manage Services Base",
+    "summary": "Base for service modules: billing cycles and date ranges",
     "version": "19.0.2.0.7",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
