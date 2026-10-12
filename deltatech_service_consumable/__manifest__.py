@@ -4,7 +4,7 @@
 
 {
     "name": "Services Consumable",
-    "summary": "Service Consumable",
+    "summary": "Bill consumables from equipment counter readings, with estimates for missing ones",
     "version": "20.0.1.1.10",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
