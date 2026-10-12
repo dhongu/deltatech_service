@@ -1,7 +1,7 @@
 # ©  2023-now Deltatech
 # See README.rst file on addons root folder for license details
 {
-    "name": "Deltatech Object History",
+    "name": "Object History",
     "summary": "Object history - a parallel history of Odoo documents, separated from standard Odoo messages",
     "version": "19.0.0.0.4",
     "author": "Terrabit, Dan Stoica",

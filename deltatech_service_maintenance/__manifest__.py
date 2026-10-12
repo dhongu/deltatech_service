@@ -3,8 +3,8 @@
 # See README.rst file on addons root folder for license details
 
 {
-    "name": "Deltatech Services Maintenance",
-    "summary": "Services Maintenance",
+    "name": "Services Maintenance",
+    "summary": "Service requests, service orders and maintenance plans that generate orders",
     "version": "19.0.1.2.7",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
