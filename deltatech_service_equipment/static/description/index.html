@@ -9,6 +9,7 @@
     <span class="d-inline-block rounded-pill fw-semibold m-1" style="background-color:#00432a;color:#ffffff;padding:8px 16px;font-size:12px;">Services/Equipment</span>
     <span class="d-inline-block rounded-pill fw-semibold m-1" style="background-color:#00432a;color:#ffffff;padding:8px 16px;font-size:12px;">OPL-1</span>
     <span class="d-inline-block rounded-pill fw-semibold m-1" style="background-color:#00432a;color:#ffffff;padding:8px 16px;font-size:12px;">Odoo.sh &bull; On-premise</span>
+    <span class="d-inline-block rounded-pill fw-semibold m-1" style="background-color:#00432a;color:#ffffff;padding:8px 16px;font-size:12px;">&#10003; 23 automated tests</span>
   </div>
 </div>
 
@@ -51,6 +52,14 @@
 </div>
 <div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Versions</h2>
+<h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.1.19 (2026-10-10)</h2>
+<ul>
+<li>Automatic billing requires <em>Readings done</em> only for agreement types with <em>Requires readings
+  for billing</em>, like the manual billing preparation; agreements without meters are billed again
+  on their date (EQUIPMENT-004).</li>
+<li><em>Readings done</em> is cleared after the agreement is billed, for the types that require readings,
+  so the next period is not billed on the previous readings (EQUIPMENT-005).</li>
+</ul>
 <h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.1.18 (2026-10-06)</h2>
 <ul>
 <li>The equipment dropdown shows address, emplacement and serial number in a second, dimmed
