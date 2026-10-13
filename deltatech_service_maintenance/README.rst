@@ -16,8 +16,11 @@ Deltatech Services Maintenance
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
     :alt: dhongu/deltatech_service
+.. |badge_tests| image:: https://img.shields.io/badge/-28%20automated%20tests-2ea44f.png
+    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance/tests
+    :alt: 28 automated tests
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_tests|
 
 - Features:
 

@@ -16,8 +16,11 @@ Property Management
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property
     :alt: dhongu/deltatech_service
+.. |badge_tests| image:: https://img.shields.io/badge/-12%20automated%20tests%20%C2%B7%2090%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_property
+    :alt: 12 automated tests · 90% code coverage
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_tests|
 
 Features:
 
