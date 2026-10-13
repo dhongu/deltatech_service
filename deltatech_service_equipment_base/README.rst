@@ -17,7 +17,7 @@ Services Equipment Base
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base
     :alt: dhongu/deltatech_service
 .. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
-    :target: https://github.com/dhongu/deltatech_service/blob/19.0/deltatech_service_equipment_base/readme/FISA_CONSULTANT.md
+    :target: https://github.com/dhongu/deltatech_service/blob/20.0/deltatech_service_equipment_base/readme/FISA_CONSULTANT.md
     :alt: Fișă consultant
 
 |badge1| |badge2| |badge_fisa|
