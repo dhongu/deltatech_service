@@ -14,7 +14,7 @@ Services Base
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base
+    :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_base
     :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
@@ -25,6 +25,14 @@ Features:
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+20.0.2.0.7 (2026-10-09)
+-----------------------
+
+- Apps Store banner (banner.json).
 
 Bug Tracker
 ===========
@@ -54,6 +62,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_base>`_ project on GitHub.
 
 You are welcome to contribute.
