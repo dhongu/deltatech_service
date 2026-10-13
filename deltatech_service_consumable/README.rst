@@ -16,8 +16,11 @@ Services Consumable
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable
     :alt: dhongu/deltatech_service
+.. |badge_tests| image:: https://img.shields.io/badge/-14%20automated%20tests%20%C2%B7%2071%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable
+    :alt: 14 automated tests · 71% code coverage
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_tests|
 
 - Features:
 

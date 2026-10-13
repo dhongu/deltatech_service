@@ -16,8 +16,11 @@ Deltatech Services Task
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task
     :alt: dhongu/deltatech_service
+.. |badge_tests| image:: https://img.shields.io/badge/-8%20automated%20tests%20%C2%B7%2089%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_task
+    :alt: 8 automated tests · 89% code coverage
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_tests|
 
 - Features:
 
