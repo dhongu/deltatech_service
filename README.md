@@ -1,7 +1,7 @@
 ![Licence](https://img.shields.io/badge/licence-OPL--1-blue.svg)
 [![Pre-commit Status](https://github.com/dhongu/deltatech_service/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/dhongu/deltatech_service/actions/workflows/pre-commit.yml?query=branch%3A18.0)
 [![Build Status](https://github.com/dhongu/deltatech_service/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/dhongu/deltatech_service/actions/workflows/test.yml?query=branch%3A18.0)
-[![codecov](https://codecov.io/gh/dhongu/deltatech_service/branch/18.0/graph/badge.svg)](https://codecov.io/gh/dhongu/deltatech_service/tree/18.0)
+[![codecov](https://codecov.io/gh/dhongu/deltatech_service/branch/18.0/graph/badge.svg?token=9T2YOAPADD)](https://codecov.io/gh/dhongu/deltatech_service/tree/18.0)
 
 
 
