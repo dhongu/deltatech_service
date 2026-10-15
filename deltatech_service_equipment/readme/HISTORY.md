@@ -1,3 +1,17 @@
+## 20.0.1.1.17 (2026-10-15)
+
+- Searching an equipment by serial number or EAN code ignored the domain of the field
+  and the result limit, and could list the same equipment twice. The serial number and
+  the EAN code are now searched together with the name (also from the search bar), so
+  the domain and the limit apply to all results.
+- The equipment dropdown shows address, emplacement and serial number in a second, dimmed
+  column; the plain name (`reference/address/emplacement/serial`) used on invoice lines is unchanged.
+- Automatic billing requires *Readings done* only for agreement types with *Requires readings
+  for billing*, like the manual billing preparation; agreements without meters are billed again
+  on their date (EQUIPMENT-004).
+- *Readings done* is cleared after the agreement is billed, for the types that require readings,
+  so the next period is not billed on the previous readings (EQUIPMENT-005).
+
 ## 20.0.1.1.16 (2026-10-04)
 
 - New `stock.move._get_service_signed_value()`: the valuation (`stock.move.value`) of the

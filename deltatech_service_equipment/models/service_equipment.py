@@ -8,6 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -312,19 +313,27 @@ class ServiceEquipment(models.Model):
         }
 
     @api.model
-    def name_search(self, name="", domain=None, operator="ilike", limit=100):
-        res_serial = []
-        if name and len(name) > 3:
-            equipment_ids = self.search(
-                ["|", ("serial_id", "ilike", name), ("ean_code", "ilike", name)],
-                limit=10,
-            )
-            if equipment_ids:
-                res_serial = [(equipment_id.id, equipment_id.display_name) for equipment_id in equipment_ids]
-        res = super().name_search(name, domain, operator=operator, limit=limit) + res_serial
-        return res
+    def _search_display_name(self, operator, value):
+        # the serial number and the EAN code are searched together with the name, so the
+        # many2one domain and the limit apply to all of them
+        domain = super()._search_display_name(operator, value)
+        if operator in ("ilike", "like", "=ilike", "=like", "=") and isinstance(value, str) and len(value) > 3:
+            domain = Domain.OR([domain, [("serial_id.name", operator, value)], [("ean_code", operator, value)]])
+        return domain
 
+    @api.depends("name", "address_id.name", "emplacement", "serial_id.name")
+    @api.depends_context("formatted_display_name")
     def _compute_display_name(self):
+        if self.env.context.get("formatted_display_name"):
+            for equipment in self:
+                details = " · ".join(
+                    part
+                    for part in (equipment.address_id.name, equipment.emplacement, equipment.serial_id.name)
+                    if part
+                )
+                name = equipment.name or ""
+                equipment.display_name = f"{name}\t--{details}--" if details else name
+            return
         for equipment in self:
             name = equipment.name or ""
             if equipment.address_id.name:

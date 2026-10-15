@@ -16,14 +16,8 @@ Services Equipment
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_equipment
     :alt: dhongu/deltatech_service
-.. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
-    :target: https://github.com/dhongu/deltatech_service/blob/20.0/deltatech_service_equipment/readme/FISA_CONSULTANT.md
-    :alt: Fișă consultant
-.. |badge_tests| image:: https://img.shields.io/badge/-15%20automated%20tests%20%C2%B7%2076%25%20code%20coverage-2ea44f.png
-    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/20.0/deltatech_service_equipment
-    :alt: 15 automated tests · 76% code coverage
 
-|badge1| |badge2| |badge_fisa| |badge_tests|
+|badge1| |badge2|
 
 - Features:
 
@@ -41,6 +35,26 @@ Services Equipment
 
 Changelog
 =========
+
+20.0.1.1.17 (2026-10-15)
+------------------------
+
+- Searching an equipment by serial number or EAN code ignored the domain
+  of the field and the result limit, and could list the same equipment
+  twice. The serial number and the EAN code are now searched together
+  with the name (also from the search bar), so the domain and the limit
+  apply to all results.
+- The equipment dropdown shows address, emplacement and serial number in
+  a second, dimmed column; the plain name
+  (``reference/address/emplacement/serial``) used on invoice lines is
+  unchanged.
+- Automatic billing requires *Readings done* only for agreement types
+  with *Requires readings for billing*, like the manual billing
+  preparation; agreements without meters are billed again on their date
+  (EQUIPMENT-004).
+- *Readings done* is cleared after the agreement is billed, for the
+  types that require readings, so the next period is not billed on the
+  previous readings (EQUIPMENT-005).
 
 20.0.1.1.16 (2026-10-04)
 ------------------------
