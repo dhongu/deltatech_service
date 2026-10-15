@@ -7,9 +7,10 @@
 
 - Person pickers (contact person, read by) accept the contacts of a company, which Odoo 20 may
   flag as companies through their CUI.
-- Schimbarea tipului pe echipament completează din șablon doar listele de operațiuni goale; nu mai
-  rescrie ajustările făcute punctual pe echipament.
-- Buton „Preia operațiunile din șablon”, cu confirmare, pentru resincronizarea deliberată din șablon.
+- Changing the equipment type fills from the type template only the operation lists that are
+  still empty; adjustments made on a specific equipment are no longer overwritten.
+- *Load Operations from Template* button, with confirmation, for a deliberate resync from the
+  template.
 
 ## 20.0.1.2.9 (2026-09-30)
 

@@ -23,7 +23,7 @@
     "deltatech_service_equipment_base": {
       "coverage": 86.0,
       "lines": 442,
-      "tests": 13
+      "tests": 14
     }
   },
   "branch": "20.0",
