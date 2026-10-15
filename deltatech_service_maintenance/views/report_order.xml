@@ -5,7 +5,6 @@
         <field name="model">service.order</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">deltatech_service_maintenance.report_service_order</field>
-        <field name="report_file">deltatech_service_maintenance.report_service_order</field>
         <field name="binding_type">report</field>
         <field name="binding_view_types">form</field>
         <field name="binding_model_id" ref="model_service_order" />
@@ -17,7 +16,6 @@
         <field name="model">service.order</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">deltatech_service_maintenance.report_handover_report</field>
-        <field name="report_file">deltatech_service_maintenance.report_handover_report</field>
         <field name="binding_type">report</field>
         <field name="binding_view_types">form</field>
         <field name="binding_model_id" ref="model_service_order" />
@@ -28,7 +26,6 @@
         <field name="model">service.order</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">deltatech_service_maintenance.report_minute_report</field>
-        <field name="report_file">deltatech_service_maintenance.report_minute_report</field>
         <field name="binding_type">report</field>
         <field name="binding_view_types">form</field>
         <field name="binding_model_id" ref="model_service_order" />

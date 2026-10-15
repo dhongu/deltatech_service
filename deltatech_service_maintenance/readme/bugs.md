@@ -59,7 +59,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-005 — P2: Internal transfer actions still populate the obsolete picking move relation
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 20.0.1.2.7 (migration to Odoo 20): `new_transfer_button()` passes the lines as `default_move_ids`, with the stock move unit in `uom_id`. Not yet covered by a test.
 - **Location:** models/service_notification.py, new_transfer_button().
 - **Trigger:** Create an internal transfer from a notification with products.
 - **Actual behavior:** The action uses default_move_lines while Odoo 19 stock.picking uses move_ids. The delivery actions were updated, but this separate transfer path was left behind.
@@ -114,7 +114,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-010 — P3: Picking "New Notification" method still reads the removed move relation
 
-- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Status:** Partially fixed in 20.0.1.2.7 (migration to Odoo 20): the method reads `move_ids`; the misleading `sale_order_id` context key and the commented button remain.
 - **Location:** `models/stock.py`, `StockPicking.new_notification()`.
 - **Trigger:** Call `new_notification()` on a `stock.picking` (RPC or custom code); the form button in `views/stock_view.xml` is commented out, so the method is not reachable from the standard UI.
 - **Actual behavior:** The method reads `self.move_lines`, a `stock.picking` relation removed in Odoo 19 (replaced by `move_ids`), so it raises `AttributeError` before returning the action. It also puts the picking id into the `sale_order_id` context key, copied from the sale order variant in `models/sale.py`.
@@ -125,7 +125,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-011 — P3: Notification user grouping helper uses the user default company and removed APIs
 
-- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Status:** Partially fixed in 20.0.1.2.7 (migration to Odoo 20): `name_get()` was replaced by `display_name`; the helper is still dead code and still uses `env.user.company_id`.
 - **Location:** `models/service_notification.py`, `ServiceNotification.company_user()` and the `_group_by_full` class attribute.
 - **Trigger:** None in Odoo 19: `_group_by_full` is no longer read by the ORM, so `company_user()` is never called by the framework; only a direct call reaches it.
 - **Actual behavior:** The helper takes the partner of `env.user.company_id` (the user default company, not `env.company`; same class as AGREEMENT-001 / AGREEMENT-010) and calls `res.users.name_get()`, which no longer exists in Odoo 19, so a direct call raises `AttributeError`.

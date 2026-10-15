@@ -160,11 +160,11 @@ class ServiceWarranty(models.Model):
         # block picking if partner blocked
 
         picking_type_id = False
-        get_param = self.env["ir.config_parameter"].sudo().get_param
+        get_str = self.env["ir.config_parameter"].sudo().get_str
         if self.type == "warranty":
-            picking_type_id = safe_eval(get_param("service.picking_type_for_warranty", "False"))
+            picking_type_id = safe_eval(get_str("service.picking_type_for_warranty", "False"))
         elif self.type == "recondition":
-            picking_type_id = safe_eval(get_param("service.picking_type_for_recondition", "False"))
+            picking_type_id = safe_eval(get_str("service.picking_type_for_recondition", "False"))
         if picking_type_id:
             picking_type = self.env["stock.picking.type"].browse(picking_type_id)
         else:
@@ -187,7 +187,7 @@ class ServiceWarranty(models.Model):
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "uom_id": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
@@ -275,7 +275,7 @@ class ServiceWarrantyItem(models.Model):
     )
     product_id = fields.Many2one("product.product", string="Product")
     alternative_code = fields.Char(related="product_id.alternative_code")
-    quantity = fields.Float(string="Quantity", digits="Product Unit of Measure", default=1)
+    quantity = fields.Float(string="Quantity", digits="Product Unit", default=1)
     product_uom = fields.Many2one("uom.uom", string="Unit of Measure ")
     note = fields.Char(string="Note")
     price_unit = fields.Float(string="Unit price")

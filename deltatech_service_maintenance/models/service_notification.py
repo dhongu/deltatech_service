@@ -139,7 +139,7 @@ class ServiceNotification(models.Model):
     def company_user(self, present_ids, domain, **kwargs):
         partner_id = self.env.user.company_id.partner_id
         users = self.env["res.users"].search([("partner_id.parent_id", "=", partner_id.id)])
-        users_name = users.name_get()
+        users_name = [(user.id, user.display_name) for user in users]
         users_name.append((False, False))
         return users_name, None
 
@@ -373,8 +373,8 @@ class ServiceNotification(models.Model):
                 # TODO: De anuntat utilizatorul ca are o sesizare
 
     def new_delivery_button(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
 
         picking_type = self.env["stock.picking.type"].browse(picking_type_id)
 
@@ -401,7 +401,7 @@ class ServiceNotification(models.Model):
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "uom_id": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
@@ -444,18 +444,18 @@ class ServiceNotification(models.Model):
         )
 
         if self.item_ids:
-            context["default_move_lines"] = []
+            context["default_move_ids"] = []
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "uom_id": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
                 }
 
-                context["default_move_lines"] += [(0, 0, value)]
+                context["default_move_ids"] += [(0, 0, value)]
                 context["notification_id"] = self.id
         return {
             "name": self.env._("Transfer for service"),
@@ -596,7 +596,7 @@ class ServiceNotificationItem(models.Model):
     )
     product_id = fields.Many2one("product.product", string="Product")
     alternative_code = fields.Char(related="product_id.alternative_code")
-    quantity = fields.Float(string="Quantity", digits="Product Unit of Measure", default=1)
+    quantity = fields.Float(string="Quantity", digits="Product Unit", default=1)
     product_uom = fields.Many2one("uom.uom", string="Unit of Measure ")
     note = fields.Char(string="Note")
     stock_location_issue = fields.Boolean(compute="_compute_stock_issue")

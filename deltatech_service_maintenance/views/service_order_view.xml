@@ -110,7 +110,7 @@
                             groups="sales_team.group_sale_salesman"
                             invisible="can_ordered==False"
                             type="object"
-                            icon="fa-shopping-cart"
+                            icon="shopping_cart"
                         >
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">Sale Order</span>
@@ -204,21 +204,21 @@
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
-                                        icon="fa-area-chart text-success"
+                                        icon="area_chart" icon_class="text-success"
                                         title="Forecast"
                                         invisible="stock_location_issue==True"
                                     />
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
-                                        icon="fa-area-chart text-warning"
+                                        icon="area_chart" icon_class="text-warning"
                                         title="Forecast"
                                         invisible="stock_location_issue==False or stock_issue==True"
                                     />
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
-                                        icon="fa-area-chart text-danger"
+                                        icon="area_chart" icon_class="text-danger"
                                         title="Forecast"
                                         invisible="stock_location_issue==False or stock_issue==False"
                                     />

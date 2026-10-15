@@ -5,7 +5,7 @@
 {
     "name": "Services Maintenance",
     "summary": "Service requests, service orders and maintenance plans that generate orders",
-    "version": "19.0.1.2.7",
+    "version": "20.0.1.2.7",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
@@ -19,7 +19,6 @@
     ],
     "license": "OPL-1",
     "data": [
-        "security/service_security.xml",
         "data/data.xml",
         "views/service_notification_view.xml",
         "views/service_order_view.xml",
@@ -32,7 +31,7 @@
         "views/service_work_center_view.xml",
         "views/service_warranty_view.xml",
         # "views/res_config_view.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
     "images": ["static/description/main_screenshot.png"],
     "development_status": "Production/Stable",

@@ -239,8 +239,8 @@ class ServiceOrder(models.Model):
         return self.new_delivery_button()
 
     def new_delivery_button(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        picking_type_id = safe_eval(get_param("service.picking_type_for_service", "False"))
+        get_str = self.env["ir.config_parameter"].sudo().get_str
+        picking_type_id = safe_eval(get_str("service.picking_type_for_service", "False"))
 
         picking_type = self.env["stock.picking.type"].browse(picking_type_id)
 
@@ -267,7 +267,7 @@ class ServiceOrder(models.Model):
             for item in self.component_ids:
                 value = {
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "uom_id": item.product_id.uom_id.id,
                     "product_uom_qty": item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
@@ -410,7 +410,7 @@ class ServiceOrderComponent(models.Model):
     )
     product_id = fields.Many2one("product.product", string="Product", domain=[("type", "!=", "service")])
     alternative_code = fields.Char(related="product_id.alternative_code")
-    quantity = fields.Float(string="Quantity", digits="Product Unit of Measure", default=1)
+    quantity = fields.Float(string="Quantity", digits="Product Unit", default=1)
     product_uom = fields.Many2one("uom.uom", string="Unit of Measure ")
     note = fields.Char(string="Note")
 

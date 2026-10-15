@@ -112,12 +112,12 @@ class TestServiceQuotation(TestServiceBase):
 @tagged("post_install", "-at_install")
 class TestWarrantyDeliveryCosts(TestServiceBase):
     """SERVICE-004: validating a warranty delivery writes the unit cost from the
-    Odoo 19 move valuation (stock.move.value) instead of the removed valuation layers."""
+    Odoo 20 move valuation (signed stock.move.value) instead of the removed valuation layers."""
 
     def setUp(self):
         super().setUp()
         self.picking_type = self.env.ref("stock.picking_type_out")
-        self.env["ir.config_parameter"].sudo().set_param("service.picking_type_for_warranty", self.picking_type.id)
+        self.env["ir.config_parameter"].sudo().set_str("service.picking_type_for_warranty", self.picking_type.id)
         self.product.standard_price = 10.0
         self.env.user.group_ids |= self.env.ref("deltatech_service_base.group_warranty_approve")
         self.warranty = self.env["service.warranty"].create(
@@ -135,7 +135,7 @@ class TestWarrantyDeliveryCosts(TestServiceBase):
     def test_validate_writes_unit_cost(self):
         self.assertIs(self.picking.button_validate(), True)
         self.assertEqual(self.picking.state, "done")
-        self.assertEqual(self.picking.move_ids.value, 30.0)
+        self.assertEqual(self.picking.move_ids.value, -30.0)
         self.assertEqual(self.warranty.item_ids.price_unit, 10.0)
 
     def test_backorder_wizard_writes_cost_after_completion(self):

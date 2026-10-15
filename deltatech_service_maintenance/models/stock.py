@@ -43,10 +43,10 @@ class StockPicking(models.Model):
         self.ensure_one()
         context = {"default_partner_id": self.partner_id.id}
 
-        if self.move_lines:
+        if self.move_ids:
             context["default_item_ids"] = []
 
-            for item in self.move_lines:
+            for item in self.move_ids:
                 value = {}
                 value["product_id"] = item.product_id.id
                 value["quantity"] = item.product_uom_qty
@@ -87,7 +87,7 @@ class StockPicking(models.Model):
     def _update_warranty_costs(self):
         """Write on the warranty items the actual unit cost of the delivered products.
 
-        Odoo 19 keeps the valuation on ``stock.move.value`` (always positive); outgoing
+        ``stock.move.value`` is signed in Odoo 20 (negative on outgoing moves); outgoing
         moves are the cost, incoming moves (returns) reduce it. The unit cost is the
         delivered value divided by the delivered quantity, in the unit of the item.
         """
@@ -101,8 +101,9 @@ class StockPicking(models.Model):
             quantity = 0.0
             for move in product_moves:
                 sign = -1 if move.is_in else 1
-                value += sign * move.value
-                quantity += sign * move.product_uom._compute_quantity(move.quantity, product.uom_id, round=False)
+                # the value is already signed (negative on outgoing moves)
+                value -= move.value
+                quantity += sign * move.uom_id._compute_quantity(move.quantity, product.uom_id, round=False)
             price_unit = value / quantity if quantity else 0.0
             if line.product_uom and line.product_uom != product.uom_id:
                 price_unit = product.uom_id._compute_price(price_unit, line.product_uom)

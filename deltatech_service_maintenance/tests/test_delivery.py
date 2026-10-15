@@ -11,9 +11,9 @@ class TestServiceDelivery(TestServiceBase):
     def setUp(self):
         super().setUp()
         self.picking_type = self.env.ref("stock.picking_type_out")
-        set_param = self.env["ir.config_parameter"].sudo().set_param
-        set_param("service.picking_type_for_service", self.picking_type.id)
-        set_param("service.picking_type_for_warranty", self.picking_type.id)
+        set_str = self.env["ir.config_parameter"].sudo().set_str
+        set_str("service.picking_type_for_service", self.picking_type.id)
+        set_str("service.picking_type_for_warranty", self.picking_type.id)
 
     def _save_delivery(self, action):
         picking = Form(self.env["stock.picking"].with_context(**action["context"])).save()

@@ -57,9 +57,7 @@ class TestServiceNotification(TestServiceBase):
         notification.partner_id = self.partner
         notification = notification.save()
         operation_type = self.env.ref("stock.picking_type_out")
-        self.env["ir.config_parameter"].sudo().set_param(
-            "service.picking_type_for_warranty", operation_type.id or False
-        )
+        self.env["ir.config_parameter"].sudo().set_str("service.picking_type_for_warranty", operation_type.id or False)
         notification.set_assigned()
         notification.set_in_progress()
         notification.new_delivery_button()

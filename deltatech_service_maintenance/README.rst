@@ -1,6 +1,6 @@
-==============================
-Deltatech Services Maintenance
-==============================
+====================
+Services Maintenance
+====================
 
 ..
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -14,13 +14,10 @@ Deltatech Services Maintenance
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
+    :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_maintenance
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-28%20automated%20tests-2ea44f.png
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance/tests
-    :alt: 28 automated tests
 
-|badge1| |badge2| |badge_tests|
+|badge1| |badge2|
 
 - Features:
 
@@ -38,6 +35,28 @@ ToDo: de utilizat si modulul de maintenance
 
 Changelog
 =========
+
+19.0.1.2.7 (2026-10-10)
+-----------------------
+
+- Writing *Approved* directly in the warranty status (RPC, import) is
+  refused to the users who may not approve: the same right as the
+  *Approve* button (SERVICE-012). The other states and the managers'
+  clickable status bar are unchanged.
+
+19.0.1.2.6 (2026-10-09)
+-----------------------
+
+- Creating several service orders in one call (import, batch create)
+  kept only the last one; all orders are now created and returned
+  (SERVICE-002).
+- Approving a warranty is checked on the server: only the warranty
+  Approval or Manager groups may approve, and only warranties waiting
+  for approval (SERVICE-006).
+- Creating a notification no longer fails when the optional equipment
+  extension (EAN code, service agreement on the equipment) is not
+  installed; the equipment is still detected from the contact and the
+  customer is taken from the equipment (SERVICE-008).
 
 19.0.1.2.5 (2026-10-02)
 -----------------------
@@ -103,6 +122,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_maintenance>`_ project on GitHub.
 
 You are welcome to contribute.

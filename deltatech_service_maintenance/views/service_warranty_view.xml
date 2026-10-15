@@ -178,7 +178,7 @@
                                                     <div class="col-8">
                                                         <strong>
                                                             <span>
-                                                                <t t-esc="record.product_id.value" />
+                                                                <t t-out="record.product_id.value" />
                                                             </span>
                                                         </strong>
                                                     </div>
@@ -187,8 +187,8 @@
                                                     <div class="col-12 text-muted">
                                                         <span>
                                                             Quantity:
-                                                            <t t-esc="record.quantity.value" />
-                                                            <t t-esc="record.product_uom.value" />
+                                                            <t t-out="record.quantity.value" />
+                                                            <t t-out="record.product_uom.value" />
                                                         </span>
                                                     </div>
                                                 </div>

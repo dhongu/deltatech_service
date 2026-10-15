@@ -161,21 +161,21 @@
                                         type="object"
                                         name="action_product_forecast_report"
                                         title="Forecast"
-                                        icon="fa-area-chart text-success"
+                                        icon="area_chart" icon_class="text-success"
                                         invisible="stock_location_issue==True"
                                     />
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
                                         title="Forecast"
-                                        icon="fa-area-chart text-warning"
+                                        icon="area_chart" icon_class="text-warning"
                                         invisible="stock_location_issue==False or stock_issue==True"
                                     />
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
                                         title="Forecast"
-                                        icon="fa-area-chart text-danger"
+                                        icon="area_chart" icon_class="text-danger"
                                         invisible="stock_location_issue==False or stock_issue==False"
                                     />
 
@@ -195,7 +195,7 @@
                                                     <div class="col-8">
                                                         <strong>
                                                             <span>
-                                                                <t t-esc="record.product_id.value" />
+                                                                <t t-out="record.product_id.value" />
                                                             </span>
                                                         </strong>
                                                     </div>
@@ -204,8 +204,8 @@
                                                     <div class="col-12 text-muted">
                                                         <span>
                                                             Quantity:
-                                                            <t t-esc="record.quantity.value" />
-                                                            <t t-esc="record.product_uom.value" />
+                                                            <t t-out="record.quantity.value" />
+                                                            <t t-out="record.product_uom.value" />
                                                         </span>
                                                     </div>
                                                 </div>
@@ -287,8 +287,8 @@
                                 <div class="o_kanban_record_headings mt4">
                                     <strong class="o_kanban_record_title">
                                         <span>
-                                            <t t-esc="record.service_location_id.value" />
-                                            <t t-esc="record.partner_id.value" />
+                                            <t t-out="record.service_location_id.value" />
+                                            <t t-out="record.partner_id.value" />
                                         </span>
                                     </strong>
                                 </div>
@@ -296,8 +296,8 @@
                             <div class="o_kanban_record_bottom">
                                 <div class="oe_kanban_bottom_left text-muted">
                                     <span>
-                                        <t t-esc="record.name.value" />
-                                        <t t-esc="record.date.value and record.date.value.split(' ')[0] or False" />
+                                        <t t-out="record.name.value" />
+                                        <t t-out="record.date.value and record.date.value.split(' ')[0] or False" />
                                     </span>
                                     <field name="activity_ids" widget="kanban_activity" />
                                 </div>

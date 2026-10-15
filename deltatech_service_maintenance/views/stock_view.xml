@@ -25,7 +25,7 @@
             <div name="button_box" position="inside">
                 <button
                     name="action_lot_open_warranty"
-                    icon="fa-exclamation"
+                    icon="priority_high"
                     class="oe_stat_button"
                     string="Warranties"
                     type="object"
