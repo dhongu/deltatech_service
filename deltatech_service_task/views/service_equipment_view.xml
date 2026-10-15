@@ -8,20 +8,20 @@
         <field name="inherit_id" ref="deltatech_service_equipment_base.view_service_equipment_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="action_view_task_history" type="object" class="oe_stat_button" icon="fa-tasks">
+                <button name="action_view_task_history" type="object" class="oe_stat_button" icon="checklist">
                     <field name="task_count" widget="statinfo" string="Tasks" />
                 </button>
-                <button name="action_view_part_history" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                <button name="action_view_part_history" type="object" class="oe_stat_button" icon="check_box">
                     <field name="part_history_count" widget="statinfo" string="Parts" />
                 </button>
-                <button name="action_view_check_history" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                <button name="action_view_check_history" type="object" class="oe_stat_button" icon="check_box">
                     <field name="check_history_count" widget="statinfo" string="Checks" />
                 </button>
                 <button
                     name="action_view_measurement_history"
                     type="object"
                     class="oe_stat_button"
-                    icon="fa-list-ol"
+                    icon="format_list_numbered"
                 >
                     <field name="measurement_history_count" widget="statinfo" string="Measurements" />
                 </button>

@@ -31,15 +31,23 @@ class ServiceEquipment(models.Model):
 
     def _compute_task_history(self):
         for equipment in self:
-            equipment.task_count = self.env["project.task"].search_count([("service_equipment_id", "=", equipment.id)])
+            # pe un echipament nesalvat (NewId) nu exista istoric; in 20.0 un NewId in domeniu da WARNING
+            equipment_id = equipment._origin.id
+            if not equipment_id:
+                equipment.task_count = 0
+                equipment.part_history_count = 0
+                equipment.check_history_count = 0
+                equipment.measurement_history_count = 0
+                continue
+            equipment.task_count = self.env["project.task"].search_count([("service_equipment_id", "=", equipment_id)])
             equipment.part_history_count = self.env["project.task.part"].search_count(
-                [("equipment_id", "=", equipment.id)]
+                [("equipment_id", "=", equipment_id)]
             )
             equipment.check_history_count = self.env["project.task.check"].search_count(
-                [("equipment_id", "=", equipment.id)]
+                [("equipment_id", "=", equipment_id)]
             )
             equipment.measurement_history_count = self.env["project.task.measurement"].search_count(
-                [("equipment_id", "=", equipment.id)]
+                [("equipment_id", "=", equipment_id)]
             )
 
     def action_view_task_history(self):

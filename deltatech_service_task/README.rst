@@ -1,6 +1,6 @@
-=======================
-Deltatech Services Task
-=======================
+=============
+Services Task
+=============
 
 ..
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -14,13 +14,10 @@ Deltatech Services Task
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task
+    :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_task
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-8%20automated%20tests%20%C2%B7%2089%25%20code%20coverage-2ea44f.png
-    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_task
-    :alt: 8 automated tests · 89% code coverage
 
-|badge1| |badge2| |badge_tests|
+|badge1| |badge2|
 
 - Features:
 
@@ -34,6 +31,17 @@ Deltatech Services Task
 
 Changelog
 =========
+
+19.0.0.0.23 (2026-10-15)
+------------------------
+
+- Apps Store main image regenerated with the redrawn module icon.
+
+19.0.0.0.22 (2026-10-15)
+------------------------
+
+- Module icon redrawn in the Terrabit house style: clean vector, 100x100
+  viewBox, no embedded image.
 
 19.0.0.0.21 (2026-10-03)
 ------------------------
@@ -88,6 +96,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_task>`_ project on GitHub.
 
 You are welcome to contribute.
