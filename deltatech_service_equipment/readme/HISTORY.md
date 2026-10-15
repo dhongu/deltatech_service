@@ -1,3 +1,10 @@
+## 20.0.1.1.17 (2026-10-15)
+
+- Searching an equipment by serial number or EAN code ignored the domain of the field
+  and the result limit, and could list the same equipment twice. The serial number and
+  the EAN code are now searched together with the name (also from the search bar), so
+  the domain and the limit apply to all results.
+
 ## 20.0.1.1.16 (2026-10-04)
 
 - New `stock.move._get_service_signed_value()`: the valuation (`stock.move.value`) of the
