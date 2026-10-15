@@ -1,0 +1,13 @@
+id,name,model_id,group_id/id,operation,domain
+access_project_task_part_user,access_project_task_part,project.task.part,project.group_project_user,crud,
+access_project_task_check_user,access_project_task_check,project.task.check,project.group_project_user,crud,
+access_project_task_measurement_user,access_project_task_measurement,project.task.measurement,project.group_project_user,crud,
+access_service_maintenance_type_user,access_service_maintenance_type_user,service.maintenance.type,base.group_user,r,
+access_service_maintenance_type_manager,access_service_maintenance_type_manager,service.maintenance.type,project.group_project_manager,crud,
+access_service_maintenance_type_service_manager,access_service_maintenance_type_service_manager,service.maintenance.type,deltatech_service_base.group_service_manager,crud,
+restrict_project_task_part_read,project.task.part: read follows the task,project.task.part,,r,"[('task_id', 'access', 'read')]"
+restrict_project_task_part_write,project.task.part: changes follow the task,project.task.part,,cud,"[('task_id', 'access', 'write')]"
+restrict_project_task_check_read,project.task.check: read follows the task,project.task.check,,r,"[('task_id', 'access', 'read')]"
+restrict_project_task_check_write,project.task.check: changes follow the task,project.task.check,,cud,"[('task_id', 'access', 'write')]"
+restrict_project_task_measurement_read,project.task.measurement: read follows the task,project.task.measurement,,r,"[('task_id', 'access', 'read')]"
+restrict_project_task_measurement_write,project.task.measurement: changes follow the task,project.task.measurement,,cud,"[('task_id', 'access', 'write')]"

@@ -1,0 +1,24 @@
+# © 2026 Deltatech
+#              Dorin Hongu <dhongu(@)gmail(.)com
+# See README.rst file on addons root folder for license details
+
+{
+    "name": "Services Task",
+    "summary": "Services Task Maintenance",
+    "version": "20.0.0.0.23",
+    "author": "Terrabit, Dorin Hongu",
+    "website": "https://www.terrabit.ro",
+    "category": "Services/Maintenance",
+    "depends": ["deltatech_service_equipment_base", "project", "hr"],
+    "license": "OPL-1",
+    "data": [
+        "security/ir.access.csv",
+        "report/project_task_report.xml",
+        "views/project_task_views.xml",
+        "views/service_equipment_view.xml",
+        "views/service_maintenance_type_views.xml",
+    ],
+    "images": ["static/description/main_screenshot.png"],
+    "development_status": "Beta",
+    "maintainers": ["dhongu"],
+}

@@ -1,3 +1,17 @@
+## 20.0.1.2.11 (2026-10-06)
+
+- The equipment dropdown shows the serial number in a second, dimmed column; the plain
+  name (`reference / serial`) used on invoices and reports is unchanged.
+
+## 20.0.1.2.10
+
+- Person pickers (contact person, read by) accept the contacts of a company, which Odoo 20 may
+  flag as companies through their CUI.
+- Changing the equipment type fills from the type template only the operation lists that are
+  still empty; adjustments made on a specific equipment are no longer overwritten.
+- *Load Operations from Template* button, with confirmation, for a deliberate resync from the
+  template.
+
 ## 20.0.1.2.9 (2026-09-30)
 
 - Own module icon in the flat style of the other modules.
