@@ -1,3 +1,9 @@
+## 20.0.2.0.16 (2026-10-15)
+
+- The agreement dropdown shows the partner and the agreement date in a second, dimmed column;
+  the plain name (`number / date`) is unchanged. The date format is read from the cached
+  language data instead of searching `res.lang` on every computation.
+
 ## 20.0.2.0.15 (2026-10-10)
 
 - **Fixed** (AGREEMENT-005): the billing cron created the preparation wizard without the period it had
