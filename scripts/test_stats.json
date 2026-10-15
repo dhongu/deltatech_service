@@ -24,6 +24,11 @@
       "coverage": 86.0,
       "lines": 442,
       "tests": 14
+    },
+    "deltatech_service_task": {
+      "coverage": 93.0,
+      "lines": 219,
+      "tests": 18
     }
   },
   "branch": "20.0",
