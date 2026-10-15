@@ -13,13 +13,14 @@ class TestEquipmentDisplayName(TransactionCase):
         equipment = self.env["service.equipment"].create({"name": "EQ-TEST", "serial_id": lot.id})
         bare = self.env["service.equipment"].create({"name": "EQ-BARE"})
 
-        if "address_id" in equipment._fields:
-            # deltatech_service_equipment overrides the plain form with name/address/emplacement/serial
-            self.assertEqual(equipment.display_name, "EQ-TEST/SN-0001")
-        else:
-            self.assertEqual(equipment.display_name, "EQ-TEST / SN-0001")
         self.assertEqual(bare.display_name, "EQ-BARE")
+        self.assertEqual(bare.with_context(formatted_display_name=True).display_name, "EQ-BARE")
 
+        if "address_id" in equipment._fields:
+            # deltatech_service_equipment overrides both forms (name/address/emplacement/serial);
+            # its own test_display_name covers the dropdown form
+            self.assertEqual(equipment.display_name, "EQ-TEST/SN-0001")
+            return
+        self.assertEqual(equipment.display_name, "EQ-TEST / SN-0001")
         formatted = equipment.with_context(formatted_display_name=True)
         self.assertEqual(formatted.display_name, "EQ-TEST\t--SN-0001--")
-        self.assertEqual(bare.with_context(formatted_display_name=True).display_name, "EQ-BARE")

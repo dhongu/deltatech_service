@@ -5,6 +5,8 @@
 
 ## 20.0.1.2.10
 
+- Person pickers (contact person, read by) accept the contacts of a company, which Odoo 20 may
+  flag as companies through their CUI.
 - Schimbarea tipului pe echipament completează din șablon doar listele de operațiuni goale; nu mai
   rescrie ajustările făcute punctual pe echipament.
 - Buton „Preia operațiunile din șablon”, cu confirmare, pentru resincronizarea deliberată din șablon.
