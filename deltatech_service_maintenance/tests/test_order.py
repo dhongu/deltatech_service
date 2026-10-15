@@ -27,3 +27,16 @@ class TestServiceOrder(TestServiceBase):
 
         service_order.new_sale_order_button()
         service_order.new_delivery_button()
+
+    def test_access_token_unique_per_order(self):
+        # the default was computed once at import: every order shared the token
+        vals = {
+            "partner_id": self.partner.id,
+            "contact_id": self.partner.id,
+            "work_center_id": self.work_center.id,
+            "service_location_id": self.location.id,
+            "type_id": self.order_type.id,
+        }
+        orders = self.env["service.order"].create([vals, vals])
+        self.assertTrue(all(orders.mapped("access_token")))
+        self.assertNotEqual(orders[0].access_token, orders[1].access_token)

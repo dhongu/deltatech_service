@@ -1,3 +1,11 @@
+## 20.0.1.2.8
+
+- Each service order gets its own portal access token: the default was computed once per
+  server start, so the orders created until a restart shared the same token. The upgrade
+  gives every existing order a new token.
+- The linked service order of a notification is no longer searched while the notification
+  is still being created (no more "Domains don't support NewId" warning).
+
 ## 19.0.1.2.7 (2026-10-10)
 
 - Writing *Approved* directly in the warranty status (RPC, import) is refused to the users

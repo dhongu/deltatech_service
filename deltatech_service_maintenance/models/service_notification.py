@@ -149,8 +149,9 @@ class ServiceNotification(models.Model):
 
     def _compute_order_id(self):
         for notification in self:
-            notification.order_id = self.env["service.order"].search(
-                [("notification_id", "=", notification.id)], limit=1
+            # a notification still being created (NewId) has no order yet
+            notification.order_id = notification._origin.id and self.env["service.order"].search(
+                [("notification_id", "=", notification._origin.id)], limit=1
             )
 
     @api.onchange("equipment_id")

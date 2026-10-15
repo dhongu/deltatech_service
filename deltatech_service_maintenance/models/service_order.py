@@ -24,7 +24,9 @@ class ServiceOrder(models.Model):
         default=fields.Date.context_today,
     )
 
-    access_token = fields.Char(string="Security Token", required=True, copy=False, default=str(uuid.uuid4()))
+    access_token = fields.Char(
+        string="Security Token", required=True, copy=False, default=lambda self: str(uuid.uuid4())
+    )
 
     state = fields.Selection(
         [
