@@ -39,3 +39,23 @@ The field units and conversion semantics were checked against the local Odoo 20 
 ### Cause
 
 On 19.0 the method read `move_ids.stock_valuation_layer_ids.value`, a field that no longer exists (`AttributeError`). The 20.0 migration had already replaced it with `stock.move.value` and guarded the search; the port only moves the computation into a shared helper used by `deltatech_service_consumable` as well.
+
+## [P2] EQUIPMENT-004 — Automatic billing skipped agreements without meters unless *Readings done* was ticked
+
+**Status:** Fixed in 20.0.1.1.17 — `get_agreements_auto_billing()` filters on `not type_id.readings_required or meter_reading_status`, the rule of the manual billing preparation. Covered by `tests/test_auto_billing_readings.py`. Port of the 19.0 fix (19.0.1.1.19).
+
+**Location:** `models/service_agreement.py`, `get_agreements_auto_billing()`.
+
+### Cause
+
+The override removed every agreement without `meter_reading_status`, whatever its type, while the manual billing preparation checks readings only when the agreement type requires them. Agreements without meters were not billed automatically until someone ticked *Readings done*.
+
+## [P2] EQUIPMENT-005 — *Readings done* was never cleared, so later periods were billed on old readings
+
+**Status:** Fixed in 20.0.1.1.17 — `service.billing.do_billing()` (`wizard/service_billing.py`) clears `meter_reading_status` on the billed agreements whose type requires readings. Covered by `tests/test_auto_billing_readings.py`. Port of the 19.0 fix (19.0.1.1.19).
+
+**Location:** `models/service_agreement.py` (`meter_reading_status`), billing wizard.
+
+### Cause
+
+Nothing reset the flag after billing, so the automatic billing (and the manual preparation check) kept accepting the agreement in the following periods without new readings.

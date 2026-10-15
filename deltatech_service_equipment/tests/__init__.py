@@ -9,3 +9,4 @@ from . import test_screenshots
 from . import test_cost_refresh
 from . import test_name_search
 from . import test_display_name
+from . import test_auto_billing_readings
