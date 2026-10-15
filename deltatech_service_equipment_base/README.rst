@@ -19,9 +19,9 @@ Services Equipment Base
 .. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
     :target: https://github.com/dhongu/deltatech_service/blob/20.0/deltatech_service_equipment_base/readme/FISA_CONSULTANT.md
     :alt: Fișă consultant
-.. |badge_tests| image:: https://img.shields.io/badge/-13%20automated%20tests%20%C2%B7%2086%25%20code%20coverage-2ea44f.png
+.. |badge_tests| image:: https://img.shields.io/badge/-14%20automated%20tests%20%C2%B7%2086%25%20code%20coverage-2ea44f.png
     :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/20.0/deltatech_service_equipment_base
-    :alt: 13 automated tests · 86% code coverage
+    :alt: 14 automated tests · 86% code coverage
 
 |badge1| |badge2| |badge_fisa| |badge_tests|
 
@@ -41,6 +41,24 @@ Services Equipment Base
 
 Changelog
 =========
+
+20.0.1.2.11 (2026-10-06)
+------------------------
+
+- The equipment dropdown shows the serial number in a second, dimmed
+  column; the plain name (``reference / serial``) used on invoices and
+  reports is unchanged.
+
+20.0.1.2.10
+-----------
+
+- Person pickers (contact person, read by) accept the contacts of a
+  company, which Odoo 20 may flag as companies through their CUI.
+- Changing the equipment type fills from the type template only the
+  operation lists that are still empty; adjustments made on a specific
+  equipment are no longer overwritten.
+- *Load Operations from Template* button, with confirmation, for a
+  deliberate resync from the template.
 
 20.0.1.2.9 (2026-09-30)
 -----------------------

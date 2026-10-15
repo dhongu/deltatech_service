@@ -27,6 +27,16 @@
         <field name="arch" type="xml">
             <form string="Service Equipment">
                 <header >
+                    <!--
+                        Resincronizarea operatiunilor din sablonul tipului. Exista ca buton, cu
+                        confirmare, fiindca inlocuieste ce e pe echipament: ajustarile punctuale facute
+                        pe un echipament anume se pierd. Preluarea automata la alegerea tipului umple
+                        doar listele goale, tocmai ca sa nu se piarda configurarea din greseala.
+                    -->
+                    <button name="action_update_from_template" type="object"
+                            string="Load Operations from Template"
+                            confirm="The operations of this equipment will be replaced with those from the equipment type template. Adjustments made on this equipment will be lost. Continue?"
+                            invisible="not type_id"/>
                     <field name="state" widget="statusbar" options="{'clickable': '1'}" />
                 </header>
                 <sheet>

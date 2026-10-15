@@ -1085,3 +1085,28 @@ msgstr "sau"
 #: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_enter_reading_form
 msgid "x"
 msgstr "x"
+
+#. module: deltatech_service_equipment_base
+#. odoo-python
+#: code:addons/deltatech_service_equipment_base/models/service_equipment.py:0
+msgid ""
+"Equipment %(equipment)s has no type, so there is no template to load the "
+"operations from."
+msgstr ""
+"Echipamentul %(equipment)s nu are tip, deci nu există șablon din care să "
+"preia operațiunile."
+
+#. module: deltatech_service_equipment_base
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+msgid "Load Operations from Template"
+msgstr "Preia operațiunile din șablon"
+
+#. module: deltatech_service_equipment_base
+#: model_terms:ir.ui.view,arch_db:deltatech_service_equipment_base.view_service_equipment_form
+msgid ""
+"The operations of this equipment will be replaced with those from the "
+"equipment type template. Adjustments made on this equipment will be lost. "
+"Continue?"
+msgstr ""
+"Operațiunile de pe acest echipament vor fi înlocuite cu cele din șablonul "
+"tipului. Ajustările făcute punctual pe acest echipament se pierd. Continui?"
