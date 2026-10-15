@@ -8,3 +8,4 @@ from . import test_consumption_uom
 from . import test_screenshots
 from . import test_cost_refresh
 from . import test_name_search
+from . import test_display_name

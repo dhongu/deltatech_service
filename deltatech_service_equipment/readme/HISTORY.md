@@ -4,6 +4,8 @@
   and the result limit, and could list the same equipment twice. The serial number and
   the EAN code are now searched together with the name (also from the search bar), so
   the domain and the limit apply to all results.
+- The equipment dropdown shows address, emplacement and serial number in a second, dimmed
+  column; the plain name (`reference/address/emplacement/serial`) used on invoice lines is unchanged.
 
 ## 20.0.1.1.16 (2026-10-04)
 
