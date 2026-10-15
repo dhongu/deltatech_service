@@ -16,11 +16,8 @@ Services Agreement
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_agreement
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-22%20automated%20tests%20%C2%B7%2077%25%20code%20coverage-2ea44f.png
-    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/20.0/deltatech_service_agreement
-    :alt: 22 automated tests · 77% code coverage
 
-|badge1| |badge2| |badge_tests|
+|badge1| |badge2|
 
 Features:
 
@@ -40,6 +37,14 @@ Features:
 
 Changelog
 =========
+
+20.0.2.0.16 (2026-10-15)
+------------------------
+
+- The agreement dropdown shows the partner and the agreement date in a
+  second, dimmed column; the plain name (``number / date``) is
+  unchanged. The date format is read from the cached language data
+  instead of searching ``res.lang`` on every computation.
 
 20.0.2.0.15 (2026-10-10)
 ------------------------
