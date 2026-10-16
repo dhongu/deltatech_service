@@ -52,3 +52,40 @@ class TestServiceDelivery(TestServiceBase):
         )
         picking = self._save_delivery(warranty.new_delivery_button())
         self.assertEqual(picking.warranty_id, warranty)
+
+    def test_transfer_from_notification(self):
+        # SERVICE-005: the lines were passed in the removed default_move_lines
+        notification = self.env["service.notification"].create(
+            {
+                "partner_id": self.partner.id,
+                "item_ids": [(0, 0, {"product_id": self.product.id, "quantity": 3.0})],
+            }
+        )
+        action = notification.new_transfer_button()
+        picking = Form(self.env["stock.picking"].with_context(**action["context"])).save()
+        self.assertRecordValues(
+            picking.move_ids,
+            [
+                {
+                    "product_id": self.product.id,
+                    "product_uom_qty": 3.0,
+                    "picking_type_id": self.env.ref("stock.picking_type_internal").id,
+                }
+            ],
+        )
+
+    def test_new_notification_from_picking(self):
+        # SERVICE-010: the method read the removed move_lines relation
+        picking = Form(self.env["stock.picking"].with_context(**self._delivery_context())).save()
+        action = picking.new_notification()
+        self.assertEqual(len(action["context"]["default_item_ids"]), 1)
+        self.assertEqual(action["context"]["default_item_ids"][0][2]["product_id"], self.product.id)
+
+    def _delivery_context(self):
+        notification = self.env["service.notification"].create(
+            {
+                "partner_id": self.partner.id,
+                "item_ids": [(0, 0, {"product_id": self.product.id, "quantity": 3.0})],
+            }
+        )
+        return notification.new_delivery_button()["context"]
