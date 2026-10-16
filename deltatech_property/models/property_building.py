@@ -214,42 +214,29 @@ class PropertyBuilding(models.Model):
 
     @api.depends("room_ids.surface_cleaning_floor", "room_ids.floor_type")
     def _compute_cleaning_floor(self):
-        surface_cleaning_carpet = 0.0
-        surface_cleaning_linoleum = 0.0
-        surface_cleaning_wood = 0.0
-
-        for room in self.room_ids:
-            if room.floor_type == "c":
-                surface_cleaning_carpet += room.surface_cleaning_floor
-            if room.floor_type == "l":
-                surface_cleaning_linoleum += room.surface_cleaning_floor
-            if room.floor_type == "w":
-                surface_cleaning_wood += room.surface_cleaning_floor
-
-        self.surface_cleaning_carpet = surface_cleaning_carpet
-        self.surface_cleaning_linoleum = surface_cleaning_linoleum
-        self.surface_cleaning_wood = surface_cleaning_wood
+        for building in self:
+            surfaces = {"c": 0.0, "l": 0.0, "w": 0.0}
+            for room in building.room_ids:
+                if room.floor_type in surfaces:
+                    surfaces[room.floor_type] += room.surface_cleaning_floor
+            building.surface_cleaning_carpet = surfaces["c"]
+            building.surface_cleaning_linoleum = surfaces["l"]
+            building.surface_cleaning_wood = surfaces["w"]
 
     @api.depends("room_ids.surface_cleaning_windows")
     def _compute_cleaning_windows(self):
-        surface_cleaning_windows = 0.0
-        for room in self.room_ids:
-            surface_cleaning_windows += room.surface_cleaning_windows
-        self.surface_cleaning_windows = surface_cleaning_windows
+        for building in self:
+            building.surface_cleaning_windows = sum(building.room_ids.mapped("surface_cleaning_windows"))
 
     @api.depends("room_ids.surface_cleaning_doors")
     def _compute_cleaning_doors(self):
-        surface_cleaning_doors = 0.0
-        for room in self.room_ids:
-            surface_cleaning_doors += room.surface_cleaning_doors
-        self.surface_cleaning_doors = surface_cleaning_doors
+        for building in self:
+            building.surface_cleaning_doors = sum(building.room_ids.mapped("surface_cleaning_doors"))
 
     @api.depends("room_ids.surface_disinsection")
     def _compute_surface_disinsection(self):
-        surface_disinsection = 0.0
-        for room in self.room_ids:
-            surface_disinsection += room.surface_disinsection
-        self.surface_disinsection = surface_disinsection
+        for building in self:
+            building.surface_disinsection = sum(building.room_ids.mapped("surface_disinsection"))
 
 
 class PropertyFeatures(models.Model):

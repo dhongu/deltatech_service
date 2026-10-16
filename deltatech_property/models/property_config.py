@@ -4,6 +4,7 @@
 
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class PropertyNomenclature(models.AbstractModel):
@@ -32,7 +33,7 @@ class PropertyNomenclature(models.AbstractModel):
         if not name.isdigit():
             return super().name_search(name, domain, operator, limit)
 
-        recs = self.search([("cod", operator, name.zfill(2))], limit=1)
+        recs = self.search(Domain(domain) & Domain("cod", operator, name.zfill(2)), limit=limit)
         return [(rec.id, rec.display_name) for rec in recs]
 
 
