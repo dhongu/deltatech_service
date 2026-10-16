@@ -59,7 +59,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-005 — P2: Internal transfer actions still populate the obsolete picking move relation
 
-- **Status:** Open; reviewed 2026-10-02.
+- **Status:** Fixed in 19.0.1.2.8 — `new_transfer_button()` passes the lines as `default_move_ids`. Covered by `tests/test_delivery.py` (`test_transfer_from_notification`: the internal transfer is saved with the product, quantity and operation type).
 - **Location:** models/service_notification.py, new_transfer_button().
 - **Trigger:** Create an internal transfer from a notification with products.
 - **Actual behavior:** The action uses default_move_lines while Odoo 19 stock.picking uses move_ids. The delivery actions were updated, but this separate transfer path was left behind.
@@ -114,7 +114,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-010 — P3: Picking "New Notification" method still reads the removed move relation
 
-- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Status:** Partially fixed in 19.0.1.2.8 — the method reads `move_ids` (covered by `tests/test_delivery.py`, `test_new_notification_from_picking`); the misleading `sale_order_id` context key and the commented button remain.
 - **Location:** `models/stock.py`, `StockPicking.new_notification()`.
 - **Trigger:** Call `new_notification()` on a `stock.picking` (RPC or custom code); the form button in `views/stock_view.xml` is commented out, so the method is not reachable from the standard UI.
 - **Actual behavior:** The method reads `self.move_lines`, a `stock.picking` relation removed in Odoo 19 (replaced by `move_ids`), so it raises `AttributeError` before returning the action. It also puts the picking id into the `sale_order_id` context key, copied from the sale order variant in `models/sale.py`.
@@ -125,7 +125,7 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 
 ## SERVICE-011 — P3: Notification user grouping helper uses the user default company and removed APIs
 
-- **Status:** Open. Found on 2026-10-03 while fixing SERVICE-003 / SERVICE-004.
+- **Status:** Partially fixed in 19.0.1.2.8 — `name_get()` was replaced by `display_name` (covered by `tests/test_notification.py`, `test_company_user`); the helper is still dead code and still uses `env.user.company_id`.
 - **Location:** `models/service_notification.py`, `ServiceNotification.company_user()` and the `_group_by_full` class attribute.
 - **Trigger:** None in Odoo 19: `_group_by_full` is no longer read by the ORM, so `company_user()` is never called by the framework; only a direct call reaches it.
 - **Actual behavior:** The helper takes the partner of `env.user.company_id` (the user default company, not `env.company`; same class as AGREEMENT-001 / AGREEMENT-010) and calls `res.users.name_get()`, which no longer exists in Odoo 19, so a direct call raises `AttributeError`.
@@ -141,3 +141,16 @@ Compared the current local `19.0` source with the original audit snapshot. Repos
 - **Trigger:** A warranty manager clicks *Approved* on the status bar, or any user with write access writes `state` over RPC.
 - **Actual behavior / impact:** SERVICE-006 checks the group and the *Approval requested* state in `approve()`, but `state` itself is writable: the clickable status bar and a direct `write` skip `approve()` and its checks.
 - **Suggested fix:** Make the status bar non-clickable for the approval states (or remove `clickable`), and refuse changes of `state` to approved values in `write` outside the workflow methods (`sudo()` allowed).
+
+## SERVICE-013 — P1: All service orders created until a restart share the same portal token
+
+- **Status:** Fixed in 19.0.1.2.8 — the `access_token` default is a lambda, so every order gets its own token; the post-migration of 19.0.1.2.8 gives every existing order a new token. Covered by `tests/test_order.py` (`test_access_token_unique_per_order`).
+- **Location:** `models/service_order.py`, `access_token`.
+- **Actual behavior:** `default=str(uuid.uuid4())` was evaluated once when the module was imported, so all the orders created until the next server restart received the same token.
+- **Impact:** The portal link of one order (token) could open any other order created in the same server run.
+
+## SERVICE-014 — P3: The linked order of a notification is searched with a NewId
+
+- **Status:** Fixed in 19.0.1.2.8 — `_compute_order_id()` searches with `_origin.id` and leaves the order empty for a notification still being created. Covered by `tests/test_notification.py` (`test_order_id_on_new_notification`).
+- **Location:** `models/service_notification.py`, `_compute_order_id()`.
+- **Actual behavior:** On a new notification (form, onchange) the search domain received the NewId and Odoo logged the WARNING "Domains don't support NewId", which fails CI.

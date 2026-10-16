@@ -5,7 +5,7 @@
 {
     "name": "Services Maintenance",
     "summary": "Service requests, service orders and maintenance plans that generate orders",
-    "version": "19.0.1.2.7",
+    "version": "19.0.1.2.8",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
