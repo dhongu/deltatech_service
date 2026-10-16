@@ -139,7 +139,7 @@ class ServiceNotification(models.Model):
     def company_user(self, present_ids, domain, **kwargs):
         partner_id = self.env.user.company_id.partner_id
         users = self.env["res.users"].search([("partner_id.parent_id", "=", partner_id.id)])
-        users_name = users.name_get()
+        users_name = [(user.id, user.display_name) for user in users]
         users_name.append((False, False))
         return users_name, None
 
@@ -149,8 +149,9 @@ class ServiceNotification(models.Model):
 
     def _compute_order_id(self):
         for notification in self:
-            notification.order_id = self.env["service.order"].search(
-                [("notification_id", "=", notification.id)], limit=1
+            # a notification still being created (NewId) has no order yet
+            notification.order_id = notification._origin.id and self.env["service.order"].search(
+                [("notification_id", "=", notification._origin.id)], limit=1
             )
 
     @api.onchange("equipment_id")
@@ -444,7 +445,7 @@ class ServiceNotification(models.Model):
         )
 
         if self.item_ids:
-            context["default_move_lines"] = []
+            context["default_move_ids"] = []
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
@@ -455,7 +456,7 @@ class ServiceNotification(models.Model):
                     "price_unit": item.product_id.standard_price,
                 }
 
-                context["default_move_lines"] += [(0, 0, value)]
+                context["default_move_ids"] += [(0, 0, value)]
                 context["notification_id"] = self.id
         return {
             "name": self.env._("Transfer for service"),
