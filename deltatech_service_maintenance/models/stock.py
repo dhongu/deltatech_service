@@ -50,9 +50,9 @@ class StockPicking(models.Model):
                 value = {}
                 value["product_id"] = item.product_id.id
                 value["quantity"] = item.product_uom_qty
+                value["product_uom"] = item.product_uom.id
                 context["default_item_ids"] += [(0, 0, value)]
 
-        context["sale_order_id"] = self.id
         return {
             "name": self.env._("Notification"),
             "view_type": "form",
