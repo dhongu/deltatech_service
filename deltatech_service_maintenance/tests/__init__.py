@@ -8,3 +8,4 @@ from . import test_delivery
 from . import common
 from . import test_removed_api
 from . import test_p1_fixes
+from . import test_p2_p3_fixes

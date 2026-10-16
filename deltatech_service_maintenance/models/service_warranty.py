@@ -105,7 +105,7 @@ class ServiceWarranty(models.Model):
                 else:
                     warranty.has_agreement = False
 
-    @api.depends("item_ids")
+    @api.depends("item_ids.price_unit", "item_ids.quantity")
     def _compute_total_amount(self):
         for warranty in self:
             total_amount = 0.0
@@ -187,8 +187,11 @@ class ServiceWarranty(models.Model):
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
+                    # the move unit must be one of the product units: convert the line quantity
                     "product_uom": item.product_id.uom_id.id,
-                    "product_uom_qty": item.quantity,
+                    "product_uom_qty": item.product_uom._compute_quantity(item.quantity, item.product_id.uom_id)
+                    if item.product_uom
+                    else item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
@@ -287,6 +290,7 @@ class ServiceWarrantyItem(models.Model):
         self.name = self.product_id.name
         self.price_unit = self.product_id.standard_price
 
+    @api.depends("price_unit", "quantity")
     def _compute_amount(self):
         for line in self:
             line.amount = line.price_unit * line.quantity

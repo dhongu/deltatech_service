@@ -137,7 +137,7 @@ class ServiceNotification(models.Model):
 
     @api.model
     def company_user(self, present_ids, domain, **kwargs):
-        partner_id = self.env.user.company_id.partner_id
+        partner_id = self.env.company.partner_id
         users = self.env["res.users"].search([("partner_id.parent_id", "=", partner_id.id)])
         users_name = [(user.id, user.display_name) for user in users]
         users_name.append((False, False))
@@ -317,7 +317,7 @@ class ServiceNotification(models.Model):
                 value = {
                     "name": item.name,
                     "product_id": item.product_id.id,
-                    "product_uom": item.product_id.uom_id.id,
+                    "product_uom": (item.product_uom or item.product_id.uom_id).id,
                     "quantity": item.quantity,
                     "note": item.note,
                 }
@@ -402,8 +402,11 @@ class ServiceNotification(models.Model):
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
+                    # the move unit must be one of the product units: convert the line quantity
                     "product_uom": item.product_id.uom_id.id,
-                    "product_uom_qty": item.quantity,
+                    "product_uom_qty": item.product_uom._compute_quantity(item.quantity, item.product_id.uom_id)
+                    if item.product_uom
+                    else item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,
@@ -449,8 +452,11 @@ class ServiceNotification(models.Model):
             for item in self.item_ids:
                 value = {
                     "product_id": item.product_id.id,
+                    # the move unit must be one of the product units: convert the line quantity
                     "product_uom": item.product_id.uom_id.id,
-                    "product_uom_qty": item.quantity,
+                    "product_uom_qty": item.product_uom._compute_quantity(item.quantity, item.product_id.uom_id)
+                    if item.product_uom
+                    else item.quantity,
                     "location_id": picking_type.default_location_src_id.id,
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "price_unit": item.product_id.standard_price,

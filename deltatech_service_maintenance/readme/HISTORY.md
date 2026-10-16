@@ -1,3 +1,17 @@
+## 19.0.1.2.9 (2026-10-16)
+
+- The warranty *Total amount* follows the edits of the quantity and the unit price of
+  its lines, not only the added or removed lines (SERVICE-007).
+- The delivery and the transfer prepared from a notification, a service order or a
+  warranty convert the line quantity into the product unit: one dozen is delivered as
+  12 units, no longer as one unit. The service order created from a notification keeps
+  the unit of the notification line (SERVICE-009).
+- "New notification" from a transfer keeps the unit of measure of the moves and no longer
+  passes the transfer as a sale order in the context; the commented-out button was
+  removed from the transfer form (SERVICE-010).
+- The technician grouping helper of notifications lists the users of the current
+  company instead of the user's default company (SERVICE-011).
+
 ## 19.0.1.2.8 (2026-10-16)
 
 - Each service order gets its own portal access token: the default was computed once
