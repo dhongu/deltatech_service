@@ -51,11 +51,13 @@ class ServiceMeter(models.Model):
         string="Last Meter Reading",
         compute="_compute_last_meter_reading",
         store=True,
+        recursive=True,
     )
     last_reading_date = fields.Date(
         string="Last reading date",
         compute="_compute_last_meter_reading",
         store=True,
+        recursive=True,
     )
 
     total_counter_value = fields.Float(
@@ -63,6 +65,7 @@ class ServiceMeter(models.Model):
         digits="Meter Value",
         compute="_compute_last_meter_reading",
         store=True,
+        recursive=True,
     )
     estimated_value = fields.Float(
         string="Estimated Value",
@@ -119,21 +122,30 @@ class ServiceMeter(models.Model):
         if self.meter_categ_id:
             self.uom_id = self.meter_categ_id.uom_id
 
-    @api.depends("meter_reading_ids", "meter_reading_ids.counter_value", "meter_ids")
+    @api.depends(
+        "meter_reading_ids",
+        "meter_reading_ids.counter_value",
+        "meter_reading_ids.date",
+        "meter_ids",
+        "meter_ids.total_counter_value",
+    )
     def _compute_last_meter_reading(self):
         for meter in self:
             total_counter_value = 0
             last_meter_reading_id = False
+            last_reading_date = False
             if meter.type == "counter":
-                if meter.meter_reading_ids:
-                    last_meter_reading_id = meter.meter_reading_ids[0]
-                    meter.last_reading_date = meter.meter_reading_ids[0].date
+                readings = meter.meter_reading_ids.sorted(key=lambda r: (r.date, r.id), reverse=True)
+                if readings:
+                    last_meter_reading_id = readings[0]
+                    last_reading_date = last_meter_reading_id.date
                     total_counter_value = last_meter_reading_id.counter_value
             else:
-                for child_meter in meter.meter_ids:
-                    total_counter_value += child_meter.meter_reading_ids[0].counter_value
+                # a counter without readings contributes 0, like its own total
+                total_counter_value = sum(meter.meter_ids.mapped("total_counter_value"))
 
             meter.last_meter_reading_id = last_meter_reading_id
+            meter.last_reading_date = last_reading_date
             meter.total_counter_value = total_counter_value
 
     def _compute_estimated_value(self):
@@ -204,11 +216,8 @@ class ServiceMeter(models.Model):
                 ("date", "<", end_date),
                 ("meter_id", "=", self.id),
             ]
-            res = self.env["service.meter.reading"].read_group(
-                domain, fields=["difference", "meter_id"], groupby=["meter_id"]
-            )
-            if res:
-                value = res[0].get("difference", 0)
+            [(value,)] = self.env["service.meter.reading"]._read_group(domain, aggregates=["difference:sum"])
+            value = value or 0
         else:
             for meter in self.meter_ids:
                 value += meter.get_counter_value(begin_date, end_date)
@@ -216,7 +225,7 @@ class ServiceMeter(models.Model):
 
     def recheck_value(self):
         for meter in self:
-            readings = meter.meter_reading_ids.sorted(key=lambda r: r.date)
+            readings = meter.meter_reading_ids.sorted(key=lambda r: (r.date, r.id))
             previous_counter_value = meter.start_value
             for reading in readings:
                 # reading.previous_counter_value = previous_counter_value
@@ -286,11 +295,7 @@ class ServiceMeterReading(models.Model):
             reading.previous_counter_value = reading.meter_id.start_value
             if reading.date and reading.meter_id:
                 previous = self.env["service.meter.reading"].search(
-                    [
-                        ("meter_id", "=", reading.meter_id.id),
-                        ("date", "<=", reading.date),
-                        ("id", "!=", reading.id),
-                    ],
+                    [("meter_id", "=", reading.meter_id.id)] + reading._earlier_readings_domain(),
                     limit=1,
                     order="date desc, id desc",
                 )
@@ -299,15 +304,38 @@ class ServiceMeterReading(models.Model):
                     reading.difference = reading.counter_value - reading.previous_counter_value
                     # self.invalidate_recordset() # asta e solutia ?
 
+    def _earlier_readings_domain(self):
+        """Readings before this one: earlier date, or same date and created before (lower id)."""
+        self.ensure_one()
+        reading_id = self._origin.id
+        if not reading_id:
+            return [("date", "<=", self.date)]
+        return [
+            "|",
+            ("date", "<", self.date),
+            "&",
+            ("date", "=", self.date),
+            ("id", "<", reading_id),
+        ]
+
     @api.depends("counter_value", "previous_counter_value")
     def _compute_difference(self):
         for reading in self:
             reading.difference = reading.counter_value - reading.previous_counter_value
-            next_reading = self.env["service.meter.reading"].search(
-                [("meter_id", "=", reading.meter_id.id), ("date", ">", reading.date)],
-                limit=1,
-                order="date, id",
-            )
+            next_reading = self.env["service.meter.reading"]
+            if reading.date and reading._origin.id:
+                next_reading = next_reading.search(
+                    [
+                        ("meter_id", "=", reading.meter_id.id),
+                        "|",
+                        ("date", ">", reading.date),
+                        "&",
+                        ("date", "=", reading.date),
+                        ("id", ">", reading._origin.id),
+                    ],
+                    limit=1,
+                    order="date, id",
+                )
             if next_reading and next_reading.previous_counter_value != reading.counter_value:
                 next_reading.write(
                     {
@@ -327,4 +355,11 @@ class ServiceMeterReading(models.Model):
             for reading in self:
                 reading.meter_id.recheck_value()
                 reading.meter_id.calc_forecast_coef()
+        return res
+
+    def unlink(self):
+        meters = self.meter_id
+        res = super().unlink()
+        # re-chain the remaining readings: the next one takes over the deleted predecessor
+        meters.exists().recheck_value()
         return res

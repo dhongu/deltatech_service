@@ -9,7 +9,7 @@ class ServiceEnterReading(models.TransientModel):
     _name = "service.enter.reading"
     _description = "Enter Meter Readings"
 
-    date = fields.Date(string="Date", index=True, required=True, default=fields.Date.today())
+    date = fields.Date(string="Date", index=True, required=True, default=fields.Date.context_today)
 
     read_by = fields.Many2one("res.partner", string="Read by", domain=[("is_company", "=", False)])
     note = fields.Text(string="Notes")
