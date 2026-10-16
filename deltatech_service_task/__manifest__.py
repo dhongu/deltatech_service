@@ -5,7 +5,7 @@
 {
     "name": "Services Task",
     "summary": "Services Task Maintenance",
-    "version": "20.0.0.0.23",
+    "version": "20.0.0.0.24",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
@@ -19,6 +19,6 @@
         "views/service_maintenance_type_views.xml",
     ],
     "images": ["static/description/main_screenshot.png"],
-    "development_status": "Beta",
+    "development_status": "Production/Stable",
     "maintainers": ["dhongu"],
 }
