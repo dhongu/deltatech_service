@@ -1,0 +1,39 @@
+# ©  2008-2019 Deltatech
+#              Dorin Hongu <dhongu(@)gmail(.)com
+# See README.rst file on addons root folder for license details
+
+{
+    "name": "Services Maintenance",
+    "summary": "Service requests, service orders and maintenance plans that generate orders",
+    "version": "20.0.1.2.8",
+    "author": "Terrabit, Dorin Hongu",
+    "website": "https://www.terrabit.ro",
+    "category": "Services/Maintenance",
+    "depends": [
+        "deltatech_service_equipment_base",
+        "sale",
+        "sales_team",
+        "sale_stock",
+        "stock",
+        # "deltatech_procurement",
+    ],
+    "license": "OPL-1",
+    "data": [
+        "data/data.xml",
+        "views/service_notification_view.xml",
+        "views/service_order_view.xml",
+        "views/service_location_view.xml",
+        "views/service_equipment_view.xml",
+        "views/stock_view.xml",
+        "views/sale_view.xml",
+        "views/report_notification.xml",
+        "views/report_order.xml",
+        "views/service_work_center_view.xml",
+        "views/service_warranty_view.xml",
+        # "views/res_config_view.xml",
+        "security/ir.access.csv",
+    ],
+    "images": ["static/description/main_screenshot.png"],
+    "development_status": "Production/Stable",
+    "maintainers": ["dhongu"],
+}
