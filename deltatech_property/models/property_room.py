@@ -4,6 +4,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 selection_level = [("p", "P"), ("m", "M"), ("s", "S")] + [(str(num), str(num)) for num in range(1, 30)]
 
@@ -60,7 +61,7 @@ class PropertyRoom(models.Model):
         help="The purpose of using the room",
         default="bedroom",
     )
-    usage_id = fields.Many2one("room.usage", string="Room usage", help="The purpose of using the room")
+    usage_id = fields.Many2one("room.usage", string="Room usage type", help="The purpose of using the room")
 
     rented_room = fields.Boolean()
     tenant_id = fields.Many2one("res.partner", string="Tenant")
@@ -76,10 +77,16 @@ class PropertyRoom(models.Model):
         for room in self:
             room.surface_disinsection = 2 * room.surface + room.height * room.perimeter
 
-    @api.constrains
+    @api.constrains("surface_cleaning_floor", "surface")
     def _check_cleaning_surface(self):
-        if self.cleaning_surface > self.surface:
-            raise ValidationError(self.env._("Cleaning surface most by lower that surface area"))
+        for room in self:
+            if float_compare(room.surface_cleaning_floor, room.surface, precision_digits=2) > 0:
+                raise ValidationError(
+                    self.env._(
+                        "The floor cleaning area of room %(room)s cannot be greater than its surface area.",
+                        room=room.display_name,
+                    )
+                )
 
 
 class RoomUsage(models.Model):

@@ -5,3 +5,4 @@
 from . import test_property
 from . import test_surface
 from . import test_security
+from . import test_room

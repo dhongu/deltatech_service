@@ -71,3 +71,81 @@ class TestBuildingSurface(TransactionCase):
             ]
         )
         self.assertEqual(buildings.mapped("surface_office"), [5.0, 7.0])
+
+    def test_batch_buildings_keep_their_own_cleaning_areas(self):
+        """PROPERTY-002: floor, window, door and disinsection areas are summed per building."""
+        buildings = self.env["property.building"].create(
+            [
+                {
+                    "name": "B1",
+                    "room_ids": [
+                        Command.create(
+                            {
+                                "name": "1",
+                                "floor_type": "c",
+                                "surface": 5.0,
+                                "surface_cleaning_floor": 5.0,
+                                "surface_cleaning_windows": 1.0,
+                                "surface_cleaning_doors": 2.0,
+                            }
+                        )
+                    ],
+                },
+                {
+                    "name": "B2",
+                    "room_ids": [
+                        Command.create(
+                            {
+                                "name": "1",
+                                "floor_type": "c",
+                                "surface": 7.0,
+                                "surface_cleaning_floor": 7.0,
+                                "surface_cleaning_windows": 3.0,
+                                "surface_cleaning_doors": 4.0,
+                            }
+                        ),
+                        Command.create({"name": "2", "floor_type": "w", "surface": 6.0, "surface_cleaning_floor": 6.0}),
+                    ],
+                },
+                {"name": "B3"},
+            ]
+        )
+        self.assertRecordValues(
+            buildings,
+            [
+                {
+                    "surface_cleaning_carpet": 5.0,
+                    "surface_cleaning_wood": 0.0,
+                    "surface_cleaning_linoleum": 0.0,
+                    "surface_cleaning_windows": 1.0,
+                    "surface_cleaning_doors": 2.0,
+                    "surface_disinsection": 10.0,
+                },
+                {
+                    "surface_cleaning_carpet": 7.0,
+                    "surface_cleaning_wood": 6.0,
+                    "surface_cleaning_linoleum": 0.0,
+                    "surface_cleaning_windows": 3.0,
+                    "surface_cleaning_doors": 4.0,
+                    "surface_disinsection": 26.0,
+                },
+                {
+                    "surface_cleaning_carpet": 0.0,
+                    "surface_cleaning_wood": 0.0,
+                    "surface_cleaning_linoleum": 0.0,
+                    "surface_cleaning_windows": 0.0,
+                    "surface_cleaning_doors": 0.0,
+                    "surface_disinsection": 0.0,
+                },
+            ],
+        )
+        # a batch recompute of all the buildings keeps the values of each one
+        self.env.add_to_compute(buildings._fields["surface_cleaning_carpet"], buildings)
+        self.env.add_to_compute(buildings._fields["surface_cleaning_windows"], buildings)
+        self.env.add_to_compute(buildings._fields["surface_cleaning_doors"], buildings)
+        self.env.add_to_compute(buildings._fields["surface_disinsection"], buildings)
+        buildings.flush_recordset()
+        self.assertEqual(buildings.mapped("surface_cleaning_carpet"), [5.0, 7.0, 0.0])
+        self.assertEqual(buildings.mapped("surface_cleaning_windows"), [1.0, 3.0, 0.0])
+        self.assertEqual(buildings.mapped("surface_cleaning_doors"), [2.0, 4.0, 0.0])
+        self.assertEqual(buildings.mapped("surface_disinsection"), [10.0, 26.0, 0.0])

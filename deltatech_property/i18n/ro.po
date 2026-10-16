@@ -267,10 +267,14 @@ msgid "Classification code"
 msgstr "Cod de clasificare"
 
 #. module: deltatech_property
-#: code:addons/deltatech_property/models/property_room.py:69
+#: code:addons/deltatech_property/models/property_room.py:0
 #, python-format
-msgid "Cleaning surface most by lower that surface area"
-msgstr "Suprafața de curățat trebuie să fie mică decât cea a camerei"
+msgid ""
+"The floor cleaning area of room %(room)s cannot be greater than its surface "
+"area."
+msgstr ""
+"Suprafața de curățat a pardoselii camerei %(room)s nu poate fi mai mare decât "
+"suprafața camerei."
 
 #. module: deltatech_property
 #: selection:property.room,usage:0 selection:property.room.usage,categ:0
@@ -825,6 +829,11 @@ msgstr "Utilizare"
 #: model:ir.model.fields,field_description:deltatech_property.field_property_room_usage
 msgid "Room usage"
 msgstr "Utilizare încăpere"
+
+#. module: deltatech_property
+#: model:ir.model.fields,field_description:deltatech_property.field_property_room__usage_id
+msgid "Room usage type"
+msgstr "Tip utilizare încăpere"
 
 #. module: deltatech_property
 #: model:ir.actions.act_window,name:deltatech_property.action_property_room
