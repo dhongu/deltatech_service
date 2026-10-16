@@ -28,6 +28,17 @@ class TestServiceNotification(TestServiceBase):
         notification.new_sale_order_button()
         notification.new_delivery_button()
 
+    def test_order_id_on_new_notification(self):
+        # the order was searched with the NewId of the record being created
+        notification = self.env["service.notification"].new({"partner_id": self.partner.id})
+        with self.assertNoLogs("odoo.domains", level="WARNING"):
+            self.assertFalse(notification.order_id)
+
+    def test_company_user(self):
+        # SERVICE-011: the helper called the removed res.users.name_get()
+        users_name, _dummy = self.env["service.notification"].company_user([], [])
+        self.assertEqual(users_name[-1], (False, False))
+
     def test_equipment_button(self):
         self.equipment.notification_button()
         self.equipment.order_button()

@@ -1,3 +1,10 @@
+## 20.0.1.2.9 (2026-10-16)
+
+- Tests for the internal transfer from a notification (SERVICE-005), the notification from
+  a transfer (SERVICE-010), the technician grouping helper (SERVICE-011) and the linked order
+  of a notification being created (SERVICE-014); SERVICE-013 and SERVICE-014 recorded in
+  `readme/bugs.md` with the same numbering as on 19.0.
+
 ## 20.0.1.2.8
 
 - Each service order gets its own portal access token: the default was computed once per
