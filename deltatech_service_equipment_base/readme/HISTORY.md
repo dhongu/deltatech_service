@@ -1,7 +1,8 @@
 ## 19.0.1.2.12 (2026-10-16)
 
 - Several readings of the same meter on the same day are chained in entry order: an earlier reading
-  no longer takes a later one as its previous value (negative differences).
+  no longer takes a later one as its previous value (negative differences). Deleting a reading
+  updates the previous value and the difference of the next reading of the same meter.
 - A collector meter sums the totals of its counters, also when a counter has no readings yet, and
   is updated when a counter reading is added, changed or deleted.
 - The *Enter Readings* wizard proposes today's date (in the user's time zone) instead of the date

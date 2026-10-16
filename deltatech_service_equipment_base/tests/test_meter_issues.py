@@ -74,6 +74,21 @@ class TestMeterIssues(TransactionCase):
         self.assertEqual(second.difference, 10)
         self.assertEqual(meter.get_counter_value("2024-01-01", "2024-02-01"), 150)
 
+    # METER-001 (#170): deleting a reading re-chains the next one
+    def test_unlink_reading_updates_next_reading(self):
+        meter = self._create_meter(self.equipment, self.counter_categ)
+        self._read(meter, 100, "2024-01-10")
+        middle = self._read(meter, 120, "2024-01-20")
+        same_day = self._read(meter, 130, "2024-01-20")
+        last = self._read(meter, 150, "2024-01-30")
+        same_day.unlink()
+        self.assertEqual(last.previous_counter_value, 120)
+        self.assertEqual(last.difference, 30)
+        middle.unlink()
+        self.assertEqual(last.previous_counter_value, 100)
+        self.assertEqual(last.difference, 50)
+        self.assertEqual(meter.get_counter_value("2024-01-01", "2024-02-01"), 150)
+
     # METER-002 (#171)
     def test_collector_with_unread_counter(self):
         counter_read = self._create_meter(self.equipment, self.counter_categ)

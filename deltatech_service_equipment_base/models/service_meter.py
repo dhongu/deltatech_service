@@ -356,3 +356,10 @@ class ServiceMeterReading(models.Model):
                 reading.meter_id.recheck_value()
                 reading.meter_id.calc_forecast_coef()
         return res
+
+    def unlink(self):
+        meters = self.meter_id
+        res = super().unlink()
+        # re-chain the remaining readings: the next one takes over the deleted predecessor
+        meters.exists().recheck_value()
+        return res
