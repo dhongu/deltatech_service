@@ -238,7 +238,15 @@ class ServiceAgreement(models.Model):
             )
 
     # TODO: de legat acest contract la un cont analitic ...
-    @api.depends("last_invoice_id")
+    @api.depends(
+        "last_invoice_id",
+        "last_invoice_id.invoice_date",
+        "date_agreement",
+        "cycle_id",
+        "cycle_id.value",
+        "cycle_id.unit",
+        "invoice_day",
+    )
     def _compute_next_date_invoice(self):
         # query = """
         #     select distinct *
@@ -278,6 +286,8 @@ class ServiceAgreement(models.Model):
                     next_date += relativedelta(day=agreement.invoice_day, months=0)
 
                 agreement.next_date_invoice = next_date  # fields.Date.to_string(next_date)
+            else:
+                agreement.next_date_invoice = False
 
     @api.depends("name", "date_agreement", "partner_id.name")
     @api.depends_context("formatted_display_name", "uid")
@@ -328,8 +338,9 @@ class ServiceAgreement(models.Model):
     def get_agreements_auto_billing(self):
         agreements = self.search([("billing_automation", "=", "auto"), ("state", "=", "open")])
         for agreement in agreements:
-            # check billing prepare date
-            if agreement.next_date_invoice != fields.Date.context_today(self):
+            # contractele scadente azi si cele restante (ex. cron-ul nu a rulat in ziua scadentei);
+            # dublarea in aceeasi perioada e evitata in make_billing_automation (consum existent)
+            if not agreement.next_date_invoice or agreement.next_date_invoice > fields.Date.context_today(self):
                 agreements = agreements - agreement
         return agreements
 

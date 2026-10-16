@@ -6,3 +6,4 @@ from . import test_agreement
 from . import test_agreement_multicompany
 from . import test_display_name
 from . import test_agreement_billing_p1
+from . import test_agreement_p2

@@ -39,7 +39,7 @@ class ServiceBillingPreparation(models.TransientModel):
 
         active_ids = self.env.context.get("active_ids", False)
         if "company_id" not in defaults:
-            defaults.update({"company_id": self.env.user.company_id.id})
+            defaults.update({"company_id": self.env.company.id})
         domain = [("state", "=", "open"), ("company_id", "=", defaults["company_id"])]
         if active_ids:
             domain += [("id", "in", active_ids)]

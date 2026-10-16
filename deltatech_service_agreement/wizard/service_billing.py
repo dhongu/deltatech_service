@@ -185,6 +185,9 @@ class ServiceBilling(models.TransientModel):
                 for line in pre_invoice[cons.date_invoice][key]["lines"]:
                     if (
                         line["product_id"] == cons.product_id.id
+                        and line["product_uom_id"] == invoice_line["product_uom_id"]
+                        and line["account_id"] == invoice_line["account_id"]
+                        and line["tax_ids"] == invoice_line["tax_ids"]
                         and line["quantity"] >= 0
                         and float_compare(
                             line["price_unit"],
@@ -292,10 +295,11 @@ class ServiceBilling(models.TransientModel):
                 comment = self.env._("According to agreement ")
                 payment_term_id = False
                 for agreement in pre_invoice[date_invoice][key]["agreement_ids"]:
-                    comment += self.env._("%(agreement_name)s from %(agreement_date)s \n") % {
-                        "agreement_name": agreement.name or "____",
-                        "agreement_date": agreement.date_agreement or "____",
-                    }
+                    comment += self.env._(
+                        "%(agreement_name)s from %(agreement_date)s \n",
+                        agreement_name=agreement.name or "____",
+                        agreement_date=agreement.date_agreement or "____",
+                    )
                 if len(pre_invoice[date_invoice][key]["agreement_ids"]) > 1:
                     payment_term_id = False
                     user_id = False

@@ -75,7 +75,8 @@ class ServiceDistribution(models.TransientModel):
             price_unit = self.amount / len(consumptions)
             if self.add_values:
                 for cons in consumptions:
-                    crt_value = cons.price_unit + price_unit
+                    # valoarea existenta (cantitate x pret) se pastreaza, cantitatea devine 1
+                    crt_value = cons.quantity * cons.price_unit + price_unit
                     if self.reference:
                         name = cons.name + self.reference
                     else:

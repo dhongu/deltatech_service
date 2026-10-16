@@ -12,7 +12,7 @@ class ServicePriceChange(models.TransientModel):
 
     @api.model
     def _default_currency(self):
-        return self.env.user.company_id.currency_id
+        return self.env.company.currency_id
 
     product_id = fields.Many2one(
         "product.product",
@@ -23,7 +23,9 @@ class ServicePriceChange(models.TransientModel):
 
     price_unit = fields.Float(string="Unit Price", required=True, digits="Service Price")
 
-    currency_id = fields.Many2one("res.currency", string="Currency", required=True, default=_default_currency)
+    currency_id = fields.Many2one(
+        "res.currency", string="Currency", required=True, default=lambda self: self._default_currency()
+    )
     reference = fields.Char("Reference")
 
     @api.model
@@ -38,11 +40,15 @@ class ServicePriceChange(models.TransientModel):
             defaults["reference"] = cons.name
         return defaults
 
+    def _get_list_price_company(self):
+        """Compania in a carei moneda este pretul de lista al produsului."""
+        return self.product_id.company_id or self.env.company
+
     @api.onchange("product_id")
     def onchange_scanned_ean(self):
         price_unit = self.product_id.list_price
-        from_currency = self.env.user.company_id.currency_id
-        company = self.env.user.company_id
+        company = self._get_list_price_company()
+        from_currency = company.currency_id
         to_currency = self.currency_id
         date = self.env.context.get("date") or fields.Date.today()
         self.price_unit = from_currency._convert(price_unit, to_currency, company, date)
@@ -75,8 +81,8 @@ class ServicePriceChange(models.TransientModel):
             }
         )
 
-        company = self.env.user.company_id
-        to_currency = self.env.user.company_id.currency_id
+        company = self._get_list_price_company()
+        to_currency = company.currency_id
         date = self.env.context.get("date") or fields.Date.today()
 
         price_unit = self.currency_id._convert(self.price_unit, to_currency, company, date)

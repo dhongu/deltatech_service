@@ -1,3 +1,19 @@
+## 19.0.2.0.17 (2026-10-16)
+
+- **Fixed** (AGREEMENT-002): grouping invoice lines by service merged consumptions with different units
+  of measure (e.g. Unit and Dozen) into one line in the first unit. Lines are now merged only when the
+  unit of measure, the income account and the taxes are the same.
+- **Fixed** (AGREEMENT-003): the next invoice date was not recomputed when the billing cycle (or its
+  value/unit), the invoice day, the agreement date or the date of the last invoice changed.
+- **Fixed** (AGREEMENT-004): automatic billing selected only the agreements due exactly today, so an
+  agreement whose due date was missed (scheduler down or failed) was never billed again. Overdue
+  agreements are now billed too, once per service period.
+- **Fixed** (AGREEMENT-007): distributing a value with "Add to existing" kept only the unit price of the
+  consumption and dropped its quantity; the existing value (quantity x unit price) is now kept.
+- **Fixed** (AGREEMENT-010, AGREEMENT-011): the price change wizard and the billing preparation default
+  used the user's default company instead of the active company (and, for the product sale price, the
+  product company), so prices were converted with the wrong currency.
+
 ## 19.0.2.0.16 (2026-10-09)
 
 - **Fixed** (AGREEMENT-005): the billing cron created the preparation wizard without the period it had
