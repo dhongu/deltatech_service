@@ -1,3 +1,9 @@
+## 19.0.1.1.11 (2026-10-17)
+
+- Own module description and summary (consumables per equipment, delivery costs per
+  agreement, service efficiency report) instead of the text copied from the equipment
+  module.
+
 ## 19.0.1.1.10 (2026-10-10)
 
 - Service efficiency report: a global company rule limits the rows to the user's active

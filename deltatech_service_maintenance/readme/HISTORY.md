@@ -1,3 +1,9 @@
+## 19.0.1.2.10 (2026-10-17)
+
+- The module description is in English and follows the code: notifications, corrective
+  and preventive service orders, warranties and reconditioning, reports. The summary no
+  longer mentions maintenance plans, which the module does not have.
+
 ## 19.0.1.2.9 (2026-10-16)
 
 - The warranty *Total amount* follows the edits of the quantity and the unit price of

@@ -1,3 +1,8 @@
+## 19.0.2.0.18 (2026-10-17)
+
+- The 19.0 release notes describe the access correctly: read rights for all internal
+  users, no portal access.
+
 ## 19.0.2.0.17 (2026-10-16)
 
 - **Fixed** (AGREEMENT-002): grouping invoice lines by service merged consumptions with different units
