@@ -4,8 +4,8 @@
 
 {
     "name": "Services Consumable",
-    "summary": "Bill consumables from equipment counter readings, with estimates for missing ones",
-    "version": "19.0.1.1.10",
+    "summary": "Consumables per equipment, delivery costs per agreement and the service efficiency report",
+    "version": "19.0.1.1.11",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Equipment",

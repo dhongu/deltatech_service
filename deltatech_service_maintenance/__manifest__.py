@@ -4,8 +4,8 @@
 
 {
     "name": "Services Maintenance",
-    "summary": "Service requests, service orders and maintenance plans that generate orders",
-    "version": "19.0.1.2.9",
+    "summary": "Service notifications, corrective and preventive service orders, warranties and reconditioning",
+    "version": "19.0.1.2.10",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
