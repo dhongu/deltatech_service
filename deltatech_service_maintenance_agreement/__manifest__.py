@@ -5,7 +5,7 @@
 {
     "name": "Deltatech Services Maintenance Agreement",
     "summary": "Services Maintenance",
-    "version": "18.0.1.0.4",
+    "version": "19.0.1.0.0",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
