@@ -4,7 +4,7 @@
 
 {
     "name": "Deltatech Services Maintenance Agreement",
-    "summary": "Services Maintenance",
+    "summary": "Service agreement of the equipment on notifications and service orders",
     "version": "19.0.1.0.0",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
@@ -19,6 +19,7 @@
         "views/service_notification_view.xml",
         "views/service_order_view.xml",
     ],
+    "images": ["static/description/main_screenshot.png"],
     "development_status": "Production/Stable",
     "maintainers": ["dhongu"],
 }

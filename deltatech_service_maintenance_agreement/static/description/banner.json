@@ -1,0 +1,9 @@
+{
+  "title": "Maintenance Agreement",
+  "summary": "Service agreement on notifications and orders",
+  "features": [
+    "Agreement taken from the equipment",
+    "Agreement on every service order",
+    "Deliveries allowed per agreement type"
+  ]
+}
