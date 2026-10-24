@@ -22,14 +22,39 @@ Services Consumable
 
 |badge1| |badge2| |badge_tests|
 
-- Features:
+Track the consumables of the equipment under a service agreement: what
+was delivered, how much is left and what the deliveries cost.
 
-  - equipment management
-  - counters management
-  - reading counters management
-  - biling based on readings
-  - reading estimate calculation
-  - automatic introduction at end of the period at estimated values
+**Consumables per equipment**
+
+- Define the consumables of each equipment type (storable products),
+  with the maximum quantity allowed.
+- The equipment form shows its consumables as gauges: the quantity left
+  is the delivered quantity multiplied by the product shelf life (for
+  example the pages of a toner), minus the usage read from the equipment
+  meter in the same unit.
+- Deliveries for service are prepared from the equipment, with its
+  consumables, address and agreement; the delivered products are listed
+  on the equipment.
+- A check reports the consumables whose quantity would exceed the
+  allowed maximum.
+
+**Total cost**
+
+- Each validated delivery for service adds its stock value to the cost
+  of the agreement (returns reduce it) and refreshes the totals of the
+  equipment.
+- The agreement shows the total cost and the cost as a percentage of the
+  invoiced amount, recomputed when an invoice is posted; "Recompute
+  costs" rebuilds the total from the deliveries.
+
+**Service efficiency report**
+
+- ``service.efficiency.report`` puts the consumables delivered per
+  equipment and agreement next to the usage read from the equipment
+  meters, for a period; it is limited to the user's active companies.
+
+The delivery operation type for service is set in the stock settings.
 
 **Table of contents**
 
@@ -38,6 +63,26 @@ Services Consumable
 
 Changelog
 =========
+
+19.0.1.1.11 (2026-10-17)
+------------------------
+
+- Own module description and summary (consumables per equipment,
+  delivery costs per agreement, service efficiency report) instead of
+  the text copied from the equipment module.
+
+19.0.1.1.10 (2026-10-10)
+------------------------
+
+- Service efficiency report: a global company rule limits the rows to
+  the user's active companies. The report reuses the
+  ``stock.picking.report`` SQL view under another model, so the company
+  rule of that report did not apply and a user saw the figures of every
+  company (CONSUMABLE-003).
+- Service efficiency report: opening a record or reading all its fields
+  no longer fails with "column create_uid does not exist"; the model is
+  declared as a SQL view (``_auto = False``) and no longer gets
+  log-access fields (CONSUMABLE-004).
 
 19.0.1.1.9 (2026-10-02)
 -----------------------

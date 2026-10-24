@@ -2,18 +2,24 @@
 <!-- tb-gen v1 -->
 <div class="rounded-4 shadow px-4 py-4 mt-2 mb-4" style="background-color:#006F42;color:#ffffff;">
   <div class="d-flex flex-wrap align-items-center">
-    <span class="d-inline-block rounded-4 p-2 flex-shrink-0 my-2" style="background-color:#ffffff;margin-right:24px;"><img src="icon.png" alt="Deltatech Services Maintenance Agreement" style="width:80px;height:80px;border:none;"/></span>
+    <span class="d-inline-block rounded-4 p-2 flex-shrink-0 my-2" style="background-color:#ffffff;margin-right:24px;"><img src="icon.png" alt="Maintenance Agreement" style="width:80px;height:80px;border:none;"/></span>
     <div class="flex-grow-1 my-2" style="width:320px;min-width:0;margin-right:24px;">
-      <h1 class="fw-bold mb-2" style="color:#ffffff;font-size:36px;line-height:1.1;letter-spacing:-0.5px;border:none;">Deltatech Services Maintenance Agreement</h1>
-      <p class="mb-3" style="font-size:18px;color:#cdeccf;line-height:1.45;">Services Maintenance</p>
+      <h1 class="fw-bold mb-2" style="color:#ffffff;font-size:36px;line-height:1.1;letter-spacing:-0.5px;border:none;">Maintenance Agreement</h1>
+      <p class="mb-3" style="font-size:18px;color:#cdeccf;line-height:1.45;">Service agreement on notifications and orders</p>
       <div>
-        <span class="d-inline-block rounded-pill fw-bold me-2 mb-2" style="background-color:#ffffff;border:1px solid #ffffff;color:#006F42;padding:6px 14px;font-size:12px;">Odoo 18.0</span>
+        <span class="d-inline-block rounded-pill fw-bold me-2 mb-2" style="background-color:#ffffff;border:1px solid #ffffff;color:#006F42;padding:6px 14px;font-size:12px;">Odoo 19.0</span>
         <span class="d-inline-block rounded-pill fw-semibold me-2 mb-2" style="border:1px solid #8fd1ad;color:#ffffff;padding:6px 14px;font-size:12px;">Services/Maintenance</span>
         <span class="d-inline-block rounded-pill fw-semibold me-2 mb-2" style="border:1px solid #8fd1ad;color:#ffffff;padding:6px 14px;font-size:12px;">Odoo.sh &bull; On-premise</span>
         <span class="d-inline-block rounded-pill fw-semibold me-2 mb-2" style="border:1px dashed #8fd1ad;color:#ffffff;padding:6px 14px;font-size:12px;">OPL-1</span>
       </div>
     </div>
-    
+    <div class="flex-shrink-0 rounded-3 px-3 py-3 my-2" style="width:240px;background-color:#00432a;">
+      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 4 automated tests</div>
+      <div class="rounded-pill mt-2" style="height:8px;background-color:#2a6b4d;overflow:hidden;">
+        <div class="rounded-pill" style="height:8px;width:97%;background-color:#57B952;"></div>
+      </div>
+      <div class="mt-1" style="font-size:13px;color:#cdeccf;">97% code coverage</div>
+    </div>
   </div>
 </div>
 
@@ -25,12 +31,63 @@
   </div>
 </div>
 
+<ul class="nav nav-pills justify-content-center mb-4 pb-3 border-bottom" style="--bs-nav-pills-link-active-bg:#006F42;">
+  <li class="nav-item mx-1 mb-2">
+    <a class="nav-link active fw-semibold rounded-pill border" id="tb-tab-overview"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-overview" href="#tb-panel-overview"
+       style="padding:10px 22px;">Overview</a>
+  </li>
+  <li class="nav-item mx-1 mb-2">
+    <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-usage"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-usage" href="#tb-panel-usage"
+       style="padding:10px 22px;">Usage</a>
+  </li>
+  <li class="nav-item mx-1 mb-2">
+    <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-versions"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-versions" href="#tb-panel-versions"
+       style="padding:10px 22px;">Versions</a>
+  </li>
+</ul>
+<div class="tab-content">
 <div class="tab-pane fade show active py-2" id="tb-panel-overview" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Overview</h2>
-<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Features:</p>
+<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Connect the maintenance flow to the service agreement of the equipment: every
+notification and service order knows which agreement covers the equipment it is about,
+so the service team sees the contract while handling the request, and non-billable
+deliveries are offered only when the agreement type allows them.</p>
+<ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mt-1 mb-4"><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Agreement on the notification</span><div>the notification shows the service agreement of its
+  equipment, taken automatically from the equipment, in the form and as an optional
+  column in the list.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Agreement on the service order</span><div>the service order carries the service agreement,
+  filled in when the order is created from the equipment or from the notification.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Deliveries allowed by the agreement type</span><div>the <em>New Delivery</em> button on a delivery
+  notification appears only when the agreement type allows non-billable deliveries and
+  no delivery has been created yet.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Equipment defaults passed on</span><div>documents opened from the equipment receive its
+  agreement, address and contact as default values.</div></div></li></ul>
+</div>
+<div class="tab-pane fade py-2" id="tb-panel-usage" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
+<h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Usage</h2>
+<ol>
+<li>In <em>Services &gt; Configuration &gt; Services Agreement Type</em>, tick <em>Allows non-billable
+   deliveries</em> on the types whose agreements cover deliveries of consumables.</li>
+<li>Assign the service agreement on the equipment.</li>
+<li>Create a notification for the equipment: the <em>Service Agreement</em> field is filled in
+   from the equipment.</li>
+<li>On a notification with the <em>Delivery</em> category, use <em>New Delivery</em> to prepare the
+   delivery; the button is hidden when the agreement type does not allow deliveries.</li>
+<li>Create the service order from the notification or from the equipment: it receives
+   the same service agreement.</li>
+</ol>
+</div>
+<div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
+<h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Versions</h2>
+<h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.0.0 (2026-10-17)</h2>
 <ul>
-<li>bridges the gap between contracts and orders</li>
+<li>Migration to 19.0. No functional change: the notification and the service order show
+  the service agreement of the equipment, and the <em>New Delivery</em> button stays available
+  only when the agreement type allows non-billable deliveries.</li>
+<li>Added tests for the agreement taken from the equipment and for the default values
+  passed by the equipment and the notification.</li>
 </ul>
+</div>
 </div>
 
 <div class="row text-center mt-4 mb-1 g-3">
@@ -71,58 +128,38 @@
        class="fw-semibold" style="color:#006F42;">All apps &rarr;</a></p>
   <div class="row g-3">
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_service_maintenance" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_service_maintenance" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">SM</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_service_maintenance/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_service_maintenance/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Services Maintenance</span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Services Maintenance</span>
               <span class="d-block" style="font-size:13px;color:#3d4752;">Services/Maintenance</span>
             </span>
           </div>
-          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Services Maintenance</p>
+          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Service notifications, corrective and preventive service orders, warranties and reconditioning</p>
         </div>
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_service_maintenance_plan" target="_blank" rel="noopener"
-         class="card h-100 text-decoration-none border" style="color:#212529;">
-        <div class="card-body p-3">
-          <div class="d-flex align-items-center mb-2">
-            <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
-              <span class="d-inline-block text-center fw-bold rounded"
-                    style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">SM</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_service_maintenance_plan/icon.png" alt="" loading="lazy"
-                   class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
-            </span>
-            <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Services Maintenance Plan</span>
-              <span class="d-block" style="font-size:13px;color:#3d4752;">Services/Maintenance</span>
-            </span>
-          </div>
-          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Services Maintenance Plan</p>
-        </div>
-      </a>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_service_task" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_service_task" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">ST</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_service_task/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_service_task/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Services Task</span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Services Task</span>
               <span class="d-block" style="font-size:13px;color:#3d4752;">Services/Maintenance</span>
             </span>
           </div>
@@ -131,18 +168,18 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_category_group_equipment" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_category_group_equipment" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">EC</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_category_group_equipment/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_category_group_equipment/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Equipment Category Group</span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Equipment Category Group</span>
               <span class="d-block" style="font-size:13px;color:#3d4752;">Other</span>
             </span>
           </div>
@@ -151,18 +188,18 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_object_history" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_object_history" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">OH</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_object_history/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_object_history/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Object History</span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Object History</span>
               <span class="d-block" style="font-size:13px;color:#3d4752;">Other</span>
             </span>
           </div>
@@ -171,18 +208,18 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_object_history_service" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_object_history_service" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">OH</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_object_history_service/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_object_history_service/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
-              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Deltatech Object History for Service</span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Object History for Service</span>
               <span class="d-block" style="font-size:13px;color:#3d4752;">Other</span>
             </span>
           </div>
@@ -191,14 +228,14 @@
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_property" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_property" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">PM</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_property/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_property/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
@@ -206,19 +243,19 @@
               <span class="d-block" style="font-size:13px;color:#3d4752;">Property</span>
             </span>
           </div>
-          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Property Management</p>
+          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Register land and buildings: categories, purpose, acquisition and history</p>
         </div>
       </a>
     </div>
     <div class="col-md-3 col-sm-6">
-      <a href="https://apps.odoo.com/apps/modules/18.0/deltatech_property_agreement" target="_blank" rel="noopener"
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_property_agreement" target="_blank" rel="noopener"
          class="card h-100 text-decoration-none border" style="color:#212529;">
         <div class="card-body p-3">
           <div class="d-flex align-items-center mb-2">
             <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
               <span class="d-inline-block text-center fw-bold rounded"
                     style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">PA</span>
-              <img src="https://apps.odoocdn.com/apps/assets/18.0/deltatech_property_agreement/icon.png" alt="" loading="lazy"
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_property_agreement/icon.png" alt="" loading="lazy"
                    class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
             </span>
             <span>
@@ -227,6 +264,26 @@
             </span>
           </div>
           <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Manage property agreements</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <a href="https://apps.odoo.com/apps/modules/19.0/deltatech_service" target="_blank" rel="noopener"
+         class="card h-100 text-decoration-none border" style="color:#212529;">
+        <div class="card-body p-3">
+          <div class="d-flex align-items-center mb-2">
+            <span class="d-inline-block position-relative me-2 flex-shrink-0" style="width:40px;height:40px;">
+              <span class="d-inline-block text-center fw-bold rounded"
+                    style="width:40px;height:40px;line-height:40px;font-size:14px;color:#ffffff;background-color:#006F42;">SA</span>
+              <img src="https://apps.odoocdn.com/apps/assets/19.0/deltatech_service/icon.png" alt="" loading="lazy"
+                   class="position-absolute top-0 start-0 rounded" style="width:40px;height:40px;border:none;background-color:#ffffff;"/>
+            </span>
+            <span>
+              <span class="d-block fw-semibold" style="font-size:16px;line-height:1.25;">Services Agreement Obsolete</span>
+              <span class="d-block" style="font-size:13px;color:#3d4752;">Services/Agreement</span>
+            </span>
+          </div>
+          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Manage Services Agreement</p>
         </div>
       </a>
     </div>

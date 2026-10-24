@@ -46,22 +46,38 @@
 <div class="tab-content">
 <div class="tab-pane fade show active py-2" id="tb-panel-overview" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Overview</h2>
+<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Track the consumables of the equipment under a service agreement: what was delivered,
+how much is left and what the deliveries cost.</p>
+<p><strong>Consumables per equipment</strong></p>
+<ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mt-1 mb-4"><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex gap-2"><span class="flex-shrink-0 text-center fw-bold rounded d-inline-block" style="background-color:#57B952;color:#04331f;width:22px;height:22px;line-height:22px;font-size:13px;">&#10003;</span><div>Define the consumables of each equipment type (storable products), with the maximum
+  quantity allowed.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex gap-2"><span class="flex-shrink-0 text-center fw-bold rounded d-inline-block" style="background-color:#57B952;color:#04331f;width:22px;height:22px;line-height:22px;font-size:13px;">&#10003;</span><div>The equipment form shows its consumables as gauges: the quantity left is the delivered
+  quantity multiplied by the product shelf life (for example the pages of a toner),
+  minus the usage read from the equipment meter in the same unit.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex gap-2"><span class="flex-shrink-0 text-center fw-bold rounded d-inline-block" style="background-color:#57B952;color:#04331f;width:22px;height:22px;line-height:22px;font-size:13px;">&#10003;</span><div>Deliveries for service are prepared from the equipment, with its consumables, address
+  and agreement; the delivered products are listed on the equipment.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex gap-2"><span class="flex-shrink-0 text-center fw-bold rounded d-inline-block" style="background-color:#57B952;color:#04331f;width:22px;height:22px;line-height:22px;font-size:13px;">&#10003;</span><div>A check reports the consumables whose quantity would exceed the allowed maximum.</div></div></li></ul>
+<p><strong>Total cost</strong></p>
 <ul>
-<li>
-<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Features:</p>
+<li>Each validated delivery for service adds its stock value to the cost of the agreement
+  (returns reduce it) and refreshes the totals of the equipment.</li>
+<li>The agreement shows the total cost and the cost as a percentage of the invoiced amount,
+  recomputed when an invoice is posted; "Recompute costs" rebuilds the total from the
+  deliveries.</li>
+</ul>
+<p><strong>Service efficiency report</strong></p>
 <ul>
-<li>equipment management</li>
-<li>counters management</li>
-<li>reading counters management</li>
-<li>biling based on readings</li>
-<li>reading estimate calculation</li>
-<li>automatic introduction at end of the period at estimated values</li>
+<li><code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">service.efficiency.report</code> puts the consumables delivered per equipment and agreement
+  next to the usage read from the equipment meters, for a period; it is limited to the
+  user's active companies.</li>
 </ul>
-</li>
-</ul>
+<p>The delivery operation type for service is set in the stock settings.</p>
 </div>
 <div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Versions</h2>
+<h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.1.11 (2026-10-17)</h2>
+<ul>
+<li>Own module description and summary (consumables per equipment, delivery costs per
+  agreement, service efficiency report) instead of the text copied from the equipment
+  module.</li>
+</ul>
 <h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.1.10 (2026-10-10)</h2>
 <ul>
 <li>Service efficiency report: a global company rule limits the rows to the user's active
