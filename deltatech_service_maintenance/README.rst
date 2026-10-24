@@ -1,6 +1,6 @@
-==============================
-Deltatech Services Maintenance
-==============================
+====================
+Services Maintenance
+====================
 
 ..
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -16,20 +16,67 @@ Deltatech Services Maintenance
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-28%20automated%20tests-2ea44f.png
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance/tests
-    :alt: 28 automated tests
+.. |badge_tests| image:: https://img.shields.io/badge/-42%20automated%20tests%20%C2%B7%2072%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
+    :alt: 42 automated tests · 72% code coverage
 
 |badge1| |badge2| |badge_tests|
 
-- Features:
+Corrective and preventive service for the equipment and locations of
+your customers, from the first request to the handover report.
 
-  - gestionare sesizari
-  - gestionare comenzi de service
-  - gestionare planuri de revizii
-  - generare automat a comenzilor de service in baza planului
+**Notifications** (``service.notification``)
 
-ToDo: de utilizat si modulul de maintenance
+- Register a service request for an equipment or a service location,
+  with customer, contact, address, responsible, work center, priority,
+  subject and notes.
+- Category of the request: defect finding, delivery, transfer or sale;
+  external or internal type.
+- Flow: New, Assigned, In Progress, Done, with the assignment, start and
+  completion dates recorded automatically.
+- Lines with the requested products and the planned operations; the
+  stock availability of each product is shown on the line.
+- From a notification: create the service order, a delivery, an internal
+  transfer or a sale order, all linked back to the notification.
+
+**Service orders** (``service.order``)
+
+- Order type with its category, **Corrective** or **Preventive**, and
+  the options for travel, delivery and sale.
+- Flow: Draft, Acknowledge, On the way, In Progress, Work Done,
+  Completed, with Rejected and Cancel; travel, start and completion
+  dates.
+- Operations (with duration and the linked service product), components
+  (the parts used, with stock availability), reason, operating
+  parameters of the equipment after the intervention and the customer
+  signature.
+- Deliveries and sale orders created from the order and linked to it.
+
+**Warranties and reconditioning** (``service.warranty``)
+
+- Warranty or recondition files for an equipment, with the customer, the
+  products used and the total amount.
+- Flow: New, Assigned, In Progress, Approval requested, Approved, Done;
+  the approval and the validation of the warranty deliveries are
+  reserved to the warranty approval group.
+- The delivered products update the warranty lines with their actual
+  cost.
+- Clarifications status and links to the delivery, the sale order and
+  the invoice.
+
+**Reports**
+
+- Service Order, Handover report and Minutes of receipt, printed from
+  the service order.
+- Notification, printed from the notification.
+
+**Configuration**
+
+- Work centers with stock location, operation type, sale and transfer
+  routes and cost per hour; the stock location can also be set on the
+  service location.
+- Notification types, order types, order reasons, operations and
+  operating parameters.
 
 **Table of contents**
 
@@ -38,6 +85,71 @@ ToDo: de utilizat si modulul de maintenance
 
 Changelog
 =========
+
+19.0.1.2.10 (2026-10-17)
+------------------------
+
+- The module description is in English and follows the code:
+  notifications, corrective and preventive service orders, warranties
+  and reconditioning, reports. The summary no longer mentions
+  maintenance plans, which the module does not have.
+
+19.0.1.2.9 (2026-10-16)
+-----------------------
+
+- The warranty *Total amount* follows the edits of the quantity and the
+  unit price of its lines, not only the added or removed lines
+  (SERVICE-007).
+- The delivery and the transfer prepared from a notification, a service
+  order or a warranty convert the line quantity into the product unit:
+  one dozen is delivered as 12 units, no longer as one unit. The service
+  order created from a notification keeps the unit of the notification
+  line (SERVICE-009).
+- "New notification" from a transfer keeps the unit of measure of the
+  moves and no longer passes the transfer as a sale order in the
+  context; the commented-out button was removed from the transfer form
+  (SERVICE-010).
+- The technician grouping helper of notifications lists the users of the
+  current company instead of the user's default company (SERVICE-011).
+
+19.0.1.2.8 (2026-10-16)
+-----------------------
+
+- Each service order gets its own portal access token: the default was
+  computed once per server start, so the orders created until a restart
+  shared the same token. The upgrade gives every existing order a new
+  token.
+- The linked service order of a notification is no longer searched while
+  the notification is still being created (no more "Domains don't
+  support NewId" warning).
+- "New transfer" on notifications fills the internal transfer with the
+  products again: the lines are passed through ``move_ids``
+  (SERVICE-005).
+- "New notification" from a transfer and the technician grouping helper
+  no longer use the removed ``move_lines`` and ``name_get()``
+  (SERVICE-010, SERVICE-011).
+
+19.0.1.2.7 (2026-10-10)
+-----------------------
+
+- Writing *Approved* directly in the warranty status (RPC, import) is
+  refused to the users who may not approve: the same right as the
+  *Approve* button (SERVICE-012). The other states and the managers'
+  clickable status bar are unchanged.
+
+19.0.1.2.6 (2026-10-09)
+-----------------------
+
+- Creating several service orders in one call (import, batch create)
+  kept only the last one; all orders are now created and returned
+  (SERVICE-002).
+- Approving a warranty is checked on the server: only the warranty
+  Approval or Manager groups may approve, and only warranties waiting
+  for approval (SERVICE-006).
+- Creating a notification no longer fails when the optional equipment
+  extension (EAN code, service agreement on the equipment) is not
+  installed; the equipment is still detected from the contact and the
+  customer is taken from the equipment (SERVICE-008).
 
 19.0.1.2.5 (2026-10-02)
 -----------------------

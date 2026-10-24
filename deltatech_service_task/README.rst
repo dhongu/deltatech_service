@@ -1,6 +1,6 @@
-=======================
-Deltatech Services Task
-=======================
+=============
+Services Task
+=============
 
 ..
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -10,9 +10,9 @@ Deltatech Services Task
    !! source digest: sha256:453375cd6360e6884fa64170ec3f402dff431ffbcfc5b2ec1209b698d4e16d91
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task
     :alt: dhongu/deltatech_service
@@ -34,6 +34,23 @@ Deltatech Services Task
 
 Changelog
 =========
+
+19.0.0.0.24 (2026-10-16)
+------------------------
+
+- Development status raised from Beta to Production/Stable: the module
+  has been in production use at customers for a long time.
+
+19.0.0.0.23 (2026-10-15)
+------------------------
+
+- Apps Store main image regenerated with the redrawn module icon.
+
+19.0.0.0.22 (2026-10-15)
+------------------------
+
+- Module icon redrawn in the Terrabit house style: clean vector, 100x100
+  viewBox, no embedded image.
 
 19.0.0.0.21 (2026-10-03)
 ------------------------

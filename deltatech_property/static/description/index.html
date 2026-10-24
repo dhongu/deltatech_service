@@ -14,11 +14,11 @@
       </div>
     </div>
     <div class="flex-shrink-0 rounded-3 px-3 py-3 my-2" style="width:240px;background-color:#00432a;">
-      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 12 automated tests</div>
+      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 16 automated tests</div>
       <div class="rounded-pill mt-2" style="height:8px;background-color:#2a6b4d;overflow:hidden;">
-        <div class="rounded-pill" style="height:8px;width:90%;background-color:#57B952;"></div>
+        <div class="rounded-pill" style="height:8px;width:95%;background-color:#57B952;"></div>
       </div>
-      <div class="mt-1" style="font-size:13px;color:#cdeccf;">90% code coverage</div>
+      <div class="mt-1" style="font-size:13px;color:#cdeccf;">95% code coverage</div>
     </div>
   </div>
 </div>
@@ -53,6 +53,20 @@
 </div>
 <div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Versions</h2>
+<h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.0.5 (2026-10-16)</h2>
+<ul>
+<li>When several buildings were recomputed together, the carpet, linoleum and wood cleaning
+  areas, the window and door cleaning areas and the disinsection area of every building
+  received the total of all their rooms. Each building now sums only its own rooms
+  (PROPERTY-002).</li>
+<li>The check that the floor cleaning area of a room is not greater than its surface area
+  was never applied. It now runs when a room is created or changed (PROPERTY-003).</li>
+<li>Searching a purpose by its numeric code ignored the restriction of the field (for
+  example the parent purpose of the building) and returned a single result. The search
+  now keeps that restriction and returns all the matching codes (PROPERTY-005).</li>
+<li>The room usage list field is now labelled "Room usage type", so it is no longer
+  confused with "Room usage" in filters, grouping and exports (PROPERTY-006).</li>
+</ul>
 <h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">19.0.1.0.4 (2026-10-02)</h2>
 <ul>
 <li>The access rights of the property models had no group, so public and portal users could
@@ -272,7 +286,7 @@
               <span class="d-block" style="font-size:13px;color:#3d4752;">Services/Equipment</span>
             </span>
           </div>
-          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Bill consumables from equipment counter readings, with estimates for missing ones</p>
+          <p class="mb-0" style="font-size:15px;line-height:1.45;color:#3d4752;">Consumables per equipment, delivery costs per agreement and the service efficiency report</p>
         </div>
       </a>
     </div>

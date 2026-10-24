@@ -16,9 +16,9 @@
       "tests": 0
     },
     "deltatech_property": {
-      "coverage": 90.2,
-      "lines": 307,
-      "tests": 12
+      "coverage": 95.0,
+      "lines": 299,
+      "tests": 16
     },
     "deltatech_property_agreement": {
       "coverage": 100.0,
@@ -29,12 +29,12 @@
       "tests": 0
     },
     "deltatech_service_agreement": {
-      "coverage": 79.5,
-      "lines": 660,
-      "tests": 23
+      "coverage": 83.1,
+      "lines": 663,
+      "tests": 34
     },
     "deltatech_service_base": {
-      "coverage": 85.7,
+      "coverage": 90.5,
       "lines": 42,
       "tests": 3
     },
@@ -44,19 +44,24 @@
       "tests": 14
     },
     "deltatech_service_equipment": {
-      "coverage": 65.6,
+      "coverage": 66.6,
       "lines": 569,
       "tests": 23
     },
     "deltatech_service_equipment_base": {
-      "coverage": 83.2,
-      "lines": 458,
-      "tests": 13
+      "coverage": 86.9,
+      "lines": 472,
+      "tests": 19
     },
     "deltatech_service_maintenance": {
-      "coverage": 69.2,
-      "lines": 885,
-      "tests": 28
+      "coverage": 72.3,
+      "lines": 886,
+      "tests": 42
+    },
+    "deltatech_service_maintenance_agreement": {
+      "coverage": 97.1,
+      "lines": 35,
+      "tests": 4
     },
     "deltatech_service_task": {
       "coverage": 89.1,
@@ -65,7 +70,7 @@
     }
   },
   "branch": "19.0",
-  "commit": "8bc29e3d0587293cb81bd54ad7aa13617f5d5878",
-  "generated": "2026-10-12",
+  "commit": "4af68db1230a004fb9f63bd07d9c660cdf2b3dfa",
+  "generated": "2026-10-24",
   "source": "codecov:dhongu/deltatech_service"
 }

@@ -16,9 +16,9 @@ Services Base
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_base
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-3%20automated%20tests%20%C2%B7%2085%25%20code%20coverage-2ea44f.png
+.. |badge_tests| image:: https://img.shields.io/badge/-3%20automated%20tests%20%C2%B7%2090%25%20code%20coverage-2ea44f.png
     :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_base
-    :alt: 3 automated tests · 85% code coverage
+    :alt: 3 automated tests · 90% code coverage
 
 |badge1| |badge2| |badge_tests|
 
@@ -31,6 +31,17 @@ Features:
 
 Changelog
 =========
+
+19.0.2.0.9 (2026-10-15)
+-----------------------
+
+- Apps Store main image regenerated with the redrawn module icon.
+
+19.0.2.0.8 (2026-10-15)
+-----------------------
+
+- Module icon redrawn in the Terrabit house style: clean vector, 100x100
+  viewBox, no embedded image.
 
 19.0.2.0.7 (2026-10-09)
 -----------------------

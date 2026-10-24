@@ -19,9 +19,9 @@ Services Equipment Base
 .. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
     :target: https://github.com/dhongu/deltatech_service/blob/19.0/deltatech_service_equipment_base/readme/FISA_CONSULTANT.md
     :alt: Fișă consultant
-.. |badge_tests| image:: https://img.shields.io/badge/-13%20automated%20tests%20%C2%B7%2083%25%20code%20coverage-2ea44f.png
+.. |badge_tests| image:: https://img.shields.io/badge/-19%20automated%20tests%20%C2%B7%2086%25%20code%20coverage-2ea44f.png
     :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base
-    :alt: 13 automated tests · 83% code coverage
+    :alt: 19 automated tests · 86% code coverage
 
 |badge1| |badge2| |badge_fisa| |badge_tests|
 
@@ -41,6 +41,23 @@ Services Equipment Base
 
 Changelog
 =========
+
+19.0.1.2.12 (2026-10-16)
+------------------------
+
+- Several readings of the same meter on the same day are chained in
+  entry order: an earlier reading no longer takes a later one as its
+  previous value (negative differences). Deleting a reading updates the
+  previous value and the difference of the next reading of the same
+  meter.
+- A collector meter sums the totals of its counters, also when a counter
+  has no readings yet, and is updated when a counter reading is added,
+  changed or deleted.
+- The *Enter Readings* wizard proposes today's date (in the user's time
+  zone) instead of the date the server was started.
+- Service users can read equipment models, parts, checks and
+  measurements and tick the operation lines on the equipment form; until
+  now only service managers could.
 
 19.0.1.2.11 (2026-10-06)
 ------------------------

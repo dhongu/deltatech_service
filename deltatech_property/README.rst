@@ -16,9 +16,9 @@ Property Management
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_property
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-12%20automated%20tests%20%C2%B7%2090%25%20code%20coverage-2ea44f.png
+.. |badge_tests| image:: https://img.shields.io/badge/-16%20automated%20tests%20%C2%B7%2095%25%20code%20coverage-2ea44f.png
     :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_property
-    :alt: 12 automated tests · 90% code coverage
+    :alt: 16 automated tests · 95% code coverage
 
 |badge1| |badge2| |badge_tests|
 
@@ -33,6 +33,24 @@ Features:
 
 Changelog
 =========
+
+19.0.1.0.5 (2026-10-16)
+-----------------------
+
+- When several buildings were recomputed together, the carpet, linoleum
+  and wood cleaning areas, the window and door cleaning areas and the
+  disinsection area of every building received the total of all their
+  rooms. Each building now sums only its own rooms (PROPERTY-002).
+- The check that the floor cleaning area of a room is not greater than
+  its surface area was never applied. It now runs when a room is created
+  or changed (PROPERTY-003).
+- Searching a purpose by its numeric code ignored the restriction of the
+  field (for example the parent purpose of the building) and returned a
+  single result. The search now keeps that restriction and returns all
+  the matching codes (PROPERTY-005).
+- The room usage list field is now labelled "Room usage type", so it is
+  no longer confused with "Room usage" in filters, grouping and exports
+  (PROPERTY-006).
 
 19.0.1.0.4 (2026-10-02)
 -----------------------

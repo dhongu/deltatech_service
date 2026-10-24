@@ -16,9 +16,9 @@ Services Agreement
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement
     :alt: dhongu/deltatech_service
-.. |badge_tests| image:: https://img.shields.io/badge/-23%20automated%20tests%20%C2%B7%2079%25%20code%20coverage-2ea44f.png
+.. |badge_tests| image:: https://img.shields.io/badge/-34%20automated%20tests%20%C2%B7%2083%25%20code%20coverage-2ea44f.png
     :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_service_agreement
-    :alt: 23 automated tests · 79% code coverage
+    :alt: 34 automated tests · 83% code coverage
 
 |badge1| |badge2| |badge_tests|
 
@@ -40,6 +40,64 @@ Features:
 
 Changelog
 =========
+
+19.0.2.0.18 (2026-10-17)
+------------------------
+
+- The 19.0 release notes describe the access correctly: read rights for
+  all internal users, no portal access.
+
+19.0.2.0.17 (2026-10-16)
+------------------------
+
+- **Fixed** (AGREEMENT-002): grouping invoice lines by service merged
+  consumptions with different units of measure (e.g. Unit and Dozen)
+  into one line in the first unit. Lines are now merged only when the
+  unit of measure, the income account and the taxes are the same.
+- **Fixed** (AGREEMENT-003): the next invoice date was not recomputed
+  when the billing cycle (or its value/unit), the invoice day, the
+  agreement date or the date of the last invoice changed.
+- **Fixed** (AGREEMENT-004): automatic billing selected only the
+  agreements due exactly today, so an agreement whose due date was
+  missed (scheduler down or failed) was never billed again. Overdue
+  agreements are now billed too, once per service period.
+- **Fixed** (AGREEMENT-007): distributing a value with "Add to existing"
+  kept only the unit price of the consumption and dropped its quantity;
+  the existing value (quantity x unit price) is now kept.
+- **Fixed** (AGREEMENT-010, AGREEMENT-011): the price change wizard and
+  the billing preparation default used the user's default company
+  instead of the active company (and, for the product sale price, the
+  product company), so prices were converted with the wrong currency.
+
+19.0.2.0.16 (2026-10-09)
+------------------------
+
+- **Fixed** (AGREEMENT-005): the billing cron created the preparation
+  wizard without the period it had found and then read a
+  ``consumption_ids`` key that the preparation never returned, so
+  automatic billing failed before any invoice. The cron now passes the
+  period, company and agreements explicitly, collects the consumptions
+  generated for all agreements (manual preparation also kept only the
+  last agreement's consumptions in its result) and bills them per
+  company and sale journal. Without exactly one service period for the
+  current month the cron logs a warning and does nothing.
+- **Fixed** (AGREEMENT-009): negative consumptions (corrections of a
+  previous period) were capped at the positive quantity of the same
+  product on the new invoice, so a lone correction became 0 while the
+  consumption was still marked as billed, and the stored billed quantity
+  differed from the invoice line. Corrections are now billed in full and
+  the billed quantity is the same on the line and on the consumption.
+  **Behavior change**: when the net value is negative a credit note is
+  created instead of an invoice; a partial correction stays a negative
+  line on the invoice. Each correction now references the invoice it
+  corrects: the line description says "Correction of invoice from ", the
+  document reference lists the corrected invoices, and a credit note
+  correcting a single invoice is linked to it. The correction line uses
+  the taxes of the original invoice line (VAT rate of the original
+  operation); if that line cannot be identified, a warning is posted in
+  the document chatter. A correction without a posted original invoice
+  is refused in manual billing and its agreement is skipped (with a log
+  entry) by automatic billing.
 
 19.0.2.0.15 (2026-10-09)
 ------------------------
