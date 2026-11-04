@@ -1,0 +1,5 @@
+# Private clones for Mentor's screenshots job, sourced by terrabit-solutions/ci-agents
+# (see its mentor.yml for the variables and helpers). Nothing private in test.yml (the
+# deltatech addons are public, pip clones them); the screenshot tests import
+# l10n_ro_doc_screenshots (l10n_ro_ent).
+l10n_ro_doc_screenshots
