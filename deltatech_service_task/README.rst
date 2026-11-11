@@ -10,19 +10,46 @@ Services Task
    !! source digest: sha256:453375cd6360e6884fa64170ec3f402dff431ffbcfc5b2ec1209b698d4e16d91
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_task
     :alt: dhongu/deltatech_service
+.. |badge_tests| image:: https://img.shields.io/badge/-18%20automated%20tests%20%C2%B7%2093%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/20.0/deltatech_service_task
+    :alt: 18 automated tests · 93% code coverage
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_tests|
 
-- Features:
+Technicians who service customer equipment need a checklist per visit
+and a record of the result. This module ties tasks to equipment, loads
+its operations as a checklist, and prints a service report.
 
-  - Adaugare cmpuri loc functional (service.location) si echipament
-    (service.equipment) in task
+- **Location and equipment**: Tasks get *Functional Location* and
+  *Service Equipment* fields. The equipment list follows the location,
+  and the customer is filled in from either.
+- **Checklist from equipment**: Choosing the equipment copies its parts,
+  checks and measurements into the task, replacing existing lines.
+  Technicians tick *Is OK* or *Not Applicable* and enter values and
+  notes; the lists do not allow adding rows.
+- **Maintenance types**: Equipment lines and equipment-type templates
+  can be tagged with *Maintenance Types*. A task with a type loads only
+  matching and untagged lines, and new sub-tasks inherit it.
+- **Service report**: A PDF printed from a task shows each line's status
+  (*OK*, *Not OK*, *N/A*) or value. Each sub-task with an equipment
+  follows on its own page.
+- **Equipment history**: The *Tasks*, *Parts*, *Checks* and
+  *Measurements* buttons on the equipment form show counts and open the
+  related records.
+- **Team follows assignees**: The *Team* field lists the employees of
+  the assigned users and updates with them; employees without a user are
+  kept.
+
+The module depends on *Services Equipment Base*
+(``deltatech_service_equipment_base``), Project and Employees. Lines
+follow the access rights of their task. The checklist loads only when
+the equipment is chosen in the form, not on import.
 
 **Table of contents**
 
@@ -31,6 +58,19 @@ Services Task
 
 Changelog
 =========
+
+20.0.0.0.25 (2026-11-11)
+------------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
+
+20.0.0.0.24 (2026-10-16)
+------------------------
+
+- Development status raised from Beta to Production/Stable: the module
+  has been in production use at customers for a long time.
 
 19.0.0.0.23 (2026-10-15)
 ------------------------
