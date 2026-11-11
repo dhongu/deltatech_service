@@ -28,21 +28,32 @@
   </div>
 </div>
 
+<ul class="nav nav-pills justify-content-center mb-4 pb-3 border-bottom" style="--bs-nav-pills-link-active-bg:#006F42;">
+  <li class="nav-item mx-1 mb-2">
+    <a class="nav-link active fw-semibold rounded-pill border" id="tb-tab-overview"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-overview" href="#tb-panel-overview"
+       style="padding:10px 22px;">Overview</a>
+  </li>
+  <li class="nav-item mx-1 mb-2">
+    <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-versions"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-versions" href="#tb-panel-versions"
+       style="padding:10px 22px;">Versions</a>
+  </li>
+</ul>
+<div class="tab-content">
 <div class="tab-pane fade show active py-2" id="tb-panel-overview" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Overview</h2>
+<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Equipment billed by use, such as printers charged per page, is invoiced on meter reading differences. This module links machines, meters and contracts and bases billing on the readings.</p>
+<ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mt-1 mb-4"><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Installation and removal</span><div>The <em>Install</em>, <em>Add to Agreement</em> and <em>Remove from Agreement</em> buttons open wizards that record readings, set the <em>Status</em> and log it in <em>History Equipment/Agreement</em>. Adding creates contract lines from meter templates; removal prepares the chosen <em>Period</em>'s consumption and deactivates the equipment's lines.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Billing from readings</span><div>The <em>Billing Preparation</em> wizard sets each metered line's consumption quantity to the summed differences of readings not yet in a consumption, from the later of the agreement and installation dates to the period end. A reading in a consumption cannot be deleted.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Readings control</span><div>For agreement types with <em>Requires readings for billing</em>, billing preparation refuses contracts without <em>Readings done</em>, unless the user is in <em>Can bill without meter readings</em>. Scheduled billing skips every contract without <em>Readings done</em>.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Invoice annex</span><div>The <em>Export meters XLS</em> button on a customer invoice downloads the billed meters with equipment, serial, previous and read values.</div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100"><span class="fw-bold">Equipment from serials</span><div>A new serial number of a product whose category has <em>Equipment type required</em> creates the equipment.</div></div></li></ul>
+<p>It builds on <em>Services Agreement</em> and <em>Services Equipment Base</em>. Service managers run the operations; service users enter readings.</p>
+</div>
+<div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
+<h2 class="fw-bold mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">Versions</h2>
+<h2 class="fw-bold mt-4 mb-3" style="border:none;border-left:4px solid #57B952;padding-left:16px;font-size:24px;letter-spacing:-0.3px;line-height:1.2;">18.0.1.1.14 (2026-11-11)</h2>
 <ul>
-<li>
-<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Features:</p>
-<ul>
-<li>equipment management</li>
-<li>counters management</li>
-<li>reading counters management</li>
-<li>biling based on readings</li>
-<li>reading estimate calculation</li>
-<li>automatic introduction at end of the period at estimated values</li>
+<li>Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.</li>
 </ul>
-</li>
-</ul>
+</div>
 </div>
 
 <div class="row text-center mt-4 mb-1 g-3">
