@@ -1,3 +1,7 @@
+## 20.0.1.2.12 (2026-11-11)
+
+- Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.
+
 ## 20.0.1.2.11 (2026-10-06)
 
 - The equipment dropdown shows the serial number in a second, dimmed column; the plain
