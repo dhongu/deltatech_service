@@ -13,20 +13,50 @@ Property Management
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech/tree/18.0/deltatech_property
-    :alt: dhongu/deltatech
+.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
+    :target: https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_property
+    :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
-Features:
+Organizations that own, rent or hold land and buildings on loan or
+concession need one register of them. This module adds a *Property* app
+for lands, buildings and rooms.
 
-- Property management system
+- **Lands**: A land has a location type (*Intravilan* or *Extravilan*),
+  cadastral references, a price per m² and a *Total Price* computed from
+  its surface.
+- **Buildings**: A building links to a land and has a category, a
+  two-level purpose, valuation figures, countable features such as
+  extinguishers, and a tenant history.
+- **Rooms**: A room records level, dimensions, floor type and tenant
+  when rented, and computes its disinsection area.
+- **Building totals**: Floor cleaning areas by floor type, door and
+  window cleaning areas and the disinsection area are summed from the
+  building's rooms, but its form does not show them.
+- **Coded lists**: The lists *Acquisition Mode*, *Building Purpose* and
+  *Region* hold codes and names under *Configurations*. Typing digits in
+  such a field searches the code and offers the first match.
+
+It depends on *Maintenance* (``maintenance``) and *Discuss* (``mail``),
+and each land and building is also a maintenance equipment record. The
+*Location* button opens Google Maps in a new tab with the coordinates.
+It also adds *Land* and *Building* as contact types.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+18.0.1.0.2 (2026-11-11)
+-----------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
 
 Bug Tracker
 ===========
@@ -56,6 +86,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech <https://github.com/dhongu/deltatech/tree/18.0/deltatech_property>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_property>`_ project on GitHub.
 
 You are welcome to contribute.
