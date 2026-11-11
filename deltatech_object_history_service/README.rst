@@ -13,21 +13,45 @@ Deltatech Object History for Service
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech/tree/18.0/deltatech_object_history_service
-    :alt: dhongu/deltatech
+.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
+    :target: https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_object_history_service
+    :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
-Features:
+Notes on service agreements and equipment often need to stay apart from
+the chatter. This bridge module lets *Deltatech Object History* notes be
+kept on both.
 
-- Extends the object history functionalities to Service agreement ans
-  Service Equipment models
+- **History button**: A *History* button with a count appears on the
+  agreement and equipment forms, for users of the *Object history admin*
+  group. It opens the history rows of that record.
+- **Prefilled rows**: A new row opened from the button is attached to
+  the record, and its *Parent name* takes the record's name.
+- **New filters**: The history search gets *Agreements* and *Equipments*
+  filters.
+
+The module depends on *Deltatech Object History*
+(``deltatech_object_history``), *Services Agreement*
+(``deltatech_service_agreement``) and *Services Equipment*
+(``deltatech_service_equipment``). Internal users can read and add
+history rows; editing needs *Object history admin*. The form requires a
+*Related partner*, which is not prefilled.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+18.0.0.0.2 (2026-11-11)
+-----------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
 
 Bug Tracker
 ===========
@@ -57,6 +81,6 @@ Current maintainer:
 
 |maintainer-danila12| 
 
-This module is part of the `dhongu/deltatech <https://github.com/dhongu/deltatech/tree/18.0/deltatech_object_history_service>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_object_history_service>`_ project on GitHub.
 
 You are welcome to contribute.
