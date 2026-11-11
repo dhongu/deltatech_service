@@ -1,0 +1,11 @@
+{
+  "title": "Property Agreement",
+  "summary": "Tenants, agreements & equipment on buildings",
+  "icon": "file",
+  "features": [
+    "Tenant & agreement on each building",
+    "Service equipment linked to building",
+    "\"Building\" type for service equipment"
+  ],
+  "lang": "en"
+}

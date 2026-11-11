@@ -1,0 +1,10 @@
+{
+  "title": "Object History",
+  "summary": "Persistent notes, outside Odoo chatter",
+  "icon": "clipboard",
+  "features": [
+    "Parallel history for any document",
+    "Notes never deleted automatically",
+    "Covers partners, invoices & pickings"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Service Maintenance Plan",
+  "summary": "Plan-driven service maintenance",
+  "icon": "wrench",
+  "features": ["Maintenance plan management", "Automatic service order generation"]
+}
