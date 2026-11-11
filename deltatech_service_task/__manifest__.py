@@ -5,7 +5,7 @@
 {
     "name": "Services Task",
     "summary": "Services Task Maintenance",
-    "version": "19.0.0.0.24",
+    "version": "19.0.0.0.25",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Maintenance",
