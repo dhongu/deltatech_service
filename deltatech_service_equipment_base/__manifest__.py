@@ -11,6 +11,7 @@
     "category": "Services/Equipment",
     "depends": ["deltatech_service_base", "product", "stock"],
     "license": "OPL-1",
+    "consultant_sheet": "full",
     "data": [
         "data/data.xml",
         "security/service_security.xml",

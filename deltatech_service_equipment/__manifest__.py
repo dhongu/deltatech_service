@@ -19,6 +19,7 @@
     ],
     "external_dependencies": {"python": ["xlwt"]},
     "license": "OPL-1",
+    "consultant_sheet": "full",
     "data": [
         "data/data.xml",
         "views/service_agreement_view.xml",
