@@ -1,0 +1,10 @@
+{
+  "title": "Service Consumables",
+  "summary": "Consumable stock tracking per equipment",
+  "icon": "wrench",
+  "features": [
+    "Consumables defined per equipment type",
+    "Real-time stock level per equipment",
+    "One-click delivery from equipment form"
+  ]
+}
