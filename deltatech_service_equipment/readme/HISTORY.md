@@ -1,3 +1,7 @@
+## 19.0.1.1.20 (2026-11-11)
+
+- Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.
+
 ## 19.0.1.1.19 (2026-10-10)
 
 - Automatic billing requires *Readings done* only for agreement types with *Requires readings
