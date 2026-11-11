@@ -1,3 +1,7 @@
+## 19.0.1.2.13 (2026-11-11)
+
+- Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.
+
 ## 19.0.1.2.12 (2026-10-16)
 
 - Several readings of the same meter on the same day are chained in entry order: an earlier reading
