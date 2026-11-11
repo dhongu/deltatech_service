@@ -1,3 +1,7 @@
+## 20.0.1.1.18 (2026-11-11)
+
+- Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.
+
 ## 20.0.1.1.17 (2026-10-15)
 
 - Searching an equipment by serial number or EAN code ignored the domain of the field
