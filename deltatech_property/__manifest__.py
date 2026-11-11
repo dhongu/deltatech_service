@@ -5,7 +5,7 @@
 {
     "name": "Property Management",
     "summary": "Register land and buildings: categories, purpose, acquisition and history",
-    "version": "19.0.1.0.5",
+    "version": "19.0.1.0.6",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Property",
