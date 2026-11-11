@@ -19,11 +19,22 @@ Equipment Category Group
 
 |badge1| |badge2|
 
-Features:
+Internal Category Groups tags product categories with a type and a
+class. This module carries the same two groupings over to service
+equipment, so equipment can be grouped the way its product is.
 
-- adds two grouping elements for equipments: "Category type" and
-  "Category class", related to internal category of the equipment's
-  product
+- **Type and class**: Each equipment gets a read-only *Category type*
+  and *Category class*, taken from the category of its *Product*.
+- **List columns**: The equipment list offers both fields as optional
+  columns, hidden by default.
+- **Search and grouping**: The equipment search accepts both fields and
+  adds the group-by filters *Category Type* and *Category Class*.
+
+The module depends on *Services Equipment*
+(``deltatech_service_equipment``) and *Internal Category Groups*
+(``deltatech_category_group``), which defines the types and classes. It
+changes only the list and search views of equipment, adds no menus or
+security rules, and no other module depends on it.
 
 **Table of contents**
 
@@ -32,6 +43,13 @@ Features:
 
 Changelog
 =========
+
+19.0.0.0.5 (2026-11-11)
+-----------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
 
 19.0.0.0.4 (2026-10-09)
 -----------------------
