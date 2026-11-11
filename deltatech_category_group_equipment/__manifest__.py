@@ -5,7 +5,7 @@
 {
     "name": "Equipment Category Group",
     "summary": "Groups for equipments, related to internal categories groups",
-    "version": "19.0.0.0.4",
+    "version": "19.0.0.0.5",
     "author": "Terrabit, Dan Stoica",
     "website": "https://www.terrabit.ro",
     "category": "Other",

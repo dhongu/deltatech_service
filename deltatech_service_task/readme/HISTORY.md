@@ -1,3 +1,7 @@
+## 19.0.0.0.25 (2026-11-11)
+
+- Apps Store page: a fuller description (what the module does, the problem it solves, its main functions, dependencies and limits). No change in behavior.
+
 ## 19.0.0.0.24 (2026-10-16)
 
 - Development status raised from Beta to Production/Stable: the module has been in
