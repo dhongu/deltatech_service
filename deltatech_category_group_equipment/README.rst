@@ -13,22 +13,44 @@ Deltatech Equipment Category Group
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech/tree/18.0/deltatech_category_group_equipment
-    :alt: dhongu/deltatech
+.. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
+    :target: https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_category_group_equipment
+    :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
-Features:
+Deltatech Category Group tags product categories with a type and a
+class. This module carries the same two groupings over to service
+equipment, so each equipment shows the type and class of its product's
+category.
 
-- adds two grouping elements for equipments: "Category type" and
-  "Category class", related to internal category of the equipment's
-  product
+- **Category type**: Each equipment gets a read-only *Category type*,
+  stored on the equipment and taken from the category of its *Product*.
+- **Category class**: Each equipment also gets a read-only *Category
+  class*, taken from the same product category.
+- **List columns**: The equipment list offers both fields as optional
+  columns, hidden by default.
+
+The module depends on *Services Equipment*
+(``deltatech_service_equipment``) and *Deltatech Category Group*
+(``deltatech_category_group``), which defines the types and classes. It
+changes only the list view of equipment, adds no menus or security
+rules, and no other module depends on it.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+18.0.0.0.3 (2026-11-11)
+-----------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
 
 Bug Tracker
 ===========
@@ -58,6 +80,6 @@ Current maintainer:
 
 |maintainer-danila12| 
 
-This module is part of the `dhongu/deltatech <https://github.com/dhongu/deltatech/tree/18.0/deltatech_category_group_equipment>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_category_group_equipment>`_ project on GitHub.
 
 You are welcome to contribute.

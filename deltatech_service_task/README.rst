@@ -14,20 +14,50 @@ Deltatech Services Task
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
-    :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task
+    :target: https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_service_task
     :alt: dhongu/deltatech_service
 
 |badge1| |badge2|
 
-- Features:
+Technicians who service customer equipment need a checklist per visit
+and a record of the result. This module ties tasks to equipment, loads
+its operations as a checklist, and prints a service report.
 
-  - Adaugare cmpuri loc functional (service.location) si echipament
-    (service.equipment) in task
+- **Location and equipment**: Tasks get *Functional Location* and
+  *Service Equipment* fields. The equipment list follows the location,
+  and the customer is filled in from either.
+- **Checklist from equipment**: Choosing the equipment copies its parts,
+  checks and measurements into the task as lines. Technicians tick *Is
+  OK* and enter values and notes; the lists do not allow adding rows.
+- **Service report**: A PDF printed from a task shows each line's status
+  (*OK* or *Not OK*) or value. Each sub-task with an equipment follows
+  on its own page.
+- **Equipment history**: The *Tasks*, *Checks* and *Measurements*
+  buttons on the equipment form show counts and open the related
+  records.
+- **Team follows assignees**: The *Team* field lists the employees of
+  the assigned users and updates with them; employees without a user are
+  kept.
+
+The module depends on *Services Equipment Base*
+(``deltatech_service_equipment_base``), Project and Employees. Project
+users and managers can read and change the lines. The checklist loads
+only when the equipment is chosen in the form, not on import.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+18.0.0.0.9 (2026-11-11)
+-----------------------
+
+- Apps Store page: a fuller description (what the module does, the
+  problem it solves, its main functions, dependencies and limits). No
+  change in behavior.
 
 Bug Tracker
 ===========
@@ -57,6 +87,6 @@ Current maintainer:
 
 |maintainer-dhongu| 
 
-This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_task>`_ project on GitHub.
+This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/18.0/deltatech_service_task>`_ project on GitHub.
 
 You are welcome to contribute.
