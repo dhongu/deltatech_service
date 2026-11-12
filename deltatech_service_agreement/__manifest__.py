@@ -34,5 +34,5 @@
     "images": ["static/description/main_screenshot.png"],
     "application": False,
     "development_status": "Production/Stable",
-    "maintainers": ["dhongu"],
+    "maintainers": ["dhongu", "danila12"],
 }
