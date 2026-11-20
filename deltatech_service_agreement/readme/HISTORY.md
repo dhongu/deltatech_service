@@ -1,3 +1,16 @@
+## 20.0.2.0.18 (2026-11-20)
+
+- **Added**: consultant sheet (`readme/FISA_CONSULTANT.md`) with screenshots, the usage guide
+  (`readme/USAGE.md`), the demo GIF and the screenshot test; the description was aligned with the code.
+
+## 20.0.2.0.17 (2026-11-20)
+
+- **Fixed** (AGREEMENT-015): the invoice grouping keys were plain numbers (partner, agreement or agreement
+  line ID), so IDs from different tables could collide and put the consumptions of different customers
+  on the same invoice, or attach a free consumption to another group. The key now includes its type, is
+  computed in one place for both billing steps, and adding a consumption of another customer to an
+  existing group is refused with an error.
+
 ## 20.0.2.0.16 (2026-10-15)
 
 - The agreement dropdown shows the partner and the agreement date in a second, dimmed column;
