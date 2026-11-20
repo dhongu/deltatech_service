@@ -110,6 +110,15 @@ class ServiceBilling(models.TransientModel):
         """Consumurile negative pentru care nu se gaseste factura initiala."""
         return consumptions.filtered(lambda c: c.quantity < 0 and not self._find_corrected_invoice(c))
 
+    def _get_group_key(self, cons):
+        """Cheia de grupare a facturii; include tipul, ca ID-urile din tabele diferite sa nu se ciocneasca."""
+        self.ensure_one()
+        if self.group_invoice == "agreement_line":
+            return ("agreement_line", cons.agreement_line_id.id)
+        if self.group_invoice == "agreement" or cons.agreement_id.invoice_mode == "detail":
+            return ("agreement", cons.agreement_id.id)
+        return ("partner", cons.partner_id.id)
+
     def add_invoice_line(self, cons, pre_invoice, price_unit, name, key):
         # nu mai exista get_invoice_line_account  in V14
         # account_id = self.env["account.move.line"].get_invoice_line_account(
@@ -174,6 +183,13 @@ class ServiceBilling(models.TransientModel):
                 )
 
         if pre_invoice[cons.date_invoice].get(key, False):
+            if pre_invoice[cons.date_invoice][key]["partner_id"] != cons.partner_id.id:
+                raise UserError(
+                    self.env._(
+                        "Consumption %(cons)s belongs to a different customer than the invoice it would be added to.",
+                        cons=cons.display_name,
+                    )
+                )
             pre_invoice[cons.date_invoice][key]["corrected_invoices"] |= corrected_invoice
             if warning:
                 pre_invoice[cons.date_invoice][key]["warnings"].append(warning)
@@ -245,14 +261,7 @@ class ServiceBilling(models.TransientModel):
             if cons.name and (cons.agreement_id.invoice_mode == "detail" or not self.group_service):
                 name += cons.name
 
-            # if self.group_invoice == "partner":
-            key = cons.partner_id.id
-
-            if self.group_invoice == "agreement" or cons.agreement_id.invoice_mode == "detail":
-                key = cons.agreement_id.id
-
-            if self.group_invoice == "agreement_line":
-                key = cons.agreement_line_id.id
+            key = self._get_group_key(cons)
 
             if cons.quantity > cons.agreement_line_id.quantity_free or cons.quantity < 0 or cons.with_free_cycle:
                 self.add_invoice_line(cons, pre_invoice, price_unit, name, key)
@@ -277,10 +286,7 @@ class ServiceBilling(models.TransientModel):
         self.do_billing_step1(pre_invoice)
 
         for cons in self.consumption_ids.filtered(lambda r: r.state == "none"):
-            if self.group_invoice == "agreement" or cons.agreement_id.invoice_mode == "detail":
-                key = cons.agreement_id.id
-            else:
-                key = cons.partner_id.id
+            key = self._get_group_key(cons)
             if pre_invoice[cons.date_invoice].get(key, False):
                 # daca a fost generata o factura atunci leg si consumul de facura pentru a aparea in centralizator
                 pre_invoice[cons.date_invoice][key]["cons"] += cons
