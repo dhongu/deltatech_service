@@ -1,3 +1,8 @@
+## 19.0.2.0.20 (2026-11-20)
+
+- **Added**: consultant sheet (`readme/FISA_CONSULTANT.md`) with screenshots, the usage guide
+  (`readme/USAGE.md`), the demo GIF and the screenshot test; the description was aligned with the code.
+
 ## 19.0.2.0.19 (2026-11-20)
 
 - **Fixed** (AGREEMENT-015): the invoice grouping keys were plain numbers (partner, agreement or agreement
