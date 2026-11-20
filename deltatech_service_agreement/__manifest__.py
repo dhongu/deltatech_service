@@ -4,7 +4,7 @@
 {
     "name": "Services Agreement",
     "summary": "Manage Services Agreement",
-    "version": "19.0.2.0.18",
+    "version": "19.0.2.0.20",
     "author": "Terrabit, Dorin Hongu",
     "website": "https://www.terrabit.ro",
     "category": "Services/Agreement",
@@ -34,5 +34,6 @@
     "images": ["static/description/main_screenshot.png"],
     "application": False,
     "development_status": "Production/Stable",
+    "consultant_sheet": "full",
     "maintainers": ["dhongu", "danila12"],
 }
