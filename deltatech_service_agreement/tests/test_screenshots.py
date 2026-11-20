@@ -75,15 +75,9 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
             (cls.product_maint | cls.product_support).write({"taxes_id": [Command.set(vat.ids)]})
         cls.cycle = env.ref("deltatech_service_agreement.cycle_monthly")
         Partner = env["res.partner"]
-        cls.partner_1 = Partner.create(
-            {"name": "Ferma Verde SRL", "is_company": True, "country_id": env.ref("base.ro").id}
-        )
-        cls.partner_2 = Partner.create(
-            {"name": "Transport Rapid SRL", "is_company": True, "country_id": env.ref("base.ro").id}
-        )
-        cls.partner_3 = Partner.create(
-            {"name": "Atelier Mecanic SRL", "is_company": True, "country_id": env.ref("base.ro").id}
-        )
+        cls.partner_1 = Partner.create({"name": "Ferma Verde SRL", "country_id": env.ref("base.ro").id})
+        cls.partner_2 = Partner.create({"name": "Transport Rapid SRL", "country_id": env.ref("base.ro").id})
+        cls.partner_3 = Partner.create({"name": "Atelier Mecanic SRL", "country_id": env.ref("base.ro").id})
         today = fields.Date.today()
         start = today + relativedelta(day=1)
         end = start + relativedelta(months=1, days=-1)
