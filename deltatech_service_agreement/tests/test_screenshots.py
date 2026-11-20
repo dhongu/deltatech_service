@@ -41,9 +41,7 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
         env.ref("base.user_admin").write(
             {"company_ids": [(4, company.id)], "company_id": company.id, "lang": "ro_RO", "tz": "Europe/Bucharest"}
         )
-        cls.journal = env["account.journal"].search(
-            [("type", "=", "sale"), ("company_id", "=", company.id)], limit=1
-        )
+        cls.journal = env["account.journal"].search([("type", "=", "sale"), ("company_id", "=", company.id)], limit=1)
         # agentul de vânzări apare pe capturi: un nume potrivit pentru un manual
         env.ref("base.user_admin").partner_id.name = "Andrei Popescu"
         cls.journal.service_invoice = True
@@ -77,9 +75,15 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
             (cls.product_maint | cls.product_support).write({"taxes_id": [Command.set(vat.ids)]})
         cls.cycle = env.ref("deltatech_service_agreement.cycle_monthly")
         Partner = env["res.partner"]
-        cls.partner_1 = Partner.create({"name": "Ferma Verde SRL", "is_company": True, "country_id": env.ref("base.ro").id})
-        cls.partner_2 = Partner.create({"name": "Transport Rapid SRL", "is_company": True, "country_id": env.ref("base.ro").id})
-        cls.partner_3 = Partner.create({"name": "Atelier Mecanic SRL", "is_company": True, "country_id": env.ref("base.ro").id})
+        cls.partner_1 = Partner.create(
+            {"name": "Ferma Verde SRL", "is_company": True, "country_id": env.ref("base.ro").id}
+        )
+        cls.partner_2 = Partner.create(
+            {"name": "Transport Rapid SRL", "is_company": True, "country_id": env.ref("base.ro").id}
+        )
+        cls.partner_3 = Partner.create(
+            {"name": "Atelier Mecanic SRL", "is_company": True, "country_id": env.ref("base.ro").id}
+        )
         today = fields.Date.today()
         start = today + relativedelta(day=1)
         end = start + relativedelta(months=1, days=-1)
@@ -129,7 +133,9 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
             [(cls.product_maint, 1, 1200.0), (cls.product_support, 10, 150.0)],
             description="Mentenanță și suport aplicație de gestiune",
         )
-        cls.agr_2 = agreement("AG/00002", cls.partner_2, [(cls.product_maint, 1, 1200.0)], description="Mentenanță aplicație flotă")
+        cls.agr_2 = agreement(
+            "AG/00002", cls.partner_2, [(cls.product_maint, 1, 1200.0)], description="Mentenanță aplicație flotă"
+        )
         cls.agr_3 = agreement(
             "AG/00003",
             cls.partner_3,
@@ -158,12 +164,16 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
 
     def _bill(self, consumptions, lang="ro_RO"):
         # textul din factură (ex. „Conform contractului”) se traduce în limba utilizatorului
-        billing = self.env["service.billing"].with_context(lang=lang).create(
-            {
-                "company_id": self.env.company.id,
-                "journal_id": self.journal.id,
-                "consumption_ids": [Command.set(consumptions.ids)],
-            }
+        billing = (
+            self.env["service.billing"]
+            .with_context(lang=lang)
+            .create(
+                {
+                    "company_id": self.env.company.id,
+                    "journal_id": self.journal.id,
+                    "consumption_ids": [Command.set(consumptions.ids)],
+                }
+            )
         )
         action = billing.do_billing()
         invoices = self.env["account.move"].search(action["domain"])
@@ -186,7 +196,10 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
                 "url": f"action={act_agr}&menu_id={menu_agr}&model=service.agreement&view_type=list",
                 "name": "01_lista_contracte.png",
                 "wait": ".o_list_view",
-                "highlight": ["th[data-name='state']", "th[data-name='next_date_invoice'], th[data-name='last_date_invoice']"],
+                "highlight": [
+                    "th[data-name='state']",
+                    "th[data-name='next_date_invoice'], th[data-name='last_date_invoice']",
+                ],
             },
             {
                 "url": f"id={self.agr_3.id}&action={act_agr}&menu_id={menu_agr}&model=service.agreement&view_type=form",
@@ -294,7 +307,11 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
                 "url": f"id={self.agr_1.id}&action={act_agr}&model=service.agreement&view_type=form",
                 "name": "14_contract_dupa_facturare.png",
                 "wait": ".o_form_view",
-                "highlight": ["div[name='last_invoice_id']", "div[name='next_date_invoice']", "button[name='show_invoices']"],
+                "highlight": [
+                    "div[name='last_invoice_id']",
+                    "div[name='next_date_invoice']",
+                    "button[name='show_invoices']",
+                ],
                 "full": True,
             },
         ]
