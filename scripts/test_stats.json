@@ -29,9 +29,9 @@
       "tests": 0
     },
     "deltatech_service_agreement": {
-      "coverage": 83.1,
-      "lines": 663,
-      "tests": 34
+      "coverage": 83.9,
+      "lines": 666,
+      "tests": 41
     },
     "deltatech_service_base": {
       "coverage": 90.5,
@@ -70,7 +70,7 @@
     }
   },
   "branch": "19.0",
-  "commit": "873918bd1e85e3e30266880948f67f377b216de1",
-  "generated": "2026-11-11",
+  "commit": "55844594ba56ff4dcb488d413be8478243097872",
+  "generated": "2026-11-24",
   "source": "codecov:dhongu/deltatech_service"
 }
