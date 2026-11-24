@@ -1,3 +1,7 @@
+## 19.0.2.0.21 (2026-11-24)
+
+- The demo GIF is kept only in English (`static/description/en/demo.gif`), the language of the Apps Store page; the Romanian copy is removed.
+
 ## 19.0.2.0.20 (2026-11-20)
 
 - **Added**: consultant sheet (`readme/FISA_CONSULTANT.md`) with screenshots, the usage guide
