@@ -390,10 +390,5 @@ class TestServiceAgreementScreenshots(AccountTestInvoicingCommon, ScreenshotCase
         ]
 
     def test_capture_gif(self):
-        # RO -> static/description/demo.gif; fiecare limbă într-un test propriu, ca pregătirea
-        # facturării să pornească de la o bază fără consumuri
-        self.capture_gif(self._gif_steps(), lang="ro_RO")
-
-    def test_capture_gif_en(self):
-        # EN -> static/description/en/demo.gif
+        # EN -> static/description/en/demo.gif (limba paginii de Apps)
         self.capture_gif(self._gif_steps(), lang="en_US")
