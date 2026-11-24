@@ -1,9 +1,9 @@
 {
   "addons": {
     "deltatech_service_agreement": {
-      "coverage": 77.8,
-      "lines": 657,
-      "tests": 22
+      "coverage": 79.1,
+      "lines": 660,
+      "tests": 31
     },
     "deltatech_service_base": {
       "coverage": 85.7,
@@ -11,28 +11,33 @@
       "tests": 3
     },
     "deltatech_service_consumable": {
-      "coverage": 77.7,
+      "coverage": 78.0,
       "lines": 282,
       "tests": 15
     },
     "deltatech_service_equipment": {
-      "coverage": 76.3,
-      "lines": 553,
-      "tests": 15
+      "coverage": 79.5,
+      "lines": 565,
+      "tests": 23
     },
     "deltatech_service_equipment_base": {
-      "coverage": 86.0,
-      "lines": 442,
+      "coverage": 83.6,
+      "lines": 458,
       "tests": 14
     },
+    "deltatech_service_maintenance": {
+      "coverage": 71.9,
+      "lines": 885,
+      "tests": 33
+    },
     "deltatech_service_task": {
-      "coverage": 93.0,
+      "coverage": 95.9,
       "lines": 219,
-      "tests": 18
+      "tests": 16
     }
   },
   "branch": "20.0",
-  "commit": "28b91cdbe39c81972b2af3bd93cd03fd3bc03b58",
-  "generated": "2026-10-12",
+  "commit": "0ab02da15e1bc587333e3be6427cd1c24591e806",
+  "generated": "2026-11-24",
   "source": "codecov:dhongu/deltatech_service"
 }
