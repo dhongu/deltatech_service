@@ -16,10 +16,21 @@ Services Agreement Obsolete
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service
     :alt: dhongu/deltatech_service
+.. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
+    :target: https://github.com/dhongu/deltatech_service/blob/19.0/deltatech_service/readme/FISA_CONSULTANT.md
+    :alt: Fișă consultant
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_fisa|
 
-Features:
+Obsolete compatibility module, hidden on Odoo Apps. It has no code, data
+or views of its own: installing it only installs *Services Agreement*
+(``deltatech_service_agreement``), which in turn brings *Services Base*
+(``deltatech_service_base``).
+
+It is kept so that existing databases and projects that still list
+``deltatech_service`` in their dependencies keep working after an
+upgrade. New projects should depend on ``deltatech_service_agreement``
+directly.
 
 **Table of contents**
 
@@ -28,6 +39,12 @@ Features:
 
 Changelog
 =========
+
+19.0.2.0.7 (2026-11-10)
+-----------------------
+
+- The module is obsolete: ``"hidden": True`` added to the manifest so it
+  is no longer public on Odoo Apps.
 
 19.0.2.0.6 (2026-10-09)
 -----------------------

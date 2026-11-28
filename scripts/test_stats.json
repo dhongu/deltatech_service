@@ -3,17 +3,17 @@
     "deltatech_category_group_equipment": {
       "coverage": 100.0,
       "lines": 7,
-      "tests": 0
+      "tests": 3
     },
     "deltatech_object_history": {
       "coverage": 74.1,
       "lines": 189,
-      "tests": 7
+      "tests": 10
     },
     "deltatech_object_history_service": {
       "coverage": 68.3,
       "lines": 41,
-      "tests": 0
+      "tests": 3
     },
     "deltatech_property": {
       "coverage": 95.0,
@@ -70,7 +70,7 @@
     }
   },
   "branch": "19.0",
-  "commit": "55844594ba56ff4dcb488d413be8478243097872",
-  "generated": "2026-11-24",
+  "commit": "750485eb81b5dd4c67c150fb4cabfe6db6cd9b4b",
+  "generated": "2026-11-28",
   "source": "codecov:dhongu/deltatech_service"
 }
