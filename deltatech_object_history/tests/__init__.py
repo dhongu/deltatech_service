@@ -4,3 +4,4 @@
 
 from . import test_object_history
 from . import test_object_history_access
+from . import test_screenshots

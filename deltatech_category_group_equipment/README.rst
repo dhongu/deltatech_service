@@ -16,8 +16,14 @@ Equipment Category Group
 .. |badge2| image:: https://img.shields.io/badge/github-dhongu%2Fdeltatech_service-lightgray.png?logo=github
     :target: https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment
     :alt: dhongu/deltatech_service
+.. |badge_fisa| image:: https://img.shields.io/badge/-Fi%C8%99%C4%83%20consultant-2ea44f.png
+    :target: https://github.com/dhongu/deltatech_service/blob/19.0/deltatech_category_group_equipment/readme/FISA_CONSULTANT.md
+    :alt: Fișă consultant
+.. |badge_tests| image:: https://img.shields.io/badge/-3%20automated%20tests%20%C2%B7%20100%25%20code%20coverage-2ea44f.png
+    :target: https://app.codecov.io/gh/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment
+    :alt: 3 automated tests · 100% code coverage
 
-|badge1| |badge2|
+|badge1| |badge2| |badge_fisa| |badge_tests|
 
 Internal Category Groups tags product categories with a type and a
 class. This module carries the same two groupings over to service
@@ -34,12 +40,64 @@ The module depends on *Services Equipment*
 (``deltatech_service_equipment``) and *Internal Category Groups*
 (``deltatech_category_group``), which defines the types and classes. It
 changes only the list and search views of equipment, adds no menus or
-security rules, and no other module depends on it.
+security rules.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Usage
+=====
+
+Configuration
+-------------
+
+The types and classes come from *Internal Category Groups*
+(``deltatech_category_group``):
+
+1. Define the types in **Inventory → Configuration → Products → Category
+   options → Category types** and the classes in **Category classes**.
+
+   |Category types list with three rows: Multifuncționale, Imprimante
+   and Scanere|
+
+2. Open a product category (**Inventory → Configuration → Products →
+   Categories**) and set its **Category type** and **Category class**.
+
+   |Product category form; the Category type and Category class fields
+   are highlighted at the bottom|
+
+Equipment whose product is in the category gets its type and class right
+away.
+
+Usage
+-----
+
+1. Show the columns
+~~~~~~~~~~~~~~~~~~~
+
+Open **Service → Master data → Equipment**. **Category type** and
+**Category class** are optional columns, hidden by default: tick them in
+the optional columns menu at the right of the list header. They are
+read-only and follow the category of the equipment's **Product**.
+
+|Equipment list with the Category type and Category class columns shown
+and highlighted; three multifunction printers and two laser printers|
+
+2. Group the equipment
+~~~~~~~~~~~~~~~~~~~~~~
+
+In the search panel, under **Group By**, pick **Category Type** or
+**Category Class**. You can also search equipment by type or class.
+
+|Equipment list grouped by Category Type: one group with 3 equipment and
+one with 2|
+
+.. |Category types list with three rows: Multifuncționale, Imprimante and Scanere| image:: https://raw.githubusercontent.com/dhongu/deltatech_service/19.0/deltatech_category_group_equipment/static/description/en/01_tipuri_categorie.png
+.. |Product category form; the Category type and Category class fields are highlighted at the bottom| image:: https://raw.githubusercontent.com/dhongu/deltatech_service/19.0/deltatech_category_group_equipment/static/description/en/02_categorie_produs.png
+.. |Equipment list with the Category type and Category class columns shown and highlighted; three multifunction printers and two laser printers| image:: https://raw.githubusercontent.com/dhongu/deltatech_service/19.0/deltatech_category_group_equipment/static/description/en/03_echipamente_tip_clasa.png
+.. |Equipment list grouped by Category Type: one group with 3 equipment and one with 2| image:: https://raw.githubusercontent.com/dhongu/deltatech_service/19.0/deltatech_category_group_equipment/static/description/en/04_echipamente_grupate_tip.png
 
 Changelog
 =========
@@ -81,13 +139,16 @@ Authors
 Maintainers
 -----------
 
+.. |maintainer-dhongu| image:: https://github.com/dhongu.png?size=40px
+    :target: https://github.com/dhongu
+    :alt: dhongu
 .. |maintainer-danila12| image:: https://github.com/danila12.png?size=40px
     :target: https://github.com/danila12
     :alt: danila12
 
-Current maintainer:
+Current maintainers:
 
-|maintainer-danila12| 
+|maintainer-dhongu| |maintainer-danila12| 
 
 This module is part of the `dhongu/deltatech_service <https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_category_group_equipment>`_ project on GitHub.
 

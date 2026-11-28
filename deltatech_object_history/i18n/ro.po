@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-20 10:59+0000\n"
-"PO-Revision-Date: 2024-05-20 10:59+0000\n"
+"POT-Creation-Date: 2026-11-28 10:34+0000\n"
+"PO-Revision-Date: 2026-11-28 10:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_needaction
 msgid "Action Needed"
-msgstr "Necesita actiune"
+msgstr "Necesită acțiune"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__active
@@ -26,24 +26,29 @@ msgid "Active"
 msgstr "Activ"
 
 #. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.history_add_wizard_form
+msgid "Add"
+msgstr "Adaugă"
+
+#. module: deltatech_object_history
 #: model:ir.actions.act_window,name:deltatech_object_history.action_history_add_wizard_partner
 msgid "Add history"
-msgstr "Adauga istoric"
+msgstr "Adaugă istoric"
 
 #. module: deltatech_object_history
 #: model:ir.model,name:deltatech_object_history.model_history_add_wizard
 msgid "Add history record wizard"
-msgstr "Adauga inregistrare istoric wizard"
+msgstr "Asistent adăugare înregistrare istoric"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_attachment_count
 msgid "Attachment Count"
-msgstr "Numar atasamente"
+msgstr "Număr atașamente"
 
 #. module: deltatech_object_history
 #: model_terms:ir.ui.view,arch_db:deltatech_object_history.history_add_wizard_form
 msgid "Cancel"
-msgstr "Anuleaza"
+msgstr "Anulează"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__company_id
@@ -54,7 +59,7 @@ msgstr "Companie"
 #. module: deltatech_object_history
 #: model:ir.model,name:deltatech_object_history.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__create_uid
@@ -75,20 +80,23 @@ msgid "Description"
 msgstr "Descriere"
 
 #. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_account_move__display_name
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__display_name
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__display_name
+#: model:ir.model.fields,field_description:deltatech_object_history.field_res_partner__display_name
+#: model:ir.model.fields,field_description:deltatech_object_history.field_stock_picking__display_name
 msgid "Display Name"
-msgstr "Nume afisat"
+msgstr "Nume afișat"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_follower_ids
 msgid "Followers"
-msgstr "Urmaritori"
+msgstr "Urmăritori"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Urmaritori (parteneri)"
+msgstr "Urmăritori (parteneri)"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__has_message
@@ -97,46 +105,61 @@ msgstr "Are mesaj"
 
 #. module: deltatech_object_history
 #. odoo-python
+#: code:addons/deltatech_object_history/models/account_move.py:0
 #: code:addons/deltatech_object_history/models/res_partner.py:0
+#: code:addons/deltatech_object_history/models/stock_picking.py:0
 #: model:ir.actions.act_window,name:deltatech_object_history.action_object_history
 #: model:ir.ui.menu,name:deltatech_object_history.menu_object_history_root
-#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_tree
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.view_move_form
 #: model_terms:ir.ui.view,arch_db:deltatech_object_history.view_partner_form
-#, python-format
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.view_picking_form
 msgid "History"
 msgstr "Istoric"
 
 #. module: deltatech_object_history
-#: model:ir.ui.menu,name:deltatech_object_history.menu_object_history_line
-msgid "History lines"
-msgstr "Istoric linii"
+#: model:ir.model.fields,field_description:deltatech_object_history.field_account_bank_statement_line__history_count
+#: model:ir.model.fields,field_description:deltatech_object_history.field_account_move__history_count
+#: model:ir.model.fields,field_description:deltatech_object_history.field_res_partner__history_count
+#: model:ir.model.fields,field_description:deltatech_object_history.field_res_users__history_count
+#: model:ir.model.fields,field_description:deltatech_object_history.field_stock_picking__history_count
+msgid "History Count"
+msgstr "Număr istoric"
 
 #. module: deltatech_object_history
+#: model:ir.ui.menu,name:deltatech_object_history.menu_object_history_line
+msgid "History lines"
+msgstr "Linii istoric"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_account_move__id
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__id
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__id
+#: model:ir.model.fields,field_description:deltatech_object_history.field_res_partner__id
+#: model:ir.model.fields,field_description:deltatech_object_history.field_stock_picking__id
 msgid "ID"
 msgstr ""
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Daca este bifat, noile mesaje necesita atentie"
+msgstr "Dacă este bifat, mesajele noi necesită atenția dumneavoastră."
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__message_has_error
+#: model:ir.model.fields,help:deltatech_object_history.field_object_history__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Daca este bifat, unele mesaje au o eroare de livrare"
+msgstr "Dacă este bifat, unele mesaje au o eroare de livrare."
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_is_follower
 msgid "Is Follower"
-msgstr "Este urmaritor"
+msgstr "Este urmăritor"
 
 #. module: deltatech_object_history
-#: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard____last_update
-#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history____last_update
-msgid "Last Modified on"
-msgstr "Ultima modificare pe"
+#: model:ir.model,name:deltatech_object_history.model_account_move
+msgid "Journal Entry"
+msgstr "Notă contabilă"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__write_uid
@@ -151,11 +174,6 @@ msgid "Last Updated on"
 msgstr "Ultima actualizare pe"
 
 #. module: deltatech_object_history
-#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Atasament principal"
-
-#. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_has_error
 msgid "Message Delivery error"
 msgstr "Eroare livrare mesaj"
@@ -166,6 +184,11 @@ msgid "Messages"
 msgstr "Mesaje"
 
 #. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Moves"
+msgstr "Documente contabile"
+
+#. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__name
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__name
 msgid "Name"
@@ -174,22 +197,22 @@ msgstr "Nume"
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Numar actiuni"
+msgstr "Număr de acțiuni"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_has_error_counter
 msgid "Number of errors"
-msgstr "Numar erori"
+msgstr "Număr de erori"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "Numar mesaje care necesita actiune"
+msgstr "Număr de mesaje care necesită acțiune"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Numar mesaje cu eroare de livrare"
+msgstr "Număr de mesaje cu eroare de livrare"
 
 #. module: deltatech_object_history
 #: model:ir.model,name:deltatech_object_history.model_object_history
@@ -204,9 +227,13 @@ msgstr "Admin istoric obiect"
 #. module: deltatech_object_history
 #. odoo-python
 #: code:addons/deltatech_object_history/wizard/add_history_wizard.py:0
-#, python-format
 msgid "Object not found"
-msgstr "Obiectul nu a fost gasit"
+msgstr "Obiectul nu a fost găsit"
+
+#. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_form
+msgid "Open"
+msgstr "Deschide"
 
 #. module: deltatech_object_history
 #: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_form
@@ -214,31 +241,87 @@ msgid "Open Document"
 msgstr "Deschide document"
 
 #. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Parent"
+msgstr "Document părinte"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__object_name
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Parent name"
+msgstr "Nume document"
+
+#. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Partner"
+msgstr "Partener"
+
+#. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Partners"
+msgstr "Parteneri"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__partner_id
+msgid "Related partner"
+msgstr "Partener asociat"
+
+#. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__res_id
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__res_id
 msgid "Resource ID"
-msgstr ""
+msgstr "ID document"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,field_description:deltatech_object_history.field_history_add_wizard__res_model
 #: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__res_model
 msgid "Resource Model"
-msgstr ""
+msgstr "Model document"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Eroare livrare SMS"
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__res_model
 msgid "The database model this history will be attached to."
-msgstr "Baza de date model la care va fi atasat acest istoric"
+msgstr "Modelul din baza de date la care este atașat acest istoric."
 
 #. module: deltatech_object_history
 #: model:ir.model.fields,help:deltatech_object_history.field_object_history__res_id
 msgid "The record id this is attached to."
-msgstr "Id-ul inregistrarii la care este atasat"
+msgstr "ID-ul înregistrării la care este atașat."
 
 #. module: deltatech_object_history
-#: model_terms:ir.ui.view,arch_db:deltatech_object_history.history_add_wizard_form
-msgid "_Add"
+#: model:ir.model,name:deltatech_object_history.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: deltatech_object_history
+#: model_terms:ir.ui.view,arch_db:deltatech_object_history.object_history_filter
+msgid "Transfers"
+msgstr "Transferuri"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,field_description:deltatech_object_history.field_object_history__website_message_ids
+msgid "Website Messages"
+msgstr "Mesaje website"
+
+#. module: deltatech_object_history
+#: model:ir.model.fields,help:deltatech_object_history.field_object_history__website_message_ids
+msgid "Website communication history"
+msgstr "Istoric comunicare website"
+
+#. module: deltatech_object_history
+#. odoo-python
+#: code:addons/deltatech_object_history/models/object_history.py:0
+msgid ""
+"You cannot access this history (%(operation)s) because you do not have "
+"access to the document it belongs to."
 msgstr ""
+"Nu puteți accesa acest istoric (%(operation)s) deoarece nu aveți acces la "
+"documentul căruia îi aparține."
 
 #. module: deltatech_object_history
 #: model_terms:ir.ui.view,arch_db:deltatech_object_history.history_add_wizard_form

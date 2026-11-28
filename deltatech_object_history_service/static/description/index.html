@@ -13,7 +13,10 @@
         <span class="d-inline-block rounded-pill fw-semibold me-2 mb-2" style="border:1px dashed #8fd1ad;color:#ffffff;padding:6px 14px;font-size:12px;"><span class="fa fa-balance-scale" style="margin-right:6px;" aria-hidden="true"></span>OPL-1</span>
       </div>
     </div>
-    
+    <div class="flex-shrink-0 rounded-3 px-3 py-3 my-2" style="width:240px;background-color:#00432a;">
+      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 3 automated tests</div>
+      
+    </div>
   </div>
 </div>
 
@@ -32,6 +35,11 @@
        style="padding:10px 22px;"><span class="fa fa-star" style="margin-right:6px;" aria-hidden="true"></span>Overview</a>
   </li>
   <li class="nav-item mx-1 mb-2">
+    <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-usage"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-usage" href="#tb-panel-usage"
+       style="padding:10px 22px;"><span class="fa fa-book" style="margin-right:6px;" aria-hidden="true"></span>Usage</a>
+  </li>
+  <li class="nav-item mx-1 mb-2">
     <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-versions"
        data-bs-toggle="pill" data-bs-target="#tb-panel-versions" href="#tb-panel-versions"
        style="padding:10px 22px;"><span class="fa fa-history" style="margin-right:6px;" aria-hidden="true"></span>Versions</a>
@@ -40,9 +48,84 @@
 <div class="tab-content">
 <div class="tab-pane fade show active py-2" id="tb-panel-overview" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-star" style="margin-right:6px;" aria-hidden="true"></span>Overview</span></div>
+
+<div class="rounded-4 border shadow-sm p-2 mb-4" style="background-color:#f4f8f4;">
+  <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" src="en/demo.gif" alt="Animated demo of the module" loading="lazy"/>
+</div>
 <p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Notes on service agreements and equipment often need to stay apart from the chatter. This bridge module lets <em>Object History</em> notes be kept on both.</p>
 <ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mt-1 mb-4"><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-history" style="" aria-hidden="true"></span></span><div><span class="fw-bold">History button</span><div>A <em>History</em> button with a count appears on the agreement and equipment forms, for users of the <em>Object history admin</em> group. It opens the history rows of that record.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-check" style="" aria-hidden="true"></span></span><div><span class="fw-bold">Prefilled rows</span><div>A new row opened from the button is attached to the record, and its <em>Parent name</em> takes the record's name.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-search" style="" aria-hidden="true"></span></span><div><span class="fw-bold">New filters</span><div>The history search gets <em>Agreements</em> and <em>Equipments</em> filters.</div></div></div></li></ul>
+<p>In the Romanian translation the button and the list title are named <em>Notite RG</em>.</p>
 <p>The module depends on <em>Object History</em> (<code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">deltatech_object_history</code>), <em>Services Agreement</em> (<code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">deltatech_service_agreement</code>) and <em>Services Equipment</em> (<code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">deltatech_service_equipment</code>). Rows are visible only to users who can read their agreement or equipment. The form requires a <em>Related partner</em>, which is not prefilled.</p>
+</div>
+<div class="tab-pane fade py-2" id="tb-panel-usage" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
+<div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-book" style="margin-right:6px;" aria-hidden="true"></span>Usage</span></div>
+<h2 class="mt-5 mb-3" style="border:none;font-family:'Caveat',Georgia,'Times New Roman',serif;font-weight:700;color:#006F42;font-size:36px;line-height:1.1;letter-spacing:0;"><span style="display:inline-block;padding:0 6px;white-space:nowrap;background-image:url(https://apps.odoo.com/openerp_website/static/src/img/highlights/green_highlight_03.svg);background-position:center 75%;background-repeat:no-repeat;background-size:100% 60%;">Configuration</span></h2>
+<p>Give the <strong>Object history admin</strong> group (from <em>Object History</em>) to the users who keep the history
+(Settings &#8594; Users &amp; Companies &#8594; Users). Only this group sees the <strong>History</strong> button on agreements and
+equipment.</p>
+<h2 class="mt-5 mb-3" style="border:none;font-family:'Caveat',Georgia,'Times New Roman',serif;font-weight:700;color:#006F42;font-size:36px;line-height:1.1;letter-spacing:0;"><span style="display:inline-block;padding:0 6px;white-space:nowrap;background-image:url(https://apps.odoo.com/openerp_website/static/src/img/highlights/green_highlight_03.svg);background-position:center 75%;background-repeat:no-repeat;background-size:100% 60%;">Usage</span></h2>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">1. History of a service agreement</h3>
+<p>Open an agreement in <strong>Service &#8594; Agreement &#8594; Services Agreements</strong>. The <strong>History</strong> button shows how many
+history rows the agreement has.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="Service agreement AG/00007 In Progress for Tipografia Nord SRL; the History button with the count 2 is highlighted in the button bar" src="en/01_contract_buton_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">1</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">Service agreement AG/00007 In Progress for Tipografia Nord SRL; the History button with the count 2 is highlighted in the button bar</span>
+  </div>
+</div>
+<p>Click <strong>History</strong> to list the rows of the agreement. <strong>New</strong> in this list creates a row linked to the
+agreement, with <strong>Parent name</strong> set to the agreement number; choose the <strong>Related partner</strong> before saving.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History list opened from the agreement: two rows by Andrei Popescu with Parent name AG/00007 and Related partner Tipografia Nord SRL" src="en/02_istoric_contract.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">2</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History list opened from the agreement: two rows by Andrei Popescu with Parent name AG/00007 and Related partner Tipografia Nord SRL</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">2. History of an equipment</h3>
+<p>The same <strong>History</strong> button is on the equipment form (<strong>Service &#8594; Master data &#8594; Equipment</strong>).</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="Equipment MF-0231 with serial number XNJ01842; the History button with the count 1 is highlighted" src="en/03_echipament_buton_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">3</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">Equipment MF-0231 with serial number XNJ01842; the History button with the count 1 is highlighted</span>
+  </div>
+</div>
+<p>A row of an equipment shows <strong>Resource Model</strong> <code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">service.equipment</code> and the equipment name in <strong>Parent
+name</strong>. <strong>Open Document</strong> goes back to the equipment.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History row form: Resource Model service.equipment and Parent name MF-0231 are highlighted" src="en/04_rand_istoric_echipament.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">4</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History row form: Resource Model service.equipment and Parent name MF-0231 are highlighted</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">3. Filter agreements and equipment</h3>
+<p>In <strong>Contacts &#8594; History &#8594; History lines</strong>, open the search panel: the <strong>Agreements</strong> and <strong>Equipments</strong>
+filters keep only the rows of agreements or of equipment.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History lines with the filter panel open: the Agreements and Equipments filters are highlighted below Partners, Moves and Transfers" src="en/05_filtre_contracte_echipamente.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">5</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History lines with the filter panel open: the Agreements and Equipments filters are highlighted below Partners, Moves and Transfers</span>
+  </div>
+</div>
 </div>
 <div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-history" style="margin-right:6px;" aria-hidden="true"></span>Versions</span></div>

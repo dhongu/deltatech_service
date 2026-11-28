@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="flex-shrink-0 rounded-3 px-3 py-3 my-2" style="width:240px;background-color:#00432a;">
-      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 7 automated tests</div>
+      <div class="fw-semibold" style="font-size:15px;color:#ffffff;">&#10003; 10 automated tests</div>
       <div class="rounded-pill mt-2" style="height:8px;background-color:#2a6b4d;overflow:hidden;">
         <div class="rounded-pill" style="height:8px;width:74%;background-color:#57B952;"></div>
       </div>
@@ -38,6 +38,11 @@
        style="padding:10px 22px;"><span class="fa fa-star" style="margin-right:6px;" aria-hidden="true"></span>Overview</a>
   </li>
   <li class="nav-item mx-1 mb-2">
+    <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-usage"
+       data-bs-toggle="pill" data-bs-target="#tb-panel-usage" href="#tb-panel-usage"
+       style="padding:10px 22px;"><span class="fa fa-book" style="margin-right:6px;" aria-hidden="true"></span>Usage</a>
+  </li>
+  <li class="nav-item mx-1 mb-2">
     <a class="nav-link fw-semibold rounded-pill border" id="tb-tab-versions"
        data-bs-toggle="pill" data-bs-target="#tb-panel-versions" href="#tb-panel-versions"
        style="padding:10px 22px;"><span class="fa fa-history" style="margin-right:6px;" aria-hidden="true"></span>Versions</a>
@@ -46,17 +51,100 @@
 <div class="tab-content">
 <div class="tab-pane fade show active py-2" id="tb-panel-overview" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-star" style="margin-right:6px;" aria-hidden="true"></span>Overview</span></div>
-<ul>
-<li>
-<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Features:</p>
-<ul>
-<li>Creates a new model (object.history) to store user comments, separated from standard Odoo chatter/messaging system</li>
-<li>The new history will not be deleted periodically</li>
-<li>The history items can be added by using an action (wizard)</li>
-<li>TODO: link history with partner model</li>
-</ul>
-</li>
-</ul>
+
+<div class="rounded-4 border shadow-sm p-2 mb-4" style="background-color:#f4f8f4;">
+  <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" src="en/demo.gif" alt="Animated demo of the module" loading="lazy"/>
+</div>
+<p class="mb-4" style="font-size:16px;line-height:1.65;max-width:780px;">Chatter messages mix with automatic notifications and are sometimes cleaned up. This module keeps a separate history of internal notes (<code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">object.history</code>) attached to Odoo documents.</p>
+<ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mt-1 mb-4"><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-history" style="" aria-hidden="true"></span></span><div><span class="fw-bold">History button</span><div>Partners, invoices / journal entries and stock transfers get a <em>History</em> button with the number of rows, for users of the <em>Object history admin</em> group. It opens the rows of that document.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-history" style="" aria-hidden="true"></span></span><div><span class="fw-bold">History rows</span><div>Each row has a title, a formatted description, a <em>Related partner</em>, the linked document and its name, the author and the date, plus its own chatter. <em>Open Document</em> goes back to the original record.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-check" style="" aria-hidden="true"></span></span><div><span class="fw-bold">Add from Action</span><div>On a partner form, <em>Actions &#8594; Add history</em> adds a row for that partner.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-history" style="" aria-hidden="true"></span></span><div><span class="fw-bold">History list</span><div><em>Contacts &#8594; History &#8594; History lines</em> lists all rows, with the filters <em>Partners</em>, <em>Moves</em> and <em>Transfers</em> and grouping by partner or by document type.</div></div></div></li><li class="col"><div class="border rounded-3 px-3 py-2 h-100 d-flex align-items-start"><span class="flex-shrink-0 text-center rounded-3 d-inline-block me-2" style="background-color:#DEF1DD;color:#006F42;width:30px;height:30px;line-height:30px;font-size:15px;"><span class="fa fa-check" style="" aria-hidden="true"></span></span><div><span class="fw-bold">Kept rows</span><div>No user can delete history rows; <em>Object history admin</em> can only archive them.</div></div></div></li></ul>
+<p>Rows are visible only to users who can read their document; rows of deleted documents stay visible to <em>Object history admin</em>. A row takes the company of its document; for a document shared between companies (e.g. a partner without a company) it takes the user's current company. Rows added with <em>Add history</em> do not fill <em>Related partner</em> and <em>Parent name</em>. <em>Deltatech Object History for Service</em> (<code class="border rounded px-2" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;">deltatech_object_history_service</code>) adds the same history to service agreements and equipment.</p>
+</div>
+<div class="tab-pane fade py-2" id="tb-panel-usage" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
+<div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-book" style="margin-right:6px;" aria-hidden="true"></span>Usage</span></div>
+<h2 class="mt-5 mb-3" style="border:none;font-family:'Caveat',Georgia,'Times New Roman',serif;font-weight:700;color:#006F42;font-size:36px;line-height:1.1;letter-spacing:0;"><span style="display:inline-block;padding:0 6px;white-space:nowrap;background-image:url(https://apps.odoo.com/openerp_website/static/src/img/highlights/green_highlight_03.svg);background-position:center 75%;background-repeat:no-repeat;background-size:100% 60%;">Configuration</span></h2>
+<p>Give the <strong>Object history admin</strong> group to the users who keep the history (Settings &#8594; Users &amp; Companies &#8594;
+Users). The administrator gets it on install. Only this group sees the <strong>History</strong> button and the
+<strong>Contacts &#8594; History</strong> menu.</p>
+<h2 class="mt-5 mb-3" style="border:none;font-family:'Caveat',Georgia,'Times New Roman',serif;font-weight:700;color:#006F42;font-size:36px;line-height:1.1;letter-spacing:0;"><span style="display:inline-block;padding:0 6px;white-space:nowrap;background-image:url(https://apps.odoo.com/openerp_website/static/src/img/highlights/green_highlight_03.svg);background-position:center 75%;background-repeat:no-repeat;background-size:100% 60%;">Usage</span></h2>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">1. Open the history of a partner</h3>
+<p>Open a partner in <strong>Contacts</strong>. The <strong>History</strong> button shows how many history rows the partner has.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="Partner form of Ferma Verde SRL; the History button with the count 2 is highlighted next to Sales, Invoiced and Due" src="en/01_partener_buton_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">1</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">Partner form of Ferma Verde SRL; the History button with the count 2 is highlighted next to Sales, Invoiced and Due</span>
+  </div>
+</div>
+<p>Click <strong>History</strong> to list the rows of the partner, newest first. <strong>New</strong> in this list creates a row already
+linked to the partner, with <strong>Related partner</strong> and <strong>Parent name</strong> filled in.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History list opened from the partner: two rows by Andrei Popescu with the columns Created on, Created by, Parent name, Related partner, Name and Description" src="en/03_istoric_partener.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">2</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History list opened from the partner: two rows by Andrei Popescu with the columns Created on, Created by, Parent name, Related partner, Name and Description</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">2. Add a row from the Action menu</h3>
+<p>On the partner form, click <strong>&#9881; Actions &#8594; Add history</strong>, fill in <strong>Name</strong> (required) and <strong>Description</strong>, then
+click <strong>Add</strong>. A row added this way has no <strong>Related partner</strong> and no <strong>Parent name</strong>; to get them, use
+<strong>New</strong> from the <strong>History</strong> button instead. This action exists only on partners.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="Add history dialog over the partner form: the Name and Description fields and the Add button are highlighted; Resource Model res.partner and Resource ID Ferma Verde SRL on the right" src="en/02_adaugare_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">3</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">Add history dialog over the partner form: the Name and Description fields and the Add button are highlighted; Resource Model res.partner and Resource ID Ferma Verde SRL on the right</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">3. Read a history row</h3>
+<p>A row shows its <strong>Name</strong>, <strong>Related partner</strong> (required when saving), the linked document (<strong>Resource
+Model</strong>, <strong>Resource ID</strong>, <strong>Parent name</strong>) and the <strong>Description</strong>. <strong>Open Document</strong> and <strong>Open</strong> go back
+to the original record. Each row has its own chatter.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History row form: Related partner and Parent name Ferma Verde SRL and the Open button are highlighted; the description is below" src="en/04_rand_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">4</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History row form: Related partner and Parent name Ferma Verde SRL and the Open button are highlighted; the description is below</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">4. History on invoices and transfers</h3>
+<p>The same <strong>History</strong> button appears on invoices / journal entries and on stock transfers. <strong>New</strong> from its
+list fills in <strong>Parent name</strong> with the document number; choose the <strong>Related partner</strong> before saving.</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="Posted customer invoice INV/2026/00001 for Ferma Verde SRL; the History button with the count 1 is highlighted" src="en/05_factura_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">5</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">Posted customer invoice INV/2026/00001 for Ferma Verde SRL; the History button with the count 1 is highlighted</span>
+  </div>
+</div>
+<h3 class="fw-bold mt-4 mb-3" style="border:none;border-left-width:4px;border-left-style:solid;border-left-color:#57B952;padding-left:16px;font-size:19px;letter-spacing:-0.3px;line-height:1.2;">5. Search all rows</h3>
+<p><strong>Contacts &#8594; History &#8594; History lines</strong> lists every row you can access. Use the filters <strong>Partners</strong>,
+<strong>Moves</strong> and <strong>Transfers</strong>, or group by <strong>Partner</strong> or by <strong>Parent</strong> (the document type).</p>
+<div class="border rounded-4 shadow-sm my-4" style="background-color:#ffffff;">
+  <div class="p-2 rounded-top-4" style="background-color:#f4f8f4;">
+    <img class="img-fluid d-block mx-auto rounded-3" style="max-width:100%;height:auto;" alt="History lines list with three rows by Andrei Popescu: one on the invoice INV/2026/00001 and two on the partner Ferma Verde SRL" src="en/06_lista_istoric.png"/>
+  </div>
+  <div class="d-flex align-items-center px-3 py-2 border-top">
+    <span class="flex-shrink-0 text-center fw-bold rounded-circle d-inline-block me-2"
+          style="background-color:#006F42;color:#ffffff;width:26px;height:26px;line-height:26px;font-size:13px;">6</span>
+    <span style="font-size:14px;line-height:1.4;color:#3d4752;">History lines list with three rows by Andrei Popescu: one on the invoice INV/2026/00001 and two on the partner Ferma Verde SRL</span>
+  </div>
+</div>
+<p>Rows are visible only to users who can read their document. No user can delete a row; <strong>Object history admin</strong> can archive rows from the list (<strong>Actions &#8594; Archive</strong>).</p>
 </div>
 <div class="tab-pane fade py-2" id="tb-panel-versions" style="font-size:16px;line-height:1.65;color:#212529;font-weight:400;">
 <div class="mb-2"><span class="d-inline-block rounded-pill fw-bold text-uppercase" style="background-color:#DEF1DD;color:#006F42;padding:5px 14px;font-size:12px;letter-spacing:0.14em;"><span class="fa fa-history" style="margin-right:6px;" aria-hidden="true"></span>Versions</span></div>

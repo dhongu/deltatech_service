@@ -4,4 +4,4 @@ Internal Category Groups tags product categories with a type and a class. This m
 - **List columns**: The equipment list offers both fields as optional columns, hidden by default.
 - **Search and grouping**: The equipment search accepts both fields and adds the group-by filters *Category Type* and *Category Class*.
 
-The module depends on *Services Equipment* (`deltatech_service_equipment`) and *Internal Category Groups* (`deltatech_category_group`), which defines the types and classes. It changes only the list and search views of equipment, adds no menus or security rules, and no other module depends on it.
+The module depends on *Services Equipment* (`deltatech_service_equipment`) and *Internal Category Groups* (`deltatech_category_group`), which defines the types and classes. It changes only the list and search views of equipment, adds no menus or security rules.

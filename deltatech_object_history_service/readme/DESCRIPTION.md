@@ -4,4 +4,6 @@ Notes on service agreements and equipment often need to stay apart from the chat
 - **Prefilled rows**: A new row opened from the button is attached to the record, and its *Parent name* takes the record's name.
 - **New filters**: The history search gets *Agreements* and *Equipments* filters.
 
+In the Romanian translation the button and the list title are named *Notite RG*.
+
 The module depends on *Object History* (`deltatech_object_history`), *Services Agreement* (`deltatech_service_agreement`) and *Services Equipment* (`deltatech_service_equipment`). Rows are visible only to users who can read their agreement or equipment. The form requires a *Related partner*, which is not prefilled.
